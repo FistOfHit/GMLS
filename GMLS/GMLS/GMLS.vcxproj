@@ -18,6 +18,19 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\includes\grid_routines.h" />
+    <ClInclude Include="..\..\includes\interpolation.h" />
+    <ClInclude Include="..\..\includes\IO_routines.h" />
+    <ClInclude Include="..\..\includes\restriction.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\grid_routines.cpp" />
+    <ClCompile Include="..\..\source\interpolation.cpp" />
+    <ClCompile Include="..\..\source\IO_routines.cpp" />
+    <ClCompile Include="..\..\source\main.cpp" />
+    <ClCompile Include="..\..\source\restriction.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{3002068F-A2E9-499E-8E33-397E943A46E9}</ProjectGuid>
@@ -114,19 +127,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="grid_routines.cpp" />
-    <ClCompile Include="interpolation.cpp" />
-    <ClCompile Include="IO_routines.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="restriction.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="grid_routines.h" />
-    <ClInclude Include="interpolation.h" />
-    <ClInclude Include="IO_routines.h" />
-    <ClInclude Include="restriction.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
