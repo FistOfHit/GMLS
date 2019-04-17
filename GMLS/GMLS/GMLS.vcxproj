@@ -20,9 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\includes\grid_routines.h" />
+    <ClInclude Include="..\..\includes\grid_routine_tests.h" />
     <ClInclude Include="..\..\includes\interpolation.h" />
+    <ClInclude Include="..\..\includes\interpolation_tests.h" />
     <ClInclude Include="..\..\includes\IO_routines.h" />
+    <ClInclude Include="..\..\includes\IO_routine_tests.h" />
     <ClInclude Include="..\..\includes\restriction.h" />
+    <ClInclude Include="..\..\includes\restriction_tests.h" />
+    <ClInclude Include="..\..\includes\smoother_tests.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\grid_routines.cpp" />
@@ -30,6 +35,11 @@
     <ClCompile Include="..\..\source\IO_routines.cpp" />
     <ClCompile Include="..\..\source\main.cpp" />
     <ClCompile Include="..\..\source\restriction.cpp" />
+    <ClCompile Include="..\..\tests\grid_routine_tests.cpp" />
+    <ClCompile Include="..\..\tests\interpolation_tests.cpp" />
+    <ClCompile Include="..\..\tests\IO_routine_tests.cpp" />
+    <ClCompile Include="..\..\tests\restriction_tests.cpp" />
+    <ClCompile Include="..\..\tests\smoother_tests.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
