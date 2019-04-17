@@ -1,10 +1,13 @@
 #include <iostream>
 
-// Custom includes
+// Custom source includes
 #include "../includes/interpolation.h"
 #include "../includes/IO_routines.h"
 #include "../includes/grid_routines.h"
 #include "../includes/restriction.h" 
+
+// Custom test includes
+#include "../includes/interpolation_tests.h"
 
 
 using namespace std;
@@ -12,7 +15,7 @@ using namespace std;
 
 int main() {
 
-	cout << "Nothing yet" << endl;
+	run_interpolation_tests();
 
 	system("pause");
 
