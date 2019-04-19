@@ -9,7 +9,14 @@ void interpolate_vector(double* coarse_array, int coarse_size, double* fine_arra
 	-----
 	Performs simple linear interpolation, copying elements for 
 	odd indexes but otherwise taking a simple aritmetic average for
-	new elements generated in between.
+	new elements generated in between, using the following stencil
+	for the elements at either end of the vector:
+							1 -> 0.5 0
+	and the simple copy for odd indexed elements:
+							1 -> 1
+	and a simple average for even indexed elements:
+							1 -> 0.5 0.5
+
 
 	Parameters
 	----------
@@ -42,8 +49,7 @@ void interpolate_vector(double* coarse_array, int coarse_size, double* fine_arra
 
 	// Handling all the newly generated points
 	for (int i = 2; i < fine_size - 2; i += 2) {
-		fine_array[i] = 0.5 * fine_array[i - 1]
-					  + 0.5 * fine_array[i + 1];
+		fine_array[i] = 0.5 * (fine_array[i - 1] + fine_array[i + 1]);
 	}
 
 }
