@@ -1,17 +1,15 @@
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
-// Custom source includes
+#include "../includes/IO_routines.h"
 #include "../includes/interpolation.h"
-
-// Custom test includes
 #include "../includes/interpolation_tests.h"
 
 
 using namespace std;
 
 
-bool is_interpolation_correct() {
+void is_interpolation_correct() {
 
 	/* Checks whether or not interpolation function returns a
 	valid interpolatied vector.
@@ -29,24 +27,24 @@ bool is_interpolation_correct() {
 
 	Returns
 	-------
-	bool: 
-		False if any element is not within tolerance, else true.
-
+	None.
 	*/
 
 	// Example coarse and fine arrays as they should be
-	double coarse_array[3] = { 1, 1, 1 };
-	double true_fine_array[7] = { 0.5, 1, 1, 1, 1, 1, 0.5 };
+	const int fine_size = 7;
+	const int coarse_size = 3;
+	double coarse_array[coarse_size] = { 1, 1, 1 };
+	double true_fine_array[fine_size] = { 0.5, 1, 1, 1, 1, 1, 0.5 };
 
 	// Create and calculate with function
-	double made_fine_array[7] = { 0 };
-	interpolate_vector(coarse_array, 3, made_fine_array, 7);
+	double made_fine_array[fine_size] = { 0 };
+	interpolate_vector(coarse_array, coarse_size, made_fine_array, fine_size);
 
 	// Compare element by element
 	double tolerance = 10e-6;
 	double difference;
 	bool any_mismatch = false;
-	for (int i = 0; i < 7; i++) {
+	for (int i = 0; i < fine_size; i++) {
 
 		difference = abs(true_fine_array[i] - made_fine_array[i]);
 
@@ -59,30 +57,22 @@ bool is_interpolation_correct() {
 	}
 
 	// Inform user of outcome
-	cout << "Interpolation correctness test: ";
+	cout << "Vector interpolation correctness test: ";
 	if (any_mismatch) {
 
 		cout << "FAIL" << endl;
 
 		// Print expected 
-		cout << "Expected output: [";
-		for (int i = 0; i < 7; i++) {
-			cout << true_fine_array[i] << " ";
-		}
-		cout << "]" << endl;
+		cout << "Expected output: ";
+		print_vector(true_fine_array, fine_size, 6);
 
 		// Print reality
-		cout << "Actual output:   [";
-		for (int i = 0; i < 7; i++) {
-			cout << made_fine_array[i] << " ";
-		}
-		cout << "]" << endl;
+		cout << "Actual output:   ";
+		print_vector(made_fine_array, fine_size, 6);
 
-		return false;
-
-	} else {
+	}
+	else {
 		cout << "PASS" << endl;
-		return true;
 	}
 
 }
