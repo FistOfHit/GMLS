@@ -27,6 +27,7 @@
     <ClInclude Include="..\..\includes\IO_routine_tests.h" />
     <ClInclude Include="..\..\includes\restriction.h" />
     <ClInclude Include="..\..\includes\restriction_tests.h" />
+    <ClInclude Include="..\..\includes\smoother.h" />
     <ClInclude Include="..\..\includes\smoother_tests.h" />
   </ItemGroup>
   <ItemGroup>
@@ -35,6 +36,7 @@
     <ClCompile Include="..\..\source\IO_routines.cpp" />
     <ClCompile Include="..\..\source\main.cpp" />
     <ClCompile Include="..\..\source\restriction.cpp" />
+    <ClCompile Include="..\..\source\smoother.cpp" />
     <ClCompile Include="..\..\tests\grid_routine_tests.cpp" />
     <ClCompile Include="..\..\tests\interpolation_tests.cpp" />
     <ClCompile Include="..\..\tests\IO_routine_tests.cpp" />
