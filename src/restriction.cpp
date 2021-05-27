@@ -1,11 +1,11 @@
-#include "../includes/restriction.h"
+#include "../includes/src_includes/restriction.h"
 
 
 using namespace std;
 
 
 void restrict_vector(double* fine_array, double* coarse_array, int coarse_size) {
-	
+
 	/* Restrict vector inverse linearly from 2^n-1 elements to 2^(n-1)-1 elements.
 
 	Notes
@@ -47,7 +47,7 @@ void restrict_vector(double* fine_array, double* coarse_array, int coarse_size) 
 
 }
 
- 
+
 void restrict_matrix(double* fine_matrix, int num_fine_rows,
 					 double* coarse_matrix, int num_coarse_rows, int num_coarse_cols) {
 
@@ -58,7 +58,7 @@ void restrict_matrix(double* fine_matrix, int num_fine_rows,
 	-----
 	Performs full weighting restriction, taking a centre-heavy
 	weighted aritmetic average for new elements generated in between
-	old elements. Restriction stencil is in 2 dimensions, of the 
+	old elements. Restriction stencil is in 2 dimensions, of the
 	following pattern:
 							1 2 1
 							2 4 2 -> 1

@@ -1,9 +1,9 @@
-#include <cmath>
+#include <math.h>
 #include <iostream>
 
-#include "../includes/IO_routines.h"
-#include "../includes/smoother.h"
-#include "../includes/smoother_tests.h"
+#include "../includes/src_includes/IO_routines.h"
+#include "../includes/src_includes/smoother.h"
+#include "../includes/test_includes/smoother_tests.h"
 
 
 using namespace std;
@@ -12,16 +12,16 @@ using namespace std;
 void is_gssmooth_correct() {
 
 	/* Tests Gauss-seidel smoother correctness with pre-defined setup.
-	
+
 	Notes
 	-----
 	Here we use a Symmetric positive-definite matrix for
 	our LHS, meaning we are guarunteed a solution, even for
-	a seemingly randomly generated RHS b. We use 100 
+	a seemingly randomly generated RHS b. We use 100
 	iterations for our solver here to ensure that it
 	converges (for a 5 x 5 matrix atleast) IF it is a valid
 	solver, to avoid any misjusgement based on convergence
-	speed. 
+	speed.
 
 	Parameters
 	----------
@@ -70,7 +70,7 @@ void is_gssmooth_correct() {
 
 		cout << "FAIL" << endl;
 
-		// Print expected 
+		// Print expected
 		cout << "Expected output: ";
 		print_vector(true_solution, size, 6);
 
@@ -95,11 +95,11 @@ void is_sorsmooth_correct() {
 	-----
 	Here we use a Symmetric positive-definite matrix for
 	our LHS, meaning we are guarunteed a solution, even for
-	a seemingly randomly generated RHS b. We use 100 
+	a seemingly randomly generated RHS b. We use 100
 	iterations for our solver here to ensure that it
 	converges (for a 5 x 5 matrix atleast) IF it is a valid
 	solver, to avoid any misjusgement based on convergence
-	speed. 
+	speed.
 
 	Parameters
 	----------
@@ -148,7 +148,7 @@ void is_sorsmooth_correct() {
 
 		cout << "FAIL" << endl;
 
-		// Print expected 
+		// Print expected
 		cout << "Expected output: ";
 		print_vector(true_solution, size, 6);
 
@@ -168,7 +168,7 @@ void run_smoother_tests() {
 
 	// Check Gauss-seidel smoother
 	is_gssmooth_correct();
-	
+
 	// Check SOR smoother
 	is_sorsmooth_correct();
 

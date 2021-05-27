@@ -1,9 +1,9 @@
-#include <cmath>
+#include <math.h>
 #include <iostream>
 
-#include "../includes/IO_routines.h"
-#include "../includes/restriction.h"
-#include "../includes/restriction_tests.h"
+#include "../includes/src_includes/IO_routines.h"
+#include "../includes/src_includes/restriction.h"
+#include "../includes/test_includes/restriction_tests.h"
 
 
 
@@ -65,7 +65,7 @@ void is_vec_restriction_correct() {
 
 		cout << "FAIL" << endl;
 
-		// Print expected 
+		// Print expected
 		cout << "Expected output: ";
 		print_vector(true_coarse_array, coarse_size, 6);
 
@@ -146,7 +146,7 @@ void is_matrix_restriction_correct() {
 
 		cout << "FAIL" << endl;
 
-		// Print expected 
+		// Print expected
 		cout << "Expected output: ";
 		print_matrix(true_coarse_array, coarse_size, coarse_size, 6);
 
@@ -171,5 +171,3 @@ void run_restriction_tests() {
 	is_matrix_restriction_correct();
 
 }
-
-

@@ -1,4 +1,4 @@
-#include "../includes/interpolation.h"
+#include "../includes/src_includes/interpolation.h"
 
 
 void interpolate_vector(double* coarse_array, int coarse_size, double* fine_array, int fine_size) {
@@ -7,7 +7,7 @@ void interpolate_vector(double* coarse_array, int coarse_size, double* fine_arra
 
 	Notes
 	-----
-	Performs simple linear interpolation, copying elements for 
+	Performs simple linear interpolation, copying elements for
 	odd indexes but otherwise taking a simple aritmetic average for
 	new elements generated in between, using the following stencil
 	for the elements at either end of the vector:

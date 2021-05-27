@@ -1,4 +1,4 @@
-#include "../includes/smoother.h"
+#include "../includes/src_includes/smoother.h"
 
 
 void gs_smooth(double* lhs_matrix, int num_rows, int num_cols,

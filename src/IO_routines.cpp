@@ -1,11 +1,12 @@
 #include <algorithm>
-#include <cmath>
-#include <cstdio>
+#include <math.h>
+#include <stdio.h>
 #include <iostream>
 #include <iomanip>
 #include <string>
 
-#include "../includes/IO_routines.h"
+
+#include "../includes/src_includes/IO_routines.h"
 
 
 using namespace std;
@@ -37,7 +38,7 @@ void read_matrix(double* matrix, int num_rows, int num_cols, string filename) {
 	None
 	*/
 
-	
+
 
 }
 
@@ -132,8 +133,8 @@ void print_matrix(double* matrix, int num_rows, int num_cols, int precision) {
 	Printing is done as expected, but to make the it a bit
 	nicer, first the number of digits in each element is
 	found and then we print it to 2 decimal places, so that
-	each element is printed with the same amount of space 
-	around it. This keeps the printing clean and tidy, and 
+	each element is printed with the same amount of space
+	around it. This keeps the printing clean and tidy, and
 	avoids rows being offset when printing, making it much
 	easier to see down columns.
 
@@ -146,7 +147,7 @@ void print_matrix(double* matrix, int num_rows, int num_cols, int precision) {
 		Number of rows in matrix
 
 	int num_cols: value greater than 0
-		Number of columns in matrix 
+		Number of columns in matrix
 
 	Returns
 	-------
@@ -209,7 +210,7 @@ void print_matrix(double* matrix, int num_rows, int num_cols, int precision) {
 		// Tidy brackets
 		if (i == num_rows - 1) {
 			cout << "]]" << endl;
-		} 
+		}
 		else {
 			cout << "]" << endl;
 		}
@@ -252,8 +253,7 @@ void print_vector(double* vector, int size, int precision) {
 	}
 
 	cout << vector[size - 1];
-	
+
 	cout << "]" << endl;
 
 }
-

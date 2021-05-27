@@ -1,15 +1,15 @@
 #include <iostream>
 
-// Custom source includes
-#include "../includes/interpolation.h"
-#include "../includes/IO_routines.h"
-#include "../includes/grid_routines.h"
-#include "../includes/restriction.h" 
+// Source includes
+#include "../includes/src_includes/interpolation.h"
+#include "../includes/src_includes/IO_routines.h"
+#include "../includes/src_includes/grid_routines.h"
+#include "../includes/src_includes/restriction.h"
 
-// Custom test includes
-#include "../includes/interpolation_tests.h"
-#include "../includes/restriction_tests.h"
-#include "../includes/smoother_tests.h"
+// Test includes
+#include "../includes/test_includes/interpolation_tests.h"
+#include "../includes/test_includes/restriction_tests.h"
+#include "../includes/test_includes/smoother_tests.h"
 
 
 using namespace std;
