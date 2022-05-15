@@ -6,11 +6,7 @@
 #include "../includes/test_includes/smoother_tests.h"
 
 
-using namespace std;
-
-
 void is_gssmooth_correct() {
-
 	/* Tests Gauss-seidel smoother correctness with pre-defined setup.
 
 	Notes
@@ -22,14 +18,6 @@ void is_gssmooth_correct() {
 	converges (for a 5 x 5 matrix atleast) IF it is a valid
 	solver, to avoid any misjusgement based on convergence
 	speed.
-
-	Parameters
-	----------
-	None.
-
-	Returns
-	-------
-	None.
 	*/
 
 	// Setting up LHS and RHS as simple system
@@ -52,8 +40,7 @@ void is_gssmooth_correct() {
 	double tolerance = 10e-6;
 	double difference;
 	bool any_mismatch = false;
-	for (int i = 0; i < size; i++) {
-
+	for (auto i = 0; i < size; i++) {
 		difference = abs(true_solution[i] - made_solution[i]);
 
 		// If any element dosent match enough, fail test
@@ -61,53 +48,41 @@ void is_gssmooth_correct() {
 			any_mismatch = true;
 			break;
 		}
-
 	}
 
 	// Inform user of outcome
-	cout << "Gauss-seidel smoother correctness test: ";
+	std::cout << "Gauss-seidel smoother correctness test: ";
 	if (any_mismatch) {
 
-		cout << "FAIL" << endl;
+		std::cout << "FAIL" << "\n";
 
 		// Print expected
-		cout << "Expected output: ";
+		std::cout << "Expected output: " << "\n";
 		print_vector(true_solution, size, 6);
 
 		// Print reality
-		cout << "Actual output:   ";
+		std::cout << "Actual output:   " << "\n";
 		print_vector(made_solution, size, 6);
 
 	}
 	else {
-		cout << "PASS" << endl;
+		std::cout << "PASS" << "\n";
 	}
 
 }
 
 
 void is_sorsmooth_correct() {
-
-	/* Tests Successive over relaxation smoother correctness with
-	pre-defined setup.
+	/* Tests Successive over relaxation smoother correctness with pre-defined
+    setup.
 
 	Notes
 	-----
-	Here we use a Symmetric positive-definite matrix for
-	our LHS, meaning we are guarunteed a solution, even for
-	a seemingly randomly generated RHS b. We use 100
-	iterations for our solver here to ensure that it
-	converges (for a 5 x 5 matrix atleast) IF it is a valid
-	solver, to avoid any misjusgement based on convergence
-	speed.
-
-	Parameters
-	----------
-	None.
-
-	Returns
-	-------
-	None.
+	Here we use a Symmetric positive-definite matrix for our LHS, meaning we
+    are guarunteed a solution, even for a seemingly randomly generated RHS b.
+    We use 100 iterations for our solver here to ensure that it converges
+    (for a 5 x 5 matrix atleast) IF it is a valid solver, to avoid any
+    misjusgement based on convergence speed.
 	*/
 
 	// Setting up LHS and RHS as simple system
@@ -130,7 +105,7 @@ void is_sorsmooth_correct() {
 	double tolerance = 10e-6;
 	double difference;
 	bool any_mismatch = false;
-	for (int i = 0; i < size; i++) {
+	for (auto i = 0; i < size; i++) {
 
 		difference = abs(true_solution[i] - made_solution[i]);
 
@@ -143,22 +118,22 @@ void is_sorsmooth_correct() {
 	}
 
 	// Inform user of outcome
-	cout << "SOR smoother correctness test: ";
+	std::cout << "SOR smoother correctness test: ";
 	if (any_mismatch) {
 
-		cout << "FAIL" << endl;
+		std::cout << "FAIL" << "\n";
 
 		// Print expected
-		cout << "Expected output: ";
+		std::cout << "Expected output: " << "\n";
 		print_vector(true_solution, size, 6);
 
 		// Print reality
-		cout << "Actual output:   ";
+		std::cout << "Actual output:   " << "\n";
 		print_vector(made_solution, size, 6);
 
 	}
 	else {
-		cout << "PASS" << endl;
+		std::cout << "PASS" << "\n";
 	}
 
 }
