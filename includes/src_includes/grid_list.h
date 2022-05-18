@@ -15,5 +15,5 @@ class GridList {
         void sort();
         int size();
 
-        inline std::unique_ptr<Matrix> operator()(int index) { return list[index]; }
+        inline std::unique_ptr<Matrix>& operator[](int index) { return list[index]; }
 };

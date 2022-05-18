@@ -21,10 +21,10 @@ int main() {
 
     if (TESTING_MODE) {
         // Run all unit tests
-        run_interpolation_tests();
+        test_interpolation();
         test_matrix();
-        run_restriction_tests();
-        run_smoother_tests();
+        test_restriction();
+        test_smoothers();
         return 0;
     }
 

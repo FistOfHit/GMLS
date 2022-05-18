@@ -1,9 +1,8 @@
 #include "../includes/src_includes/smoother.h"
 
 
-void gs_smooth(double* lhs_matrix, int num_rows, int num_cols,
-			   double* solution_vector, double* rhs_vector,
-			   double num_iterations) {
+void gs_smoother(double* lhs_matrix, int num_rows, int num_cols,
+	double* solution_vector, double* rhs_vector, double num_iterations) {
 	double row_sum;
 	int row_index;
 
@@ -32,9 +31,9 @@ void gs_smooth(double* lhs_matrix, int num_rows, int num_cols,
 }
 
 
-void sor_smooth(double* lhs_matrix, int num_rows, int num_cols,
-				double* solution_vector, double* rhs_vector,
-				double num_iterations, double omega) {
+void sor_smoother(double* lhs_matrix, int num_rows, int num_cols,
+    double* solution_vector, double* rhs_vector, double num_iterations,
+    double omega) {
 	double row_sum;
 	int row_index;
 	double new_solution;

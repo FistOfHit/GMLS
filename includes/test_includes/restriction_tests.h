@@ -1,5 +1,5 @@
 #pragma once
 
-void is_vec_restriction_correct();
-void is_matrix_restriction_correct();
-void run_restriction_tests();
+void test_vec_restriction();
+void test_matrix_restriction();
+void test_restriction();

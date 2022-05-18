@@ -6,7 +6,7 @@
 #include "../includes/test_includes/restriction_tests.h"
 
 
-void is_vec_restriction_correct() {
+void test_vec_restriction() {
 	/* Checks whether or not vector restriction function returns a valid
     restricted vector.
 
@@ -64,7 +64,7 @@ void is_vec_restriction_correct() {
 
 
 
-void is_matrix_restriction_correct() {
+void test_matrix_restriction() {
 	/* Checks whether or not matrix restriction function returns a valid
     restricted matrix.
 
@@ -130,9 +130,7 @@ void is_matrix_restriction_correct() {
 }
 
 
-void run_restriction_tests() {
-
-	is_vec_restriction_correct();
-	is_matrix_restriction_correct();
-
+void test_restriction() {
+	test_vec_restriction();
+	test_matrix_restriction();
 }

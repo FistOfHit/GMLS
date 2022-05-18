@@ -9,7 +9,7 @@ GridList::GridList() {
 
 
 GridList::GridList(std::vector<std::unique_ptr<Matrix>> list) {
-    GridList::list = list;
+    GridList::list = std::move(list);
 }
 
 
@@ -19,11 +19,11 @@ GridList::~GridList() {
 }
 
 
-void sort() {
+void GridList::sort() {
 
 }
 
 
-int size() {
+int GridList::size() {
 
 }

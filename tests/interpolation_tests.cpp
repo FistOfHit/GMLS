@@ -7,7 +7,7 @@
 
 
 
-void is_interpolation_correct() {
+void test_interpolation() {
 	/* Checks whether or not interpolation function returns a valid
     interpolatied vector.
 
@@ -60,13 +60,5 @@ void is_interpolation_correct() {
 	else {
 		std::cout << "PASS" << "\n";
 	}
-
-}
-
-
-void run_interpolation_tests() {
-
-	// Test if interpolation is working
-	is_interpolation_correct();
 
 }

@@ -6,7 +6,7 @@
 #include "../includes/test_includes/smoother_tests.h"
 
 
-void is_gssmooth_correct() {
+void test_gs_smoother() {
 	/* Tests Gauss-seidel smoother correctness with pre-defined setup.
 
 	Notes
@@ -34,7 +34,7 @@ void is_gssmooth_correct() {
 	double true_solution[size] = { 0.223264, -0.761726, -1.455909, 1.863039, 1.114446 };
 
 	// Perform smoother
-	gs_smooth(lhs_matrix, size, size, made_solution, rhs_vector, 100);
+	gs_smoother(lhs_matrix, size, size, made_solution, rhs_vector, 100);
 
 	// Compare element by element
 	double tolerance = 10e-6;
@@ -72,7 +72,7 @@ void is_gssmooth_correct() {
 }
 
 
-void is_sorsmooth_correct() {
+void test_sor_smoother() {
 	/* Tests Successive over relaxation smoother correctness with pre-defined
     setup.
 
@@ -99,7 +99,7 @@ void is_sorsmooth_correct() {
 	double true_solution[size] = { 0.223264, -0.761726, -1.455909, 1.863039, 1.114446 };
 
 	// Perform smoother
-	sor_smooth(lhs_matrix, size, size, made_solution, rhs_vector, 100, 1.5);
+	sor_smoother(lhs_matrix, size, size, made_solution, rhs_vector, 100, 1.5);
 
 	// Compare element by element
 	double tolerance = 10e-6;
@@ -139,12 +139,7 @@ void is_sorsmooth_correct() {
 }
 
 
-void run_smoother_tests() {
-
-	// Check Gauss-seidel smoother
-	is_gssmooth_correct();
-
-	// Check SOR smoother
-	is_sorsmooth_correct();
-
+void test_smoothers() {
+	test_gs_smoother();
+	test_sor_smoother();
 }
