@@ -12,8 +12,7 @@ class GridList {
         GridList(std::vector<std::unique_ptr<Matrix>> list);
         virtual ~GridList();
 
-        void sort();
-        int size();
+        inline int size() { return GridList::list.size(); }
 
         inline std::unique_ptr<Matrix>& operator[](int index) { return list[index]; }
 };

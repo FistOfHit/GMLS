@@ -1,7 +1,7 @@
 #include <math.h>
 #include <iostream>
 
-#include "../includes/src_includes/IO_routines.h"
+#include "../includes/src_includes/printing.h"
 #include "../includes/src_includes/smoother.h"
 #include "../includes/test_includes/smoother_tests.h"
 

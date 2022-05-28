@@ -1,7 +1,9 @@
+#include <vector>
+#include "../includes/src_includes/matrix.h"
 #include "../includes/src_includes/restriction.h"
 
 
-void restrict_vector(double* fine_array, double* coarse_array, int coarse_size) {
+void restrict_vector(std::vector<int> fine_array, std::vector<int> coarse_array) {
 	/* Restrict vector inverse linearly from 2^n-1 elements to 2^(n-1)-1 elements.
 
 	Notes
@@ -28,7 +30,7 @@ void restrict_vector(double* fine_array, double* coarse_array, int coarse_size) 
 
 	// find index of heavier centre point
 	int centre_index;
-	for (auto i = 0; i < coarse_size; i++) {
+	for (auto i = 0; i < coarse_array.size(); i++) {
 		centre_index = (i * 2) + 1;
 		coarse_array[i] = \
             0.25 * (fine_array[centre_index - 1] + fine_array[centre_index + 1])
@@ -37,9 +39,7 @@ void restrict_vector(double* fine_array, double* coarse_array, int coarse_size) 
 }
 
 
-void restrict_matrix(double* fine_matrix, int num_fine_rows,
-					 double* coarse_matrix, int num_coarse_rows,
-                     int num_coarse_cols) {
+void restrict_matrix(Matrix fine_matrix, Matrix coarse_matrix) {
 	/* Restrict matrix from (2^n-1) x (2^n-1) elements to
     (2^(n-1)-1) x (2^(n-1)-1) elements.
 
@@ -78,33 +78,33 @@ void restrict_matrix(double* fine_matrix, int num_fine_rows,
 	int centre_row, centre_col, behind_col, front_col, upper_fine_row,
         coarse_row, fine_row, lower_fine_row;
 
-	for (auto i = 0; i < num_coarse_rows; i++) {
+	for (auto i = 0; i < coarse_matrix.num_rows; i++) {
 		// Set up row indexes for access
-		coarse_row = i * num_coarse_cols;
+		coarse_row = i * coarse_matrix.num_cols;
 		centre_row = (i * 2) + 1;
-		fine_row = centre_row * num_fine_rows;
-		upper_fine_row = fine_row - num_fine_rows;
-		lower_fine_row = fine_row + num_fine_rows;
+		fine_row = centre_row * fine_matrix.num_rows;
+		upper_fine_row = fine_row - fine_matrix.num_rows;
+		lower_fine_row = fine_row + fine_matrix.num_rows;
 
-		for (auto j = 0; j < num_coarse_cols; j++) {
+		for (auto j = 0; j < coarse_matrix.num_cols; j++) {
 			// Set up column indexes for access
 			centre_col = (j * 2) + 1;
 			behind_col = centre_col - 1;
 			front_col = centre_col + 1;
 
-			coarse_matrix[coarse_row + j] = \
+			coarse_matrix(coarse_row, j) = \
                 // Corner points
-                0.0625 * (fine_matrix[upper_fine_row + behind_col]
-                        + fine_matrix[upper_fine_row + front_col]
-                        + fine_matrix[lower_fine_row + front_col]
-                        + fine_matrix[lower_fine_row + behind_col])
+                0.0625 * (fine_matrix(upper_fine_row, behind_col)
+                        + fine_matrix(upper_fine_row, front_col)
+                        + fine_matrix(lower_fine_row, front_col)
+                        + fine_matrix(lower_fine_row, behind_col))
                 // Side points
-                + 0.125 * (fine_matrix[upper_fine_row + centre_col]
-                        + fine_matrix[fine_row + behind_col]
-                        + fine_matrix[fine_row + front_col]
-                        + fine_matrix[lower_fine_row + centre_col])
+                + 0.125 * (fine_matrix(upper_fine_row, centre_col)
+                        + fine_matrix(fine_row, behind_col)
+                        + fine_matrix(fine_row, front_col)
+                        + fine_matrix(lower_fine_row, centre_col))
                 // Centre point
-                + 0.25 * fine_matrix[fine_row + centre_col];
+                + 0.25 * fine_matrix(fine_row, centre_col);
 		}
 	}
 }

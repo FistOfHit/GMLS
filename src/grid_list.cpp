@@ -17,13 +17,3 @@ GridList::~GridList() {
     // Replace with a temporary empty vector, freeing memory
     std::vector<std::unique_ptr<Matrix>>().swap(GridList::list);
 }
-
-
-void GridList::sort() {
-
-}
-
-
-int GridList::size() {
-
-}

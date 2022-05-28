@@ -18,12 +18,12 @@ void test_matrix_correctness(Matrix test_matrix, int num_rows, int num_cols, int
     // Check every value is at the initial value
     for (auto i = 0; i < num_rows; i++) {
         for (auto j = 0; j < num_cols; j++) {
-            if (test_matrix.values[i*test_matrix.num_cols + j] != initial_value) {
+            if (test_matrix(i, j) != initial_value) {
                 std::cout << "FAIL" << "\n";
 
                 // Print expected and actual
                 std::cout << "Expected value at (" << i << ", " << j << "): " << initial_value << "\n";
-                std::cout << "Actual value at   (" << i << ", " << j << "): " << test_matrix.values[i*test_matrix.num_cols + j] << "\n";
+                std::cout << "Actual value at   (" << i << ", " << j << "): " << test_matrix(i, j) << "\n";
                 return;
             }
         }

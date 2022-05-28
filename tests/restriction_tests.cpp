@@ -1,7 +1,9 @@
 #include <math.h>
 #include <iostream>
+#include <vector>
 
-#include "../includes/src_includes/IO_routines.h"
+#include "../includes/src_includes/printing.h"
+#include "../includes/src_includes/matrix.h"
 #include "../includes/src_includes/restriction.h"
 #include "../includes/test_includes/restriction_tests.h"
 
@@ -20,12 +22,12 @@ void test_vec_restriction() {
 	// Example coarse and fine arrays as they should be
 	const int fine_size = 7;
 	const int coarse_size = 3;
-	double fine_array[fine_size] = { 1, 1, 1, 1, 1, 1, 1 };
-	double true_coarse_array[coarse_size] = { 1, 1, 1 };
+	std::vector<int> fine_array(7, 1);
+	std::vector<int> true_coarse_array(3, 1);
 
 	// Create and calculate with function
 	double made_coarse_array[coarse_size] = { 0 };
-	restrict_vector(fine_array, made_coarse_array, coarse_size);
+	restrict_vector(fine_array, made_coarse_array);
 
 	// Compare element by element
 	double tolerance = 10e-6;
