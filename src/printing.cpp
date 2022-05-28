@@ -11,7 +11,7 @@
 #include "../includes/RapidCSV/rapidcsv.h"
 
 
-void print_matrix(double* matrix, int num_rows, int num_cols, int precision) {
+void print_matrix(std::unique_ptr<Matrix> matrix, int precision = 3) {
 	/* Print matrix element by element in easy to read manner.
 
 	Notes
@@ -24,14 +24,8 @@ void print_matrix(double* matrix, int num_rows, int num_cols, int precision) {
 
 	Parameters
 	----------
-	double* matrix: pointer to array of doubles
+	std::unique_ptr<Matrix> matrix:
 		Matrix to be printed to screen
-
-	int num_rows: value greater than 0
-		Number of rows in matrix
-
-	int num_cols: value greater than 0
-		Number of columns in matrix
 	*/
 
 	// Storing number of digits in each element
@@ -95,7 +89,7 @@ void print_matrix(double* matrix, int num_rows, int num_cols, int precision) {
 }
 
 
-void print_vector(double* vector, int size, int precision) {
+void print_vector(std::vector<float> vector, int precision = 3) {
 	/* Print vector element by element in easy to read manner.
 
 	Notes
@@ -105,21 +99,15 @@ void print_vector(double* vector, int size, int precision) {
 	----------
 	double* vector: pointer to array of doubles
 		Vector to be printed to screen
-
-	int num_rows: value greater than 0
-		Number of elements in vector
 	*/
 
-	// Size of whats being printed
 	std::cout << std::setprecision(precision) << std::fixed;
-	std::cout << "Vector: " << size << " elements" << "\n";
-	std::cout << "[";
+	std::cout << "Vector: " << vector.size() << " elements" << "\n";
 
-	// Print row by row
-	for (auto i = 0; i < size - 1; i++) {
+	std::cout << "[";
+	for (auto i = 0; i < vector.size() - 1; i++) {
 		std::cout << vector[i] << " ";
 	}
-
-	std::cout << vector[size - 1];
+	std::cout << vector[vector.size() - 1];
 	std::cout << "]" << "\n";
 }

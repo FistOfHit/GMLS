@@ -1,3 +1,4 @@
+#include <memory>
 #include <vector>
 #include "../includes/src_includes/matrix.h"
 #include "../includes/src_includes/restriction.h"
@@ -39,9 +40,8 @@ void restrict_vector(std::vector<int> fine_array, std::vector<int> coarse_array)
 }
 
 
-void restrict_matrix(Matrix fine_matrix, Matrix coarse_matrix) {
-	/* Restrict matrix from (2^n-1) x (2^n-1) elements to
-    (2^(n-1)-1) x (2^(n-1)-1) elements.
+void restrict_matrix(std::unique_ptr<Matrix> fine_matrix, std::unique_ptr<Matrix> coarse_matrix) {
+	/* Restrict matrix from (2^n-1) x (2^n-1) elements to (2^(n-1)-1) x (2^(n-1)-1) elements.
 
 	Notes
 	-----

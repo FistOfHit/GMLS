@@ -23,18 +23,18 @@ void test_vec_restriction() {
 	const int fine_size = 7;
 	const int coarse_size = 3;
 	std::vector<int> fine_array(7, 1);
-	std::vector<int> true_coarse_array(3, 1);
+	std::vector<int> coarse_array_true(3, 1);
 
 	// Create and calculate with function
-	double made_coarse_array[coarse_size] = { 0 };
-	restrict_vector(fine_array, made_coarse_array);
+	std::vector<int> coarse_array(3, 0);
+	restrict_vector(fine_array, coarse_array);
 
 	// Compare element by element
 	double tolerance = 10e-6;
 	double difference;
 	bool any_mismatch = false;
 	for (auto i = 0; i < coarse_size; i++) {
-		difference = abs(true_coarse_array[i] - made_coarse_array[i]);
+		difference = abs(coarse_array_true[i] - coarse_array[i]);
 
 		// If any element dosent match enough, fail test
 		if (difference > tolerance) {

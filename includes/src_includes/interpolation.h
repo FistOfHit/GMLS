@@ -1,5 +1,6 @@
 #pragma once
+#include <memory>
+#include "matrix.h"
 
 
-void interpolate_vector(double* coarse_array, int coarse_size,
-                        double* fine_array, int fine_size);
+void interpolate_vector(std::vector<float> coarse_array, std::vector<float> fine_array);

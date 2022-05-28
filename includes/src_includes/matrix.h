@@ -14,5 +14,5 @@ class Matrix {
         virtual ~Matrix();
 
         inline int operator()(int row, int col) { return values[row*this->num_cols + col]; }
-        inline void operator=(int value) { this->values }
+        inline void operator=(int value) { this->values; }
 };

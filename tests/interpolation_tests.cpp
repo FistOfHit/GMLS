@@ -18,42 +18,31 @@ void test_interpolation() {
 	*/
 
 	// Example coarse and fine arrays as they should be
-	const int fine_size = 7;
-	const int coarse_size = 3;
-	double coarse_array[coarse_size] = { 1, 1, 1 };
-	double true_fine_array[fine_size] = { 0.5, 1, 1, 1, 1, 1, 0.5 };
+	std::vector<float> coarse_array = std::vector<float>{ 1, 1, 1 };
+	std::vector<float> fine_array = std::vector<float>{ 0.5, 1, 1, 1, 1, 1, 0.5 };
+	std::vector<float> fine_array_test = std::vector<float>(fine_array.size(), 0);
 
-	// Create and calculate with function
-	double made_fine_array[fine_size] = { 0 };
-	interpolate_vector(coarse_array, coarse_size, made_fine_array, fine_size);
+	// Write interpolated array into fine_array_test
+	interpolate_vector(coarse_array, fine_array_test);
 
 	// Compare element by element
-	double tolerance = 10e-6;
-	double difference;
+	float tolerance = 10e-6;
 	bool any_mismatch = false;
-	for (auto i = 0; i < fine_size; i++) {
-		difference = abs(true_fine_array[i] - made_fine_array[i]);
-
-		// If any element dosent match enough, fail test
-		if (difference > tolerance) {
+	for (auto i = 0; i < fine_array.size(); i++) {
+		if (abs(fine_array[i] - fine_array_test[i]) > tolerance) {
 			any_mismatch = true;
 			break;
 		}
 	}
 
-	// Inform user of outcome
 	std::cout << "Vector interpolation correctness test: ";
 	if (any_mismatch) {
-
 		std::cout << "FAIL" << "\n";
 
-		// Print expected
 		std::cout << "Expected output: " << "\n";
-		print_vector(true_fine_array, fine_size, 6);
-
-		// Print reality
+		print_vector(fine_array);
 		std::cout << "Actual output:   " << "\n";
-		print_vector(made_fine_array, fine_size, 6);
+		print_vector(fine_array_test);
 
 	}
 	else {
