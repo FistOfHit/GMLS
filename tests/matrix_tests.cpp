@@ -1,10 +1,9 @@
 #include <iostream>
-#include <memory>
 #include "../includes/src_includes/matrix.h"
 #include "../includes/test_includes/matrix_tests.h"
 
 
-void test_matrix_correctness(Matrix test_matrix, int num_rows, int num_cols, int initial_value) {
+void test_matrix_correctness(Matrix test_matrix, double initial_value, int num_rows, int num_cols) {
     // Check matrix size
     if (test_matrix.num_rows != num_rows || test_matrix.num_cols != num_cols) {
         std::cout << "FAIL" << "\n";
@@ -36,17 +35,17 @@ void test_matrix_correctness(Matrix test_matrix, int num_rows, int num_cols, int
 void test_value_constructor() {
     std::cout << "Matrix constructor-by-value test: ";
 
-    std::unique_ptr<Matrix> test_matrix = std::make_unique<Matrix>(5, 5, 0);
-    test_matrix_correctness(*test_matrix, 5, 5, 0);
+    Matrix test_matrix = Matrix(0, 5, 5);
+    test_matrix_correctness(test_matrix, 0, 5, 5);
 }
 
 
 void test_vector_constructor() {
     std::cout << "Matrix constructor-by-vector correctness test: ";
 
-    std::vector<int> test_vector(5*5, 0);
-    std::unique_ptr<Matrix> test_matrix = std::make_unique<Matrix>(test_vector, 5, 5);
-    test_matrix_correctness(*test_matrix, 5, 5, 0);
+    std::vector<double> test_vector(5*5, 0);
+    Matrix test_matrix = Matrix(test_vector, 5, 5);
+    test_matrix_correctness(test_matrix, 0, 5, 5);
 }
 
 

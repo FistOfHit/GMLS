@@ -18,9 +18,9 @@ void test_interpolation() {
 	*/
 
 	// Example coarse and fine arrays as they should be
-	std::vector<float> coarse_array = std::vector<float>{ 1, 1, 1 };
-	std::vector<float> fine_array = std::vector<float>{ 0.5, 1, 1, 1, 1, 1, 0.5 };
-	std::vector<float> fine_array_test = std::vector<float>(fine_array.size(), 0);
+	std::vector<double> coarse_array = std::vector<double>{ 1, 1, 1 };
+	std::vector<double> fine_array = std::vector<double>{ 0.5, 1, 1, 1, 1, 1, 0.5 };
+	std::vector<double> fine_array_test = std::vector<double>(fine_array.size(), 0);
 
 	// Write interpolated array into fine_array_test
 	interpolate_vector(coarse_array, fine_array_test);
@@ -43,7 +43,6 @@ void test_interpolation() {
 		print_vector(fine_array);
 		std::cout << "Actual output:   " << "\n";
 		print_vector(fine_array_test);
-
 	}
 	else {
 		std::cout << "PASS" << "\n";

@@ -4,7 +4,7 @@
 #include "../includes/src_includes/restriction.h"
 
 
-void restrict_vector(std::vector<int> fine_array, std::vector<int> coarse_array) {
+void restrict_vector(std::vector<double> fine_vector, std::vector<double> coarse_vector) {
 	/* Restrict vector inverse linearly from 2^n-1 elements to 2^(n-1)-1 elements.
 
 	Notes
@@ -16,13 +16,13 @@ void restrict_vector(std::vector<int> fine_array, std::vector<int> coarse_array)
 
 	Parameters
 	----------
-	double* fine_array: pointer to array of doubles
+	double* fine_vector: pointer to vector of doubles
 		Array of values for coarse version of vector
 
 	int fine_size: Value greater than 0, a power of 2 + 1
 		The size of the fine version of vector
 
-	double* coarse_array: pointer to array of doubles
+	double* coarse_vector: pointer to vector of doubles
 		Array of values for coarse version of vector
 
 	int coarse_size: Value greater than 0, a power of 2 + 1
@@ -31,16 +31,16 @@ void restrict_vector(std::vector<int> fine_array, std::vector<int> coarse_array)
 
 	// find index of heavier centre point
 	int centre_index;
-	for (auto i = 0; i < coarse_array.size(); i++) {
+	for (auto i = 0; i < coarse_vector.size(); i++) {
 		centre_index = (i * 2) + 1;
-		coarse_array[i] = \
-            0.25 * (fine_array[centre_index - 1] + fine_array[centre_index + 1])
-            + 0.5 * fine_array[centre_index];
+		coarse_vector[i] = \
+            0.25 * (fine_vector[centre_index - 1] + fine_vector[centre_index + 1])
+            + 0.5 * fine_vector[centre_index];
 	}
 }
 
 
-void restrict_matrix(std::unique_ptr<Matrix> fine_matrix, std::unique_ptr<Matrix> coarse_matrix) {
+void restrict_matrix(Matrix fine_matrix, Matrix coarse_matrix) {
 	/* Restrict matrix from (2^n-1) x (2^n-1) elements to (2^(n-1)-1) x (2^(n-1)-1) elements.
 
 	Notes
@@ -53,7 +53,7 @@ void restrict_matrix(std::unique_ptr<Matrix> fine_matrix, std::unique_ptr<Matrix
         1 2 1
 	The actual implementation may seem a little sketchy, but a lot of it is
     just to reeduce the number of calculations needed to access and take the
-    average of the arrays, making each matrix restriction a lot more efficient.
+    average of the vectors, making each matrix restriction a lot more efficient.
 
 	Parameters
 	----------
@@ -92,7 +92,7 @@ void restrict_matrix(std::unique_ptr<Matrix> fine_matrix, std::unique_ptr<Matrix
 			behind_col = centre_col - 1;
 			front_col = centre_col + 1;
 
-			coarse_matrix(coarse_row, j) = \
+			coarse_matrix.values[coarse_row + j] = \
                 // Corner points
                 0.0625 * (fine_matrix(upper_fine_row, behind_col)
                         + fine_matrix(upper_fine_row, front_col)

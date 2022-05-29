@@ -1,6 +1,7 @@
 #include <math.h>
 #include <iostream>
 
+#include "../includes/src_includes/matrix.h"
 #include "../includes/src_includes/printing.h"
 #include "../includes/src_includes/smoother.h"
 #include "../includes/test_includes/smoother_tests.h"
@@ -22,28 +23,33 @@ void test_gs_smoother() {
 
 	// Setting up LHS and RHS as simple system
 	const int size = 5;
-	double lhs_matrix[size  *size] = { 5, 2, 1, 1, 0,
-									   2, 5, 1, 3, 2,
-									   1, 1, 5, 3, 2,
-									   1, 3, 3, 5, 1,
-									   0, 2, 2, 1, 5 };
-	// randomly generated RHS
-	double rhs_vector[size] = { 0, 3, 0, 4, 3 };
+    std::vector<double> lhs_vector = std::vector<double>{
+        5, 2, 1, 1, 0,
+        2, 5, 1, 3, 2,
+        1, 1, 5, 3, 2,
+        1, 3, 3, 5, 1,
+        0, 2, 2, 1, 5 };
+	Matrix lhs_matrix = Matrix(lhs_vector, size, size);
 
-	double made_solution[size] = { 0 };
-	double true_solution[size] = { 0.223264, -0.761726, -1.455909, 1.863039, 1.114446 };
+	// Random RHS
+	std::vector<double> rhs_vector = std::vector<double>{ 0, 3, 0, 4, 3 };
+
+    // Setup solution vector and truth
+	std::vector<double> solution_test = std::vector<double>(size, 0);
+	std::vector<double> solution = std::vector<double>{
+        0.223264, -0.761726, -1.455909, 1.863039, 1.114446 };
 
 	// Perform smoother
-	gs_smoother(lhs_matrix, size, size, made_solution, rhs_vector, 100);
+	gs_smoother(lhs_matrix, solution, rhs_vector, 100);
 
 	// Compare element by element
 	double tolerance = 10e-6;
 	double difference;
 	bool any_mismatch = false;
 	for (auto i = 0; i < size; i++) {
-		difference = abs(true_solution[i] - made_solution[i]);
+		difference = abs(solution[i] - solution_test[i]);
 
-		// If any element dosent match enough, fail test
+		// If any element dosent match, fail test
 		if (difference > tolerance) {
 			any_mismatch = true;
 			break;
@@ -53,22 +59,16 @@ void test_gs_smoother() {
 	// Inform user of outcome
 	std::cout << "Gauss-seidel smoother correctness test: ";
 	if (any_mismatch) {
-
 		std::cout << "FAIL" << "\n";
 
-		// Print expected
 		std::cout << "Expected output: " << "\n";
-		print_vector(true_solution, size, 6);
-
-		// Print reality
+		print_vector(solution, 6);
 		std::cout << "Actual output:   " << "\n";
-		print_vector(made_solution, size, 6);
-
+		print_vector(solution_test, 6);
 	}
 	else {
 		std::cout << "PASS" << "\n";
 	}
-
 }
 
 
@@ -87,19 +87,24 @@ void test_sor_smoother() {
 
 	// Setting up LHS and RHS as simple system
 	const int size = 5;
-	double lhs_matrix[size  *size] = { 5, 2, 1, 1, 0,
-									   2, 5, 1, 3, 2,
-									   1, 1, 5, 3, 2,
-									   1, 3, 3, 5, 1,
-									   0, 2, 2, 1, 5 };
-	// randomly generated RHS
-	double rhs_vector[size] = { 0, 3, 0, 4, 3 };
+    std::vector<double> lhs_vector = std::vector<double>{
+        5, 2, 1, 1, 0,
+        2, 5, 1, 3, 2,
+        1, 1, 5, 3, 2,
+        1, 3, 3, 5, 1,
+        0, 2, 2, 1, 5 };
+	Matrix lhs_matrix = Matrix(lhs_vector, size, size);
 
-	double made_solution[size] = { 0 };
-	double true_solution[size] = { 0.223264, -0.761726, -1.455909, 1.863039, 1.114446 };
+	// Random RHS
+	std::vector<double> rhs_vector = std::vector<double>{ 0, 3, 0, 4, 3 };
+
+    // Setup solution vector and truth
+	std::vector<double> solution_test = std::vector<double>(size, 0);
+	std::vector<double> solution = std::vector<double>{
+        0.223264, -0.761726, -1.455909, 1.863039, 1.114446 };
 
 	// Perform smoother
-	sor_smoother(lhs_matrix, size, size, made_solution, rhs_vector, 100, 1.5);
+	sor_smoother(lhs_matrix, solution_test, rhs_vector, 100, 1.5);
 
 	// Compare element by element
 	double tolerance = 10e-6;
@@ -107,9 +112,9 @@ void test_sor_smoother() {
 	bool any_mismatch = false;
 	for (auto i = 0; i < size; i++) {
 
-		difference = abs(true_solution[i] - made_solution[i]);
+		difference = abs(solution[i] - solution_test[i]);
 
-		// If any element dosent match enough, fail test
+		// If any element dosent match, fail test
 		if (difference > tolerance) {
 			any_mismatch = true;
 			break;
@@ -117,25 +122,18 @@ void test_sor_smoother() {
 
 	}
 
-	// Inform user of outcome
 	std::cout << "SOR smoother correctness test: ";
 	if (any_mismatch) {
-
 		std::cout << "FAIL" << "\n";
 
-		// Print expected
 		std::cout << "Expected output: " << "\n";
-		print_vector(true_solution, size, 6);
-
-		// Print reality
+		print_vector(solution, 6);
 		std::cout << "Actual output:   " << "\n";
-		print_vector(made_solution, size, 6);
-
+		print_vector(solution_test, 6);
 	}
 	else {
 		std::cout << "PASS" << "\n";
 	}
-
 }
 
 

@@ -6,13 +6,13 @@
 
 class GridList {
     public:
-        std::vector<std::unique_ptr<Matrix>> list;
+        std::vector<Matrix> list;
 
         GridList();
-        GridList(std::vector<std::unique_ptr<Matrix>> list);
+        GridList(std::vector<Matrix> list);
         virtual ~GridList();
 
         inline int size() { return GridList::list.size(); }
 
-        inline std::unique_ptr<Matrix>& operator[](int index) { return list[index]; }
+        inline Matrix& operator[](int index) { return list[index]; }
 };
