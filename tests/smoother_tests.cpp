@@ -40,7 +40,7 @@ void test_gs_smoother() {
         0.223264, -0.761726, -1.455909, 1.863039, 1.114446 };
 
 	// Perform smoother
-	gs_smoother(lhs_matrix, solution, rhs_vector, 100);
+	gs_smoother(lhs_matrix, solution_test, rhs_vector, 100);
 
 	// Compare element by element
 	double tolerance = 10e-6;

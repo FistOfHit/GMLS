@@ -27,7 +27,7 @@ void test_vec_restriction() {
 
 	// Create and calculate with function
 	std::vector<double> coarse_array_test(coarse_size, 0);
-	restrict_vector(fine_array, coarse_array);
+	restrict_vector(fine_array, coarse_array_test);
 
 	// Compare element by element
 	double tolerance = 10e-6;
@@ -61,7 +61,6 @@ void test_vec_restriction() {
 }
 
 
-
 void test_matrix_restriction() {
 	/* Checks whether or not matrix restriction function returns a valid
     restricted matrix.
@@ -81,7 +80,7 @@ void test_matrix_restriction() {
 
 	// Create and calculate with function
 	Matrix coarse_matrix_test = Matrix(1, coarse_size, coarse_size);
-	restrict_matrix(fine_matrix, coarse_matrix);
+	restrict_matrix(fine_matrix, coarse_matrix_test);
 
 	// Compare element by element
 	double tolerance = 10e-6;

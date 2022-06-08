@@ -11,7 +11,7 @@
 #include "../includes/RapidCSV/rapidcsv.h"
 
 
-void print_matrix(Matrix matrix, int precision) {
+void print_matrix(Matrix &matrix, int precision) {
 	/* Print matrix element by element in easy to read manner.
 
 	Notes
@@ -87,7 +87,7 @@ void print_matrix(Matrix matrix, int precision) {
 }
 
 
-void print_vector(std::vector<double> vector, int precision) {
+void print_vector(std::vector<double> &vector, int precision) {
 	/* Print vector element by element in easy to read manner.
 
 	Notes

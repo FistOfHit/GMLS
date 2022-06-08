@@ -11,7 +11,7 @@ Matrix::Matrix(double initial_value, int num_rows, int num_cols) {
 }
 
 
-Matrix::Matrix(const std::vector<double> vector, int num_rows, int num_cols) {
+Matrix::Matrix(std::vector<double> &vector, int num_rows, int num_cols) {
     Matrix::num_rows = num_rows;
     Matrix::num_cols = num_cols;
     Matrix::values = vector;

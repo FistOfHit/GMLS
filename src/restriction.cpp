@@ -4,7 +4,7 @@
 #include "../includes/src_includes/restriction.h"
 
 
-void restrict_vector(std::vector<double> fine_vector, std::vector<double> coarse_vector) {
+void restrict_vector(const std::vector<double> &fine_vector, std::vector<double> &coarse_vector) {
 	/* Restrict vector inverse linearly from 2^n-1 elements to 2^(n-1)-1 elements.
 
 	Notes
@@ -40,7 +40,7 @@ void restrict_vector(std::vector<double> fine_vector, std::vector<double> coarse
 }
 
 
-void restrict_matrix(Matrix fine_matrix, Matrix coarse_matrix) {
+void restrict_matrix(Matrix &fine_matrix, Matrix &coarse_matrix) {
 	/* Restrict matrix from (2^n-1) x (2^n-1) elements to (2^(n-1)-1) x (2^(n-1)-1) elements.
 
 	Notes
@@ -94,17 +94,17 @@ void restrict_matrix(Matrix fine_matrix, Matrix coarse_matrix) {
 
 			coarse_matrix.values[coarse_row + j] = \
                 // Corner points
-                0.0625 * (fine_matrix(upper_fine_row, behind_col)
-                        + fine_matrix(upper_fine_row, front_col)
-                        + fine_matrix(lower_fine_row, front_col)
-                        + fine_matrix(lower_fine_row, behind_col))
+                0.0625 * (fine_matrix[upper_fine_row + behind_col]
+                        + fine_matrix[upper_fine_row + front_col]
+                        + fine_matrix[lower_fine_row + front_col]
+                        + fine_matrix[lower_fine_row + behind_col])
                 // Side points
-                + 0.125 * (fine_matrix(upper_fine_row, centre_col)
-                        + fine_matrix(fine_row, behind_col)
-                        + fine_matrix(fine_row, front_col)
-                        + fine_matrix(lower_fine_row, centre_col))
+                + 0.125 * (fine_matrix[upper_fine_row + centre_col]
+                        + fine_matrix[fine_row + behind_col]
+                        + fine_matrix[fine_row + front_col]
+                        + fine_matrix[lower_fine_row + centre_col])
                 // Centre point
-                + 0.25 * fine_matrix(fine_row, centre_col);
+                + 0.25 * fine_matrix[fine_row + centre_col];
 		}
 	}
 }

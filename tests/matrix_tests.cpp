@@ -3,7 +3,7 @@
 #include "../includes/test_includes/matrix_tests.h"
 
 
-void test_matrix_correctness(Matrix test_matrix, double initial_value, int num_rows, int num_cols) {
+void test_matrix_correctness(Matrix &test_matrix, double initial_value, int num_rows, int num_cols) {
     // Check matrix size
     if (test_matrix.num_rows != num_rows || test_matrix.num_cols != num_cols) {
         std::cout << "FAIL" << "\n";
