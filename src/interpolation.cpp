@@ -1,7 +1,7 @@
 #include "../includes/src_includes/interpolation.h"
 
 
-void interpolate_vector(const std::vector<double> &coarse_array, std::vector<double> &fine_array) {
+void interpolate_vector(const std::vector<float> &coarse_array, std::vector<float> &fine_array) {
 	/* Interpolate vector linearly from 2^n-1 elements to 2^(n+1)-1 elements.
 
 	Notes
@@ -18,10 +18,10 @@ void interpolate_vector(const std::vector<double> &coarse_array, std::vector<dou
 
 	Parameters
 	----------
-	std::vector<int> coarse_array:
+	const std::vector<float> coarse_array:
 		Array of values for coarse version of vector
 
-	std::vector<int> fine_array:
+	std::vector<float> fine_array:
 		Array of values for coarse version of vector
 	*/
 

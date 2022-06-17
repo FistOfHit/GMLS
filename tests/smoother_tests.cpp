@@ -12,31 +12,29 @@ void test_gs_smoother() {
 
 	Notes
 	-----
-	Here we use a Symmetric positive-definite matrix for
-	our LHS, meaning we are guarunteed a solution, even for
-	a seemingly randomly generated RHS b. We use 100
-	iterations for our solver here to ensure that it
-	converges (for a 5 x 5 matrix atleast) IF it is a valid
-	solver, to avoid any misjusgement based on convergence
-	speed.
+	Here we use a Symmetric positive-definite matrix for our LHS, meaning we
+    are guarunteed a solution, even for a seemingly randomly generated RHS b.
+    We use 100 iterations for our solver here to ensure that it converges
+    (for a 5 x 5 matrix atleast) IF it is a valid solver, to avoid any
+    misjudgement based on convergence speed.
 	*/
 
 	// Setting up LHS and RHS as simple system
 	const int size = 5;
-    std::vector<double> lhs_vector = std::vector<double>{
+    std::vector<float> lhs_vector = std::vector<float>{
         5, 2, 1, 1, 0,
         2, 5, 1, 3, 2,
         1, 1, 5, 3, 2,
         1, 3, 3, 5, 1,
         0, 2, 2, 1, 5 };
-	Matrix lhs_matrix = Matrix(lhs_vector, size, size);
+	Matrix<float> lhs_matrix = Matrix<float>(lhs_vector, size, size);
 
 	// Random RHS
-	std::vector<double> rhs_vector = std::vector<double>{ 0, 3, 0, 4, 3 };
+	std::vector<float> rhs_vector = std::vector<float>{ 0, 3, 0, 4, 3 };
 
     // Setup solution vector and truth
-	std::vector<double> solution_test = std::vector<double>(size, 0);
-	std::vector<double> solution = std::vector<double>{
+	std::vector<float> solution_test = std::vector<float>(size, 0);
+	std::vector<float> solution = std::vector<float>{
         0.223264, -0.761726, -1.455909, 1.863039, 1.114446 };
 
 	// Perform smoother
@@ -87,20 +85,20 @@ void test_sor_smoother() {
 
 	// Setting up LHS and RHS as simple system
 	const int size = 5;
-    std::vector<double> lhs_vector = std::vector<double>{
+    std::vector<float> lhs_vector = std::vector<float>{
         5, 2, 1, 1, 0,
         2, 5, 1, 3, 2,
         1, 1, 5, 3, 2,
         1, 3, 3, 5, 1,
         0, 2, 2, 1, 5 };
-	Matrix lhs_matrix = Matrix(lhs_vector, size, size);
+	Matrix<float> lhs_matrix = Matrix<float>(lhs_vector, size, size);
 
 	// Random RHS
-	std::vector<double> rhs_vector = std::vector<double>{ 0, 3, 0, 4, 3 };
+	std::vector<float> rhs_vector = std::vector<float>{ 0, 3, 0, 4, 3 };
 
     // Setup solution vector and truth
-	std::vector<double> solution_test = std::vector<double>(size, 0);
-	std::vector<double> solution = std::vector<double>{
+	std::vector<float> solution_test = std::vector<float>(size, 0);
+	std::vector<float> solution = std::vector<float>{
         0.223264, -0.761726, -1.455909, 1.863039, 1.114446 };
 
 	// Perform smoother

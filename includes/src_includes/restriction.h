@@ -4,5 +4,5 @@
 #include "matrix.h"
 
 
-void restrict_vector(const std::vector<double> &fine_array, std::vector<double> &coarse_array);
-void restrict_matrix(Matrix &fine_matrix, Matrix &coarse_matrix);
+void restrict_vector(const std::vector<float> &fine_array, std::vector<float> &coarse_array);
+void restrict_matrix(Matrix<float> &fine_matrix, Matrix<float> &coarse_matrix);

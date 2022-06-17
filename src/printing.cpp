@@ -8,10 +8,9 @@
 
 
 #include "../includes/src_includes/printing.h"
-#include "../includes/RapidCSV/rapidcsv.h"
 
 
-void print_matrix(Matrix &matrix, int precision) {
+void print_matrix(Matrix<float> &matrix, const int precision) {
 	/* Print matrix element by element in easy to read manner.
 
 	Notes
@@ -24,9 +23,13 @@ void print_matrix(Matrix &matrix, int precision) {
 
 	Parameters
 	----------
-	std::unique_ptr<Matrix> matrix:
-		Matrix to be printed to screen
+	Matrix<float> &matrix:
+        The matrix to print
+    const int precision:
+        The numerical precision at which to print
 	*/
+
+    // TODO: Create a non-const copy of input, and make input const
 
 	// Storing number of digits in each element
 	std::vector<int> digits_matrix(matrix.num_rows * matrix.num_cols);
@@ -87,16 +90,15 @@ void print_matrix(Matrix &matrix, int precision) {
 }
 
 
-void print_vector(std::vector<double> &vector, int precision) {
+void print_vector(const std::vector<float> &vector, const int precision) {
 	/* Print vector element by element in easy to read manner.
-
-	Notes
-	-----
 
 	Parameters
 	----------
-	double* vector: pointer to array of doubles
-		Vector to be printed to screen
+	const std::vector<float> &vector:
+        The vector to print
+    const int precision
+        The numerical precision at which to print
 	*/
 
 	std::cout << std::setprecision(precision) << std::fixed;

@@ -1,7 +1,7 @@
 #include "../includes/src_includes/smoother.h"
 
 
-void gs_smoother(Matrix &lhs_matrix, std::vector<double> &solution_vector, std::vector<double> &rhs_vector, int num_iterations) {
+void gs_smoother(Matrix<float> &lhs_matrix, std::vector<float> &solution_vector, const std::vector<float> &rhs_vector, const int num_iterations) {
 	double row_sum;
 
 	// Perform n Gauss-seidel SOR iterations
@@ -28,7 +28,7 @@ void gs_smoother(Matrix &lhs_matrix, std::vector<double> &solution_vector, std::
 }
 
 
-void sor_smoother(Matrix &lhs_matrix, std::vector<double> &solution_vector, std::vector<double> &rhs_vector, int num_iterations, int omega) {
+void sor_smoother(Matrix<float> &lhs_matrix, std::vector<float> &solution_vector, const std::vector<float> &rhs_vector, const int num_iterations, const int omega) {
 	double row_sum;
 	double new_solution;
 

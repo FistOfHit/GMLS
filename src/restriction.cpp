@@ -4,7 +4,7 @@
 #include "../includes/src_includes/restriction.h"
 
 
-void restrict_vector(const std::vector<double> &fine_vector, std::vector<double> &coarse_vector) {
+void restrict_vector(const std::vector<float> &fine_vector, std::vector<float> &coarse_vector) {
 	/* Restrict vector inverse linearly from 2^n-1 elements to 2^(n-1)-1 elements.
 
 	Notes
@@ -16,17 +16,10 @@ void restrict_vector(const std::vector<double> &fine_vector, std::vector<double>
 
 	Parameters
 	----------
-	double* fine_vector: pointer to vector of doubles
-		Array of values for coarse version of vector
-
-	int fine_size: Value greater than 0, a power of 2 + 1
-		The size of the fine version of vector
-
-	double* coarse_vector: pointer to vector of doubles
-		Array of values for coarse version of vector
-
-	int coarse_size: Value greater than 0, a power of 2 + 1
-		The size of the coarse version of vector
+	const vector<float> &fine_vector
+        The fine-grain vector to be restricted into the coarse_vector
+    vector<float> &coarse_vector
+        The coarse-grain vector to be filled in from fine_vector
 	*/
 
 	// find index of heavier centre point
@@ -34,13 +27,14 @@ void restrict_vector(const std::vector<double> &fine_vector, std::vector<double>
 	for (auto i = 0; i < coarse_vector.size(); i++) {
 		centre_index = (i * 2) + 1;
 		coarse_vector[i] = \
-            0.25 * (fine_vector[centre_index - 1] + fine_vector[centre_index + 1])
+            0.25 * (fine_vector[centre_index - 1]
+                  + fine_vector[centre_index + 1])
             + 0.5 * fine_vector[centre_index];
 	}
 }
 
 
-void restrict_matrix(Matrix &fine_matrix, Matrix &coarse_matrix) {
+void restrict_matrix(Matrix<float> &fine_matrix, Matrix<float> &coarse_matrix) {
 	/* Restrict matrix from (2^n-1) x (2^n-1) elements to (2^(n-1)-1) x (2^(n-1)-1) elements.
 
 	Notes
@@ -48,29 +42,24 @@ void restrict_matrix(Matrix &fine_matrix, Matrix &coarse_matrix) {
 	Performs full weighting restriction, taking a centre-heavy weighted
     aritmetic average for new elements generated in between old elements.
     Restriction stencil is in 2 dimensions, of the following pattern:
+
         1 2 1
         2 4 2 -> 1
         1 2 1
-	The actual implementation may seem a little sketchy, but a lot of it is
-    just to reeduce the number of calculations needed to access and take the
-    average of the vectors, making each matrix restriction a lot more efficient.
+
+    The variables used here map as such:
+
+                       behind_col: centre_col: front_col:
+       upper_fine_row:      1           2           1                    j:
+             fine_row:      2           4           2     -> coarse_row: 1
+       lower_fine_row:      1           2           1
 
 	Parameters
 	----------
-	double* fine_matrix: pointer to array of doubles
-		Array of values for fine version of matrix
-
-	int num_fine_rows: Value greater than 0, a power of 2 + 1
-		The number of rows in the fine matrix
-
-	double* coarse_matrix: pointer to array of doubles
-		Array of values for coarse version of matrix
-
-	int num_coarse_rows: Value greater than 0, a power of 2 + 1
-		The number of rows in the coarse matrix
-
-	int num_coarse_cols: Value greater than 0, a power of 2 + 1
-		The number of columns in the coarse matrix
+	Matrix<float> &fine_matrix:
+        The fine-grain matrix to be restricted into the coarse_matrix
+    Matrix<float> &coarse_matrix:
+        The coarse-grain matrix to be filled in from the fine_matrix
 	*/
 
 	// find centre of stencil for each coarse element and keep clearer track of
@@ -79,7 +68,7 @@ void restrict_matrix(Matrix &fine_matrix, Matrix &coarse_matrix) {
         coarse_row, fine_row, lower_fine_row;
 
 	for (auto i = 0; i < coarse_matrix.num_rows; i++) {
-		// Set up row indexes for access
+		// Set up row indexes
 		coarse_row = i * coarse_matrix.num_cols;
 		centre_row = (i * 2) + 1;
 		fine_row = centre_row * fine_matrix.num_rows;
@@ -87,7 +76,7 @@ void restrict_matrix(Matrix &fine_matrix, Matrix &coarse_matrix) {
 		lower_fine_row = fine_row + fine_matrix.num_rows;
 
 		for (auto j = 0; j < coarse_matrix.num_cols; j++) {
-			// Set up column indexes for access
+			// Set up column indexes
 			centre_col = (j * 2) + 1;
 			behind_col = centre_col - 1;
 			front_col = centre_col + 1;
