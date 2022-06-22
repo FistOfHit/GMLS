@@ -20,7 +20,6 @@ void interpolate_vector(const std::vector<float> &coarse_array, std::vector<floa
 	----------
 	const std::vector<float> coarse_array:
 		Array of values for coarse version of vector
-
 	std::vector<float> fine_array:
 		Array of values for coarse version of vector
 	*/

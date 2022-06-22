@@ -16,6 +16,7 @@ void test_interpolation() {
     by the current interpolation function in interpolation.cpp. Tolerance is
     defined manually here, not as input.
 	*/
+    std::cout << "Vector interpolation correctness test: ";
 
 	// Example coarse and fine arrays as they should be
 	std::vector<float> coarse_array = std::vector<float>{ 1, 1, 1 };
@@ -30,22 +31,15 @@ void test_interpolation() {
 	bool any_mismatch = false;
 	for (auto i = 0; i < fine_array.size(); i++) {
 		if (abs(fine_array[i] - fine_array_test[i]) > tolerance) {
-			any_mismatch = true;
-			break;
+			std::cout << "FAIL" << "\n";
+
+            std::cout << "Expected output: " << "\n";
+            print_vector(fine_array);
+            std::cout << "Actual output:   " << "\n";
+            print_vector(fine_array_test);
+            return;
 		}
 	}
 
-	std::cout << "Vector interpolation correctness test: ";
-	if (any_mismatch) {
-		std::cout << "FAIL" << "\n";
-
-		std::cout << "Expected output: " << "\n";
-		print_vector(fine_array);
-		std::cout << "Actual output:   " << "\n";
-		print_vector(fine_array_test);
-	}
-	else {
-		std::cout << "PASS" << "\n";
-	}
-
+	std::cout << "PASS" << "\n";
 }

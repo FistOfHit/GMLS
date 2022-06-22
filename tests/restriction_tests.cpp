@@ -3,7 +3,6 @@
 #include <vector>
 
 #include "../includes/src_includes/printing.h"
-#include "../includes/src_includes/matrix.h"
 #include "../includes/src_includes/restriction.h"
 #include "../includes/test_includes/restriction_tests.h"
 
@@ -18,6 +17,7 @@ void test_vec_restriction() {
     by the current restriction function in restriction.cpp. Tolerance is
     defined manually here, not as input.
 	*/
+    std::cout << "Vector restriction correctness test: ";
 
 	// Example coarse and fine arrays as they should be
 	const int fine_size = 7;
@@ -38,26 +38,17 @@ void test_vec_restriction() {
 
 		// If any element dosent match enough, fail test
 		if (difference > tolerance) {
-			any_mismatch = true;
-			break;
+			std::cout << "FAIL" << "\n";
+
+            std::cout << "Expected output: " << "\n";
+            print_vector(coarse_array, 6);
+            std::cout << "Actual output:   " << "\n";
+            print_vector(coarse_array_test, 6);
+            return;
 		}
 	}
 
-	// Inform user of outcome
-	std::cout << "Vector restriction correctness test: ";
-	if (any_mismatch) {
-		std::cout << "FAIL" << "\n";
-
-		std::cout << "Expected output: " << "\n";
-		print_vector(coarse_array, 6);
-		std::cout << "Actual output:   " << "\n";
-		print_vector(coarse_array_test, 6);
-
-	}
-	else {
-		std::cout << "PASS" << "\n";
-	}
-
+	std::cout << "PASS" << "\n";
 }
 
 
@@ -70,47 +61,38 @@ void test_matrix_restriction() {
     by the current restriction function in restriction.cpp. Tolerance is
     defined manually here, not as input.
 	*/
+    std::cout << "Matrix restriction correctness test: ";
 
 	// 7 x 7 Matrix of 1s
-    std::vector<float> fine_values(49, 1);
-    Matrix<float> fine_matrix = Matrix<float>(fine_values, 7, 7);
+    std::vector<float> fine_matrix(49, 1);
 
 	// 3 x 3 Matrix of 1s
-	std::vector<float> coarse_values(9, 1);
-    Matrix<float> coarse_matrix = Matrix<float>(coarse_values, 3, 3);
+	std::vector<float> coarse_matrix(9, 1);
 
 	// Create and calculate with function
-	std::vector<float> coarse_values_test(9, 1);
-    Matrix<float> coarse_matrix_test = Matrix<float>(coarse_values_test, 3, 3);
-	restrict_matrix(fine_matrix, coarse_matrix_test);
+	std::vector<float> coarse_matrix_test(9, 1);
+	restrict_matrix(fine_matrix, 7, 7, coarse_matrix_test, 3, 3);
 
 	// Compare element by element
 	float tolerance = 10e-6;
 	float difference;
 	bool any_mismatch = false;
 	for (auto i = 0; i < 9; i++) {
-		difference = abs(coarse_matrix.values[i] - coarse_matrix_test.values[i]);
+		difference = abs(coarse_matrix[i] - coarse_matrix_test[i]);
 
 		// If any element dosent match, fail test
 		if (difference > tolerance) {
-			any_mismatch = true;
-			break;
+			std::cout << "FAIL" << "\n";
+
+            std::cout << "Expected output: " << "\n";
+            print_matrix(coarse_matrix, 3, 3, 6);
+            std::cout << "Actual output:   " << "\n";
+            print_matrix(coarse_matrix_test, 3, 3, 6);
+            return;
 		}
 	}
 
-	// Inform user of outcome
-	std::cout << "Matrix restriction correctness test: ";
-	if (any_mismatch) {
-		std::cout << "FAIL" << "\n";
-
-		std::cout << "Expected output: " << "\n";
-		print_matrix(coarse_matrix, 6);
-		std::cout << "Actual output:   " << "\n";
-		print_matrix(coarse_matrix_test, 6);
-	}
-	else {
-		std::cout << "PASS" << "\n";
-	}
+	std::cout << "PASS" << "\n";
 }
 
 

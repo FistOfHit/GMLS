@@ -1,8 +1,6 @@
 #pragma once
-#include <memory>
 #include <vector>
-#include "matrix.h"
 
 
 void restrict_vector(const std::vector<float> &fine_array, std::vector<float> &coarse_array);
-void restrict_matrix(Matrix<float> &fine_matrix, Matrix<float> &coarse_matrix);
+void restrict_matrix(const std::vector<float> &fine_array, const int fine_rows, const int fine_cols, std::vector<float> &coarse_array, const int coarse_rows, const int coarse_cols);

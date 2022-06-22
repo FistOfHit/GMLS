@@ -1,6 +1,5 @@
 #include <memory>
 #include <vector>
-#include "../includes/src_includes/matrix.h"
 #include "../includes/src_includes/restriction.h"
 
 
@@ -27,14 +26,13 @@ void restrict_vector(const std::vector<float> &fine_vector, std::vector<float> &
 	for (auto i = 0; i < coarse_vector.size(); i++) {
 		centre_index = (i * 2) + 1;
 		coarse_vector[i] = \
-            0.25 * (fine_vector[centre_index - 1]
-                  + fine_vector[centre_index + 1])
+            0.25 * (fine_vector[centre_index - 1] + fine_vector[centre_index + 1])
             + 0.5 * fine_vector[centre_index];
 	}
 }
 
 
-void restrict_matrix(Matrix<float> &fine_matrix, Matrix<float> &coarse_matrix) {
+void restrict_matrix(const std::vector<float> &fine_matrix, const int fine_rows, const int fine_cols, std::vector<float> &coarse_matrix, const int coarse_rows, const int coarse_cols) {
 	/* Restrict matrix from (2^n-1) x (2^n-1) elements to (2^(n-1)-1) x (2^(n-1)-1) elements.
 
 	Notes
@@ -56,10 +54,18 @@ void restrict_matrix(Matrix<float> &fine_matrix, Matrix<float> &coarse_matrix) {
 
 	Parameters
 	----------
-	Matrix<float> &fine_matrix:
+	const std::vector<float> &fine_matrix:
         The fine-grain matrix to be restricted into the coarse_matrix
-    Matrix<float> &coarse_matrix:
+    const int fine_rows:
+        The number of rows in the fine matrix
+    const int fine_cols:
+        The number of columns in the fine matrix
+    std::vector<float> &coarse_matrix:
         The coarse-grain matrix to be filled in from the fine_matrix
+    const int coarse_rows:
+        The number of rows in the coarse matrix
+    const int coarse_cols:
+        The number of rows in the coarse matrix
 	*/
 
 	// find centre of stencil for each coarse element and keep clearer track of
@@ -67,21 +73,21 @@ void restrict_matrix(Matrix<float> &fine_matrix, Matrix<float> &coarse_matrix) {
 	int centre_row, centre_col, behind_col, front_col, upper_fine_row,
         coarse_row, fine_row, lower_fine_row;
 
-	for (auto i = 0; i < coarse_matrix.num_rows; i++) {
+	for (auto i = 0; i < coarse_rows; i++) {
 		// Set up row indexes
-		coarse_row = i * coarse_matrix.num_cols;
+		coarse_row = i * coarse_cols;
 		centre_row = (i * 2) + 1;
-		fine_row = centre_row * fine_matrix.num_rows;
-		upper_fine_row = fine_row - fine_matrix.num_rows;
-		lower_fine_row = fine_row + fine_matrix.num_rows;
+		fine_row = centre_row * fine_rows;
+		upper_fine_row = fine_row - fine_rows;
+		lower_fine_row = fine_row + fine_rows;
 
-		for (auto j = 0; j < coarse_matrix.num_cols; j++) {
+		for (auto j = 0; j < coarse_cols; j++) {
 			// Set up column indexes
 			centre_col = (j * 2) + 1;
 			behind_col = centre_col - 1;
 			front_col = centre_col + 1;
 
-			coarse_matrix.values[coarse_row + j] = \
+			coarse_matrix[coarse_row + j] = \
                 // Corner points
                 0.0625 * (fine_matrix[upper_fine_row + behind_col]
                         + fine_matrix[upper_fine_row + front_col]

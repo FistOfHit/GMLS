@@ -1,7 +1,6 @@
 #include <math.h>
 #include <iostream>
 
-#include "../includes/src_includes/matrix.h"
 #include "../includes/src_includes/printing.h"
 #include "../includes/src_includes/smoother.h"
 #include "../includes/test_includes/smoother_tests.h"
@@ -18,16 +17,16 @@ void test_gs_smoother() {
     (for a 5 x 5 matrix atleast) IF it is a valid solver, to avoid any
     misjudgement based on convergence speed.
 	*/
+    std::cout << "Gauss-seidel smoother correctness test: ";
 
 	// Setting up LHS and RHS as simple system
 	const int size = 5;
-    std::vector<float> lhs_vector = std::vector<float>{
+    std::vector<float> lhs_matrix = std::vector<float>{
         5, 2, 1, 1, 0,
         2, 5, 1, 3, 2,
         1, 1, 5, 3, 2,
         1, 3, 3, 5, 1,
         0, 2, 2, 1, 5 };
-	Matrix<float> lhs_matrix = Matrix<float>(lhs_vector, size, size);
 
 	// Random RHS
 	std::vector<float> rhs_vector = std::vector<float>{ 0, 3, 0, 4, 3 };
@@ -43,30 +42,22 @@ void test_gs_smoother() {
 	// Compare element by element
 	double tolerance = 10e-6;
 	double difference;
-	bool any_mismatch = false;
 	for (auto i = 0; i < size; i++) {
 		difference = abs(solution[i] - solution_test[i]);
 
 		// If any element dosent match, fail test
 		if (difference > tolerance) {
-			any_mismatch = true;
-			break;
+            std::cout << "FAIL" << "\n";
+
+            std::cout << "\nExpected output: " << "\n";
+            print_vector(solution, 6);
+            std::cout << "\nActual output:   " << "\n";
+            print_vector(solution_test, 6);
+            return;
 		}
 	}
 
-	// Inform user of outcome
-	std::cout << "Gauss-seidel smoother correctness test: ";
-	if (any_mismatch) {
-		std::cout << "FAIL" << "\n";
-
-		std::cout << "Expected output: " << "\n";
-		print_vector(solution, 6);
-		std::cout << "Actual output:   " << "\n";
-		print_vector(solution_test, 6);
-	}
-	else {
-		std::cout << "PASS" << "\n";
-	}
+	std::cout << "PASS" << "\n";
 }
 
 
@@ -82,16 +73,16 @@ void test_sor_smoother() {
     (for a 5 x 5 matrix atleast) IF it is a valid solver, to avoid any
     misjusgement based on convergence speed.
 	*/
+    std::cout << "SOR smoother correctness test: ";
 
 	// Setting up LHS and RHS as simple system
 	const int size = 5;
-    std::vector<float> lhs_vector = std::vector<float>{
+    std::vector<float> lhs_matrix = std::vector<float>{
         5, 2, 1, 1, 0,
         2, 5, 1, 3, 2,
         1, 1, 5, 3, 2,
         1, 3, 3, 5, 1,
         0, 2, 2, 1, 5 };
-	Matrix<float> lhs_matrix = Matrix<float>(lhs_vector, size, size);
 
 	// Random RHS
 	std::vector<float> rhs_vector = std::vector<float>{ 0, 3, 0, 4, 3 };
@@ -107,31 +98,23 @@ void test_sor_smoother() {
 	// Compare element by element
 	double tolerance = 10e-6;
 	double difference;
-	bool any_mismatch = false;
 	for (auto i = 0; i < size; i++) {
 
 		difference = abs(solution[i] - solution_test[i]);
 
 		// If any element dosent match, fail test
 		if (difference > tolerance) {
-			any_mismatch = true;
-			break;
-		}
+            std::cout << "FAIL" << "\n";
 
+            std::cout << "\nExpected output: " << "\n";
+            print_vector(solution, 6);
+            std::cout << "\nActual output:   " << "\n";
+            print_vector(solution_test, 6);
+            return;
+        }
 	}
 
-	std::cout << "SOR smoother correctness test: ";
-	if (any_mismatch) {
-		std::cout << "FAIL" << "\n";
-
-		std::cout << "Expected output: " << "\n";
-		print_vector(solution, 6);
-		std::cout << "Actual output:   " << "\n";
-		print_vector(solution_test, 6);
-	}
-	else {
-		std::cout << "PASS" << "\n";
-	}
+	std::cout << "PASS" << "\n";
 }
 
 
