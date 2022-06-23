@@ -20,8 +20,8 @@ void test_vec_restriction() {
     std::cout << "Vector restriction correctness test: ";
 
 	// Example coarse and fine arrays as they should be
-	const int fine_size = 7;
-	const int coarse_size = 3;
+	const size_t fine_size = 7;
+	const size_t coarse_size = 3;
 	std::vector<float> fine_array(fine_size, 1);
 	std::vector<float> coarse_array(coarse_size, 1);
 
@@ -49,6 +49,10 @@ void test_vec_restriction() {
 	}
 
 	std::cout << "PASS" << "\n";
+
+    coarse_array = std::vector<float>();
+    coarse_array_test = std::vector<float>();
+    fine_array = std::vector<float>();
 }
 
 
@@ -93,6 +97,10 @@ void test_matrix_restriction() {
 	}
 
 	std::cout << "PASS" << "\n";
+
+    coarse_matrix = std::vector<float>();
+    coarse_matrix_test = std::vector<float>();
+    fine_matrix = std::vector<float>();
 }
 
 

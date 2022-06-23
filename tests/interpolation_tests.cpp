@@ -42,4 +42,8 @@ void test_interpolation() {
 	}
 
 	std::cout << "PASS" << "\n";
+
+    coarse_array = std::vector<float>();
+    fine_array = std::vector<float>();
+    fine_array_test = std::vector<float>();
 }

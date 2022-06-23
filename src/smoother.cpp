@@ -17,11 +17,11 @@ void gs_smoother(const std::vector<float> &lhs_matrix, std::vector<float> &solut
     */
 
     // Get matrix dimensions from equation vectors
-    int num_rows = solution_vector.size();
-    int num_cols = rhs_vector.size();
+    size_t num_rows = solution_vector.size();
+    size_t num_cols = rhs_vector.size();
 
 	// Perform n Gauss-seidel SOR iterations
-    int row_num;
+    size_t row_num;
     double row_sum;
 	for (auto n = 0; n < num_iterations; n++) {
 		for (auto i = 0; i < num_rows; i++) {
@@ -60,11 +60,11 @@ void sor_smoother(const std::vector<float> &lhs_matrix, std::vector<float> &solu
     */
 
     // Get matrix dimensions from equation vectors
-    int num_rows = solution_vector.size();
-    int num_cols = rhs_vector.size();
+    size_t num_rows = solution_vector.size();
+    size_t num_cols = rhs_vector.size();
 
 	// Perform n Gauss-seidel SOR iterations
-    int row_num;
+    size_t row_num;
     double row_sum, new_solution;
 	for (auto n = 0; n < num_iterations; n++) {
 		for (auto i = 0; i < num_rows; i++) {

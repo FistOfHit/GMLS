@@ -8,6 +8,7 @@
 
 // Source includes
 #include "../includes/src_includes/interpolation.h"
+#include "../includes/src_includes/multigrid_cycles.h"
 #include "../includes/src_includes/printing.h"
 #include "../includes/src_includes/restriction.h"
 

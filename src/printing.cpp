@@ -10,7 +10,7 @@
 #include "../includes/src_includes/printing.h"
 
 
-void print_matrix(const std::vector<float> &matrix, const int num_rows, const int num_cols, const int precision) {
+void print_matrix(const std::vector<float> &matrix, const size_t num_rows, const size_t num_cols, const int precision) {
 	/* Print matrix element by element in easy to read manner.
 
 	Notes
@@ -25,9 +25,9 @@ void print_matrix(const std::vector<float> &matrix, const int num_rows, const in
 	----------
 	const std::vector<float> &matrix:
         The matrix to print
-    const int num_rows:
+    const size_t num_rows:
         The number of rows in the matrix
-    const int num_cols:
+    const size_t num_cols:
         The number of columns in the matrix
     const int precision:
         The numerical precision at which to print
@@ -36,7 +36,7 @@ void print_matrix(const std::vector<float> &matrix, const int num_rows, const in
 	std::vector<int> digits_matrix(num_rows * num_cols);
 
 	// Find spaces required to print everything nicely
-	int row_number;
+	size_t row_number;
 	int num_digits, max_digits = 0;
 	for (auto i = 0; i < num_rows; i++) {
 		row_number = i * num_cols;

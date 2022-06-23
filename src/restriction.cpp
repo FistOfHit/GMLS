@@ -32,7 +32,7 @@ void restrict_vector(const std::vector<float> &fine_vector, std::vector<float> &
 }
 
 
-void restrict_matrix(const std::vector<float> &fine_matrix, const int fine_rows, const int fine_cols, std::vector<float> &coarse_matrix, const int coarse_rows, const int coarse_cols) {
+void restrict_matrix(const std::vector<float> &fine_matrix, const size_t fine_rows, const size_t fine_cols, std::vector<float> &coarse_matrix, const size_t coarse_rows, const size_t coarse_cols) {
 	/* Restrict matrix from (2^n-1) x (2^n-1) elements to (2^(n-1)-1) x (2^(n-1)-1) elements.
 
 	Notes
@@ -56,21 +56,21 @@ void restrict_matrix(const std::vector<float> &fine_matrix, const int fine_rows,
 	----------
 	const std::vector<float> &fine_matrix:
         The fine-grain matrix to be restricted into the coarse_matrix
-    const int fine_rows:
+    const size_t fine_rows:
         The number of rows in the fine matrix
-    const int fine_cols:
+    const size_t fine_cols:
         The number of columns in the fine matrix
     std::vector<float> &coarse_matrix:
         The coarse-grain matrix to be filled in from the fine_matrix
-    const int coarse_rows:
+    const size_t coarse_rows:
         The number of rows in the coarse matrix
-    const int coarse_cols:
+    const size_t coarse_cols:
         The number of rows in the coarse matrix
 	*/
 
 	// find centre of stencil for each coarse element and keep clearer track of
     // which row and column needed
-	int centre_row, centre_col, behind_col, front_col, upper_fine_row,
+	size_t centre_row, centre_col, behind_col, front_col, upper_fine_row,
         coarse_row, fine_row, lower_fine_row;
 
 	for (auto i = 0; i < coarse_rows; i++) {

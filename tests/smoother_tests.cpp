@@ -20,7 +20,7 @@ void test_gs_smoother() {
     std::cout << "Gauss-seidel smoother correctness test: ";
 
 	// Setting up LHS and RHS as simple system
-	const int size = 5;
+	const size_t size = 5;
     std::vector<float> lhs_matrix = std::vector<float>{
         5, 2, 1, 1, 0,
         2, 5, 1, 3, 2,
@@ -58,6 +58,11 @@ void test_gs_smoother() {
 	}
 
 	std::cout << "PASS" << "\n";
+
+    lhs_matrix = std::vector<float>();
+    rhs_vector = std::vector<float>();
+    solution = std::vector<float>();
+    solution_test = std::vector<float>();
 }
 
 
@@ -76,7 +81,7 @@ void test_sor_smoother() {
     std::cout << "SOR smoother correctness test: ";
 
 	// Setting up LHS and RHS as simple system
-	const int size = 5;
+	const size_t size = 5;
     std::vector<float> lhs_matrix = std::vector<float>{
         5, 2, 1, 1, 0,
         2, 5, 1, 3, 2,
@@ -115,6 +120,11 @@ void test_sor_smoother() {
 	}
 
 	std::cout << "PASS" << "\n";
+
+    lhs_matrix = std::vector<float>();
+    rhs_vector = std::vector<float>();
+    solution = std::vector<float>();
+    solution_test = std::vector<float>();
 }
 
 
