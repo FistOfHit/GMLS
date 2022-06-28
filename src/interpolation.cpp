@@ -1,7 +1,10 @@
+#include <math.h>
+
+
 #include "../includes/src_includes/interpolation.h"
 
 
-void interpolate_vector(const std::vector<float> &coarse_array, std::vector<float> &fine_array) {
+void interpolate_vector(std::vector<float> &vector, int grid_level) {
 	/* Interpolate vector linearly from 2^n-1 elements to 2^(n+1)-1 elements.
 
 	Notes
@@ -24,17 +27,22 @@ void interpolate_vector(const std::vector<float> &coarse_array, std::vector<floa
 		Array of values for coarse version of vector
 	*/
 
+    // Find sizes for coarse and fine grids
+    size_t old_size = vector.size();
+    int new_size_exponent = (int)std::log2(old_size + 1);
+    size_t new_size = std::pow(2, new_size_exponent + 1) - 1;
+
 	// Special handling for end points
-	fine_array[0] = 0.5 * coarse_array[0];
-	fine_array[fine_array.size() - 1] = 0.5 * coarse_array[coarse_array.size() - 1];
+	vector[0] = 0.5 * vector[1];
+	vector[vector.size() - 1] = 0.5 * vector[vector.size() - 2];
 
 	// Copying across odd-indexed elements
-	for (auto i = 0; i < coarse_array.size(); i++) {
-		fine_array[(i * 2) + 1] = coarse_array[i];
+	for (auto i = 0; i < old_size; i++) {
+		vector[(i * 2) + 1] = vector[i];
 	}
 
 	// Handling all the newly generated points
-	for (auto i = 2; i < fine_array.size() - 2; i += 2) {
-		fine_array[i] = 0.5 * (fine_array[i - 1] + fine_array[i + 1]);
+	for (auto i = 2; i < new_size - 2; i += 2) {
+		vector[i] = 0.5 * (vector[i - 1] + vector[i + 1]);
 	}
 }

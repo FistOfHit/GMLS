@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
 
-
-void gs_smoother(const std::vector<float> &lhs_matrix, std::vector<float> &solution_vector, const std::vector<float> &rhs_vector, const int num_iterations = -1);
-void sor_smoother(const std::vector<float> &lhs_matrix, std::vector<float> &solution_vector, const std::vector<float> &rhs_vector, const int num_iterations = -1, const int omega = 1.5);
+using vector = std::vector<float>;
+void gs_smoother(const vector &lhs_matrix, vector &solution_vector, const vector &rhs_vector, const int num_iterations = -1);
+void sor_smoother(const vector &lhs_matrix, vector &solution_vector, const vector &rhs_vector, const int num_iterations = -1, const int omega = 1.5);

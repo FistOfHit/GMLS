@@ -1,7 +1,7 @@
 #include <vector>
 
 
-std::vector<float>* add(const std::vector<float> a, const std::vector<float> b, std::vector<float> result) {
+void add(const std::vector<float> a, const std::vector<float> b, std::vector<float> result) {
     /* Add two vectors together, element-wise.
 
     */
@@ -12,7 +12,7 @@ std::vector<float>* add(const std::vector<float> a, const std::vector<float> b, 
 }
 
 
-std::vector<float>* subtract(const std::vector<float> a, const std::vector<float> b, std::vector<float> result) {
+void subtract(const std::vector<float> a, const std::vector<float> b, std::vector<float> result) {
     /*
     */
 
@@ -22,7 +22,7 @@ std::vector<float>* subtract(const std::vector<float> a, const std::vector<float
 }
 
 
-std::vector<float>* multiply(const std::vector<float> a, const std::vector<float> b, std::vector<float> result) {
+void multiply(const std::vector<float> a, const std::vector<float> b, std::vector<float> result) {
 
     const size_t num_rows = b.size();
     const size_t num_cols = a.size()/b.size();

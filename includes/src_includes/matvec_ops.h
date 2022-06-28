@@ -1,5 +1,6 @@
 #include <vector>
 
-std::vector<float>* add(const std::vector<float> a, const std::vector<float> b);
-std::vector<float>* subtract(const std::vector<float> a, const std::vector<float> b);
-std::vector<float>* multiply(const std::vector<float> a, const std::vector<float> b);
+using vector = std::vector<float>;
+void add(const vector &a, const vector &b, vector &result);
+void subtract(const vector &a, const vector &b, vector &result);
+void multiply(const vector &a, const vector &b, vector &result);
