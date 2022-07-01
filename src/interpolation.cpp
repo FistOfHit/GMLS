@@ -1,48 +1,50 @@
+#include <iostream>
 #include <math.h>
 
 
 #include "../includes/src_includes/interpolation.h"
 
 
-void interpolate_vector(std::vector<float> &vector, int grid_level) {
-	/* Interpolate vector linearly from 2^n-1 elements to 2^(n+1)-1 elements.
+void interpolate_vector(std::vector<float> &vector, int grid_depth) {
+	/* Interpolate vector linearly from 2^n+1 elements to 2^(n+1)+1 elements.
 
 	Notes
 	-----
 	Performs simple linear interpolation, copying elements for odd indexes but
     otherwise taking a simple aritmetic average for new elements generated in
-    between, using the following stencil for the elements at either end of the
-    vector:
-        1 -> 0.5 0
-	and the simple copy for odd indexed elements:
-        1 -> 1
+    between, using the following stencil:
+	A simple copy for odd indexed elements and edge elements:
+        [1] -> [1]
 	and a simple average for even indexed elements:
-        1 -> 0.5 0.5
+        0.5 [1, 1] -> [1]
+
+    Practically, this means that every "new" element introduced by ~doubling
+    the size of the vector is simply the arithmetic average of its neighbours. 
+
+    Given the current depth at which this grid is at in the set of all grids
+    from fine->coarse, (0 -> number of grids) this function finds out which set
+    of values need to be interpolated into which other set using variable 
+    striding across the vector.
 
 	Parameters
 	----------
-	const std::vector<float> coarse_array:
-		Array of values for coarse version of vector
-	std::vector<float> fine_array:
-		Array of values for coarse version of vector
+	const std::vector<float> &vector:
+		Vector to be interpolated
+    int grid_depth:
+        The depth at which this grid is in the fine->coarse stages of grids
 	*/
 
-    // Find sizes for coarse and fine grids
-    size_t old_size = vector.size();
-    int new_size_exponent = (int)std::log2(old_size + 1);
-    size_t new_size = std::pow(2, new_size_exponent + 1) - 1;
+    if (grid_depth == 0) {
+        std::cout << "Attempting to interpolate from finest level, exiting. \n"; 
+        return;
+    }
 
-	// Special handling for end points
-	vector[0] = 0.5 * vector[1];
-	vector[vector.size() - 1] = 0.5 * vector[vector.size() - 2];
+    // Determine stride length across vector
+    int half_stride = std::pow(2, grid_depth-1);
+    int stride = half_stride * 2;
 
-	// Copying across odd-indexed elements
-	for (auto i = 0; i < old_size; i++) {
-		vector[(i * 2) + 1] = vector[i];
-	}
-
-	// Handling all the newly generated points
-	for (auto i = 2; i < new_size - 2; i += 2) {
-		vector[i] = 0.5 * (vector[i - 1] + vector[i + 1]);
+	// Interpolating all "new" points
+	for (auto i = half_stride; i <= vector.size() - half_stride; i += stride) {
+		vector[i] = 0.5 * (vector[i - half_stride] + vector[i + half_stride]);
 	}
 }

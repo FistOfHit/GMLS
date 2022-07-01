@@ -1,9 +1,10 @@
+#include <math>
 #include <memory>
 #include <vector>
 #include "../includes/src_includes/restriction.h"
 
 
-void restrict_vector(const std::vector<float> &fine_vector, std::vector<float> &coarse_vector) {
+void restrict_vector(const std::vector<float> &vector, int grid_depth) {
 	/* Restrict vector inverse linearly from 2^n-1 elements to 2^(n-1)-1 elements.
 
 	Notes
@@ -15,11 +16,15 @@ void restrict_vector(const std::vector<float> &fine_vector, std::vector<float> &
 
 	Parameters
 	----------
-	const vector<float> &fine_vector
-        The fine-grain vector to be restricted into the coarse_vector
-    vector<float> &coarse_vector
-        The coarse-grain vector to be filled in from fine_vector
+	const std::vector<float> &vector:
+		Vector to be restricted
+    int grid_depth:
+        The depth at which this grid is in the fine->coarse stages of grids
 	*/
+
+    // Determine stride length across vector
+    int half_stride = std::pow(2, grid_depth-1);
+    int stride = half_stride * 2;
 
 	// find index of heavier centre point
 	int centre_index;
