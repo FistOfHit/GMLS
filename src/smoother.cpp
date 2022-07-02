@@ -1,51 +1,11 @@
 #include "../includes/src_includes/smoother.h"
 #include <iostream>
+#include <math.h>
 
 
-void gs_smoother(const std::vector<float> &lhs_matrix, std::vector<float> &solution_vector, const std::vector<float> &rhs_vector, const int num_iterations) {
-    /* Perform a given number of gauss-sidel smoothing iterations on a matrix.
-
-    Notes
-    -----
-
-    Parameters
-    ----------
-    const std::vector<float> &lhs_matrix:
-    std::vector<float> &solution_vector:
-    const std::vector<float> &rhs_vector:
-    const int num_iterations:
-    */
-
-    // Get matrix dimensions from equation vectors
-    size_t num_rows = solution_vector.size();
-    size_t num_cols = rhs_vector.size();
-
-	// Perform n Gauss-seidel SOR iterations
-    size_t row_num;
-    double row_sum;
-	for (auto n = 0; n < num_iterations; n++) {
-		for (auto i = 0; i < num_rows; i++) {
-            row_num = i * num_cols;
-            row_sum = .0;
-
-			// Perform row-solution dot product
-			for (auto j = 0; j < i; j++) {
-				row_sum += lhs_matrix[row_num + j] * solution_vector[j];
-			}
-			// Careful with avoiding the i'th element
-			for (auto j = i + 1; j < num_cols; j++) {
-				row_sum += lhs_matrix[row_num + j] * solution_vector[j];
-			}
-
-			// Update solution vector
-			solution_vector[i] = (rhs_vector[i] - row_sum) / lhs_matrix[row_num + i];
-		}
-	}
-}
-
-
-void sor_smoother(const std::vector<float> &lhs_matrix, std::vector<float> &solution_vector, const std::vector<float> &rhs_vector, const int num_iterations, const int omega) {
-    /* Perform a given number of SOR smoothing iterations on a matrix.
+using vector = std::vector<float>;
+void sor_smooth(const vector &a, vector &x, const vector &b, const int grid_depth, const int omega, const int num_iterations) {
+    /* Perform a given number of SOR smoothing iterations on Ax=b.
 
     Notes
     -----
@@ -60,29 +20,84 @@ void sor_smoother(const std::vector<float> &lhs_matrix, std::vector<float> &solu
     */
 
     // Get matrix dimensions from equation vectors
-    size_t num_rows = solution_vector.size();
-    size_t num_cols = rhs_vector.size();
+    size_t num_rows = x.size();
+    size_t num_cols = b.size();
+
+    // Determine stride length across vector/matrix
+    int stride = std::pow(2, grid_depth);
 
 	// Perform n Gauss-seidel SOR iterations
     size_t row_num;
-    double row_sum, new_solution;
-	for (auto n = 0; n < num_iterations; n++) {
-		for (auto i = 0; i < num_rows; i++) {
+    float row_sum, new_solution;
+	for (auto _ = 0; _ < num_iterations; _++) {
+		for (auto i = 0; i < num_rows; i += stride) {
 			row_num = i * num_cols;
-            row_sum = .0;
+            row_sum = .0F;
 
 			// Perform row-solution dot product
-			for (auto j = 0; j < i; j++) {
-				row_sum += lhs_matrix[row_num + j] * solution_vector[j];
+			for (auto j = 0; j < i; j += stride) {
+				row_sum += a[row_num + j] * x[j];
 			}
 			// Careful with avoiding the i'th element
-			for (auto j = i + 1; j < num_cols; j++) {
-				row_sum += lhs_matrix[row_num + j] * solution_vector[j];
+			for (auto j = i + 1; j < num_cols; j += stride) {
+				row_sum += a[row_num + j] * x[j];
 			}
 
 			// Update solution vector
-			new_solution = (rhs_vector[i] - row_sum) / lhs_matrix[row_num + i];
-			solution_vector[i] = (omega * new_solution) + ((1 - omega) * solution_vector[i]);
+			new_solution = (b[i] - row_sum) / a[row_num + i];
+			x[i] = (omega * new_solution) + ((1 - omega) * x[i]);
+		}
+	}
+}
+
+
+void jacobi_smooth(const vector &a, vector &x, const vector &b, const int grid_depth, const int num_iterations, const int omega) {
+    /* Perform a given number of Jacobi smoothing iterations on Ax=b.
+
+    Notes
+    -----
+    Requires a copy of the solution to avoid updating upon itself - 
+    paralellism comes at the cost of memory and allocation
+
+    Parameters
+    ----------
+    const std::vector<float> &lhs_matrix:
+    std::vector<float> &solution_vector:
+    const std::vector<float> &rhs_vector:
+    const int num_iterations:
+    const int omega:
+    */
+
+    // Get matrix dimensions from equation vectors
+    size_t num_rows = x.size();
+    size_t num_cols = b.size();
+
+    // Determine stride length across vector/matrix
+    int stride = std::pow(2, grid_depth);
+
+    // Create a duplicate solution vector x
+    vector x_old = vector(x);
+
+	// Perform n Gauss-seidel SOR iterations
+    size_t row_num;
+    float row_sum, new_solution;
+	for (auto _ = 0; _ < num_iterations; _++) {
+		for (auto i = 0; i < num_rows; i += stride) {
+			row_num = i * num_cols;
+            row_sum = .0F;
+
+			// Perform row-solution dot product
+			for (auto j = 0; j < i; j += stride) {
+				row_sum += a[row_num + j] * x_old[j];
+			}
+			// Careful with avoiding the i'th element
+			for (auto j = i + 1; j < num_cols; j += stride) {
+				row_sum += a[row_num + j] * x_old[j];
+			}
+
+			// Update solution vector
+			new_solution = (b[i] - row_sum) / a[row_num + i];
+			x[i] = (omega * new_solution) + ((1 - omega) * x_old[i]);
 		}
 	}
 }

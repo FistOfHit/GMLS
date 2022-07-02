@@ -1,12 +1,11 @@
-#include <map>
-#include <memory>
-#include <vector>
-
 #include "../includes/src_includes/interpolation.h"
 #include "../includes/src_includes/matvec_ops.h"
 #include "../includes/src_includes/multigrid_cycles.h"
 #include "../includes/src_includes/smoother.h"
 #include "../includes/src_includes/restriction.h"
+#include <map>
+#include <memory>
+#include <vector>
 
 
 using grid_list = std::map<int, std::vector<float>>;

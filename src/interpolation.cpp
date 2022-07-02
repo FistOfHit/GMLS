@@ -1,8 +1,6 @@
+#include "../includes/src_includes/interpolation.h"
 #include <iostream>
 #include <math.h>
-
-
-#include "../includes/src_includes/interpolation.h"
 
 
 void interpolate_vector(std::vector<float> &vector, int grid_depth) {

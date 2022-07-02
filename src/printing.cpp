@@ -1,13 +1,11 @@
+#include "../includes/src_includes/printing.h"
 #include <algorithm>
+#include <iostream>
+#include <iomanip>
 #include <math.h>
 #include <stdio.h>
 #include <string>
-#include <iostream>
-#include <iomanip>
 #include <vector>
-
-
-#include "../includes/src_includes/printing.h"
 
 
 void print_matrix(const std::vector<float> &matrix, const size_t num_rows, const size_t num_cols, const int precision) {
