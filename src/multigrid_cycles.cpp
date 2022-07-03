@@ -1,8 +1,7 @@
-#include "../includes/src_includes/interpolation.h"
-#include "../includes/src_includes/matvec_ops.h"
+#include "../includes/src_includes/arithmetic.h"
 #include "../includes/src_includes/multigrid_cycles.h"
-#include "../includes/src_includes/smoother.h"
-#include "../includes/src_includes/restriction.h"
+#include "../includes/src_includes/reshapers.h"
+#include "../includes/src_includes/smoothers.h"
 #include <map>
 #include <memory>
 #include <vector>

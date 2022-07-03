@@ -1,5 +1,5 @@
+#pragma once
 #include <vector>
-
 
 using grid_list = std::map<int, std::vector<float>>;
 
