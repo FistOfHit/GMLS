@@ -23,13 +23,17 @@ void print_matrix(const std::vector<float> &matrix, const size_t num_rows, const
 	----------
 	const std::vector<float> &matrix:
         The matrix to print
+
     const size_t num_rows:
         The number of rows in the matrix
+
     const size_t num_cols:
         The number of columns in the matrix
+
     const int precision:
         The numerical precision at which to print
 	*/
+
 	// Storing number of digits in each element
 	std::vector<int> digits_matrix(num_rows * num_cols);
 
@@ -96,6 +100,7 @@ void print_vector(const std::vector<float> &vector, const int precision) {
 	----------
 	const std::vector<float> &vector:
         The vector to print
+    
     const int precision
         The numerical precision at which to print
 	*/

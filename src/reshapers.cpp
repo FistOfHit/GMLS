@@ -3,7 +3,7 @@
 #include <math.h>
 
 
-void interpolate_vector(std::vector<float> &vector, int grid_depth) {
+void interpolate_vector(std::vector<float> &vector, const int grid_depth) {
 	/* Interpolate vector linearly from 2^n+1 elements to 2^(n+1)+1 elements.
 
 	Notes
@@ -26,9 +26,10 @@ void interpolate_vector(std::vector<float> &vector, int grid_depth) {
 
 	Parameters
 	----------
-	const std::vector<float> &vector:
+	std::vector<float> &vector:
 		Vector to be interpolated
-    int grid_depth:
+    
+    const int grid_depth:
         The depth at which this grid is in the fine->coarse stages of grids
 	*/
 
@@ -48,8 +49,8 @@ void interpolate_vector(std::vector<float> &vector, int grid_depth) {
 }
 
 
-void restrict_vector(std::vector<float> &vector, int grid_depth) {
-	/* Restrict vector inverse linearly from 2^n+1 elements to 2^(n-1)+1 elements.
+void restrict_vector(std::vector<float> &vector, const int grid_depth) {
+	/* Restrict vector inv. linearly from 2^n+1 elements to 2^(n-1)+1 elements.
 
 	Notes
 	-----
@@ -62,9 +63,10 @@ void restrict_vector(std::vector<float> &vector, int grid_depth) {
 
 	Parameters
 	----------
-	const std::vector<float> &vector:
+	std::vector<float> &vector:
 		Vector to be restricted
-    int grid_depth:
+
+    const int grid_depth:
         The depth at which this grid is in the fine->coarse stages of grids
 	*/
 
@@ -73,6 +75,7 @@ void restrict_vector(std::vector<float> &vector, int grid_depth) {
     int stride = half_stride * 2;
 
 	for (auto i = stride; i <= vector.size() - stride; i += stride) {
-        vector[i] = 0.5 * vector[i] + 0.25 * (vector[i - half_stride] + vector[i + half_stride]);
+        vector[i] = (0.5 * vector[i]) 
+            + 0.25 * (vector[i - half_stride] + vector[i + half_stride]);
 	}
 }

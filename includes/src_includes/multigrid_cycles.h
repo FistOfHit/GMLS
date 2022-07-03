@@ -1,8 +1,9 @@
 #pragma once
 #include <vector>
 
-using grid_list = std::map<int, std::vector<float>>;
+
+using vector = std::vector<float>;
 
 
-// void w_cycle(std::vector<std::vector<float>> grids);
-void v_cycle(grid_list a_grids, grid_sizes a_sizes, grid_list x_grids, grid_list b_grids, grid_list r_grids, const int num_iterations);
+void v_cycle(vector a, vector x, vector b, vector r, const int num_grids, const int num_iterations, const int num_cycles);
+// void w_cycle(vector a, vector x, vector b, vector r, const int num_grids, const int num_iterations, const_int num_cycles)
