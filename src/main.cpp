@@ -19,9 +19,6 @@ int main() {
 
     if (TESTING_MODE) {
         // Run all unit tests
-        test_interpolation();
-        test_restriction();
-        test_smoothers();
         return 0;
     }
 
