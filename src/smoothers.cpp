@@ -4,7 +4,7 @@
 
 
 using vector = std::vector<float>;
-void sor_smooth(const vector &a, vector &x, const vector &b, const int grid_depth, const int num_iterations, const int omega) {
+void sor_smooth(vector &a, vector &x, vector &b, const int grid_depth, const int num_iterations, const int omega) {
     /* Perform a given number of SOR smoothing iterations on Ax=b.
 
     Notes

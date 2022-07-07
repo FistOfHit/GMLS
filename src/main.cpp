@@ -17,8 +17,9 @@
 
 int main() {
 
+    // Run all unit tests
     if (TESTING_MODE) {
-        // Run all unit tests
+        test_arithmetic();
         return 0;
     }
 

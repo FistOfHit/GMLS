@@ -10,7 +10,7 @@
 using vector = std::vector<float>;
 
 
-void v_cycle(const vector &a, vector &x, const vector &b, vector &r, const int num_grids, const int num_iterations, const int num_cycles) {
+void v_cycle(vector &a, vector &x, vector &b, vector &r, const int num_grids, const int num_iterations, const int num_cycles) {
     /* Perform one V-cycle iteration on a series of grids.
 
     Notes
