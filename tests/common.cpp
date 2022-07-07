@@ -30,7 +30,6 @@ void test_vector_equality(const vector expected, const vector actual, const floa
 void log_failure(const vector expected, const vector actual) {
     /* Log a mismatch failure to stdout.
     */
-
     std::cout << "FAIL" << "\n";
     std::cout << "\tExpected: " << "\n\t";
     print_vector(expected);

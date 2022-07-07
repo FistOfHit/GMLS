@@ -1,102 +1,69 @@
+#include <map>
 #include <math.h>
 #include <iostream>
-
 #include "../includes/src_includes/printing.h"
 #include "../includes/src_includes/reshapers.h"
+#include "../includes/test_includes/common.h"
 #include "../includes/test_includes/reshapers_tests.h"
 
 
-void test_interpolation() {
-	/* Checks whether or not interpolation function returns a valid
-    interpolatied vector.
+using vector = std::vector<float>;
 
-	Notes
-	-----
-	Performs a simple element by element check on an example vector generated
-    by the current interpolation function in interpolation.cpp. Tolerance is
-    defined manually here, not as input.
+void test_vector_interpolation() {
+	/* Test vector interpolation at various grid-depths.
 	*/
     std::cout << "Vector interpolation correctness test: ";
 
 	// Example coarse and fine arrays as they should be
-	std::vector<float> fine_array = std::vector<float>{ 0.5, 1, 1, 1, 1, 1, 0.5 };
+	vector actual;
+    std::map<int, vector> expecteds_map = std::map<int, vector>{
+        {0, vector{1, 1.25, 1.5, 1.75, 2, 1.75, 1.5, 1.25, 1}},
+        {1, vector{1, 0, 1.5, 0, 2, 0, 1.5, 0, 1}},
+        {2, vector{1, 0, 0, 0, 2, 0, 0, 0, 1}},
+    };
 
-	// Write interpolated array into fine_array_test
-	interpolate_vector(coarse_array, fine_array_test);
+	// Test on multiple grid levels
+    int num_grids = 3;
+    int stride;
+    for (auto grid_depth = 2; grid_depth >= 1; grid_depth--) {
+        actual = expecteds_map[grid_depth];
+        interpolate_vector(actual, grid_depth);
+        test_vector_equality(expecteds_map[grid_depth-1], actual);
+    }
 
-	// Compare element by element
-	float tolerance = 10e-6;
-	bool any_mismatch = false;
-	for (auto i = 0; i < fine_array.size(); i++) {
-		if (abs(fine_array[i] - fine_array_test[i]) > tolerance) {
-			std::cout << "FAIL" << "\n";
-
-            std::cout << "Expected output: " << "\n";
-            print_vector(fine_array);
-            std::cout << "Actual output:   " << "\n";
-            print_vector(fine_array_test);
-            return;
-		}
-	}
-
-	std::cout << "PASS" << "\n";
-
-    coarse_array = std::vector<float>();
-    fine_array = std::vector<float>();
-    fine_array_test = std::vector<float>();
+    actual = vector();
+    expecteds_map = std::map<int, vector>();
 }
 
 
-void test_restriction() {
-	/* Checks whether or not vector restriction function returns a valid
-    restricted vector.
-
-	Notes
-	-----
-	Performs a simple element by element check on an example vector generated
-    by the current restriction function in restriction.cpp. Tolerance is
-    defined manually here, not as input.
+void test_vector_restriction() {
+    /* Test vector restriction at various grid-depths.
 	*/
     std::cout << "Vector restriction correctness test: ";
 
 	// Example coarse and fine arrays as they should be
-	const size_t fine_size = 7;
-	const size_t coarse_size = 3;
-	std::vector<float> fine_array(fine_size, 1);
-	std::vector<float> coarse_array(coarse_size, 1);
+	vector actual;
+    std::map<int, vector> expecteds_map = std::map<int, vector>{
+        {0, vector{1, 1.25, 1.5, 1.75, 2, 1.75, 1.5, 1.25, 1}},
+        {1, vector{1, 1.25, 1.5, 1.75, 1.875, 1.75, 1.5, 1.25, 1}},
+        {2, vector{1, 1.25, 1.5, 1.75, 1.6875, 1.75, 1.5, 1.25, 1}},
+    };
 
-	// Create and calculate with function
-	std::vector<float> coarse_array_test(coarse_size, 0);
-	restrict_vector(fine_array, coarse_array_test);
+	// Test on multiple grid levels
+    int num_grids = 3;
+    int stride;
+    for (auto grid_depth = 0; grid_depth < num_grids; grid_depth++) {
+        actual = expecteds_map[grid_depth];
+        restrict_vector(actual, grid_depth);
+        test_vector_equality(expecteds_map[grid_depth+1], actual);
+    }
 
-	// Compare element by element
-	float tolerance = 10e-6;
-	float difference;
-	bool any_mismatch = false;
-	for (auto i = 0; i < coarse_size; i++) {
-		difference = abs(coarse_array[i] - coarse_array_test[i]);
-
-		// If any element dosent match enough, fail test
-		if (difference > tolerance) {
-			std::cout << "FAIL" << "\n";
-
-            std::cout << "Expected output: " << "\n";
-            print_vector(coarse_array, 6);
-            std::cout << "Actual output:   " << "\n";
-            print_vector(coarse_array_test, 6);
-            return;
-		}
-	}
-
-	std::cout << "PASS" << "\n";
-
-    coarse_array = std::vector<float>();
-    coarse_array_test = std::vector<float>();
-    fine_array = std::vector<float>();
+    actual = vector();
+    expecteds_map = std::map<int, vector>();
 }
 
 
 void test_reshapers() {
-    test_interpolation()
-	test_restriction();
+    test_vector_interpolation();
+	test_vector_restriction();
 }
