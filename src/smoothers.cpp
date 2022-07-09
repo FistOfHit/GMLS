@@ -5,7 +5,7 @@
 
 
 using vector = std::vector<float>;
-void sor_smooth(vector &a, vector &x, vector &b, int grid_depth, int num_iterations, int omega) {
+void sor_smooth(vector &a, vector &x, vector &b, int grid_depth, int num_iterations, float omega) {
     /* Perform a given number of SOR smoothing iterations on Ax=b.
 
     Notes
@@ -70,7 +70,7 @@ void sor_smooth(vector &a, vector &x, vector &b, int grid_depth, int num_iterati
 }
 
 
-void jacobi_smooth(vector &a, vector &x, vector &b, int grid_depth, int num_iterations, int omega) {
+void jacobi_smooth(vector &a, vector &x, vector &b, int grid_depth, int num_iterations, float omega) {
     /* Perform a given number of Jacobi smoothing iterations on Ax=b.
 
     Notes

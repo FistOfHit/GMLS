@@ -1,9 +1,9 @@
 CXX=g++
-CPPFLAGS=-O3 --std=c++17 -fPIC
-INCLUDES=./includes/*
+CPPFLAGS=-O3 --std=c++17 -fPIC -Wall
+SOURCES=./src/* ./tests/*
 
 compile:
-	${CXX} ${CPPFLAGS} -I "${INCLUDES}" ./src/* ./tests/* -o gmls.exe
+	${CXX} -o gmls.exe ${CPPFLAGS} ${SOURCES}
 
 examples:
 	sed -i 's/#define TESTING_MODE.*/#define TESTING_MODE 0/' ./src/main.cpp

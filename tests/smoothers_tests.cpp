@@ -12,21 +12,21 @@ using vector = std::vector<float>;
 void test_sor_smoother() {
     /* Test SOR smoothing at various grid-depths.
 	*/
-    std::cout << "SOR smoother correctness test: ";
+    std::cout << "SOR smoother correctness tests: \n";
 
 	// Linear system setup
     vector test_matrix = vector{
-        2, 1, 0, 0, 0, 0, 0, 0, 0,
-        1, 2, 1, 0, 0, 0, 0, 0, 0,
-        0, 1, 2, 1, 0, 0, 0, 0, 0,
-        0, 0, 1, 2, 1, 0, 0, 0, 0,
-        0, 0, 0, 1, 2, 1, 0, 0, 0,
-        0, 0, 0, 0, 1, 2, 1, 0, 0,
-        0, 0, 0, 0, 0, 1, 2, 1, 0,
-        0, 0, 0, 0, 0, 0, 1, 2, 1,
-        0, 0, 0, 0, 0, 0, 0, 1, 2,
+        2, 1, 2, 1, 2, 1, 2, 1, 2,
+        1, 2, 1, 2, 1, 2, 1, 2, 1,
+        2, 1, 2, 1, 2, 1, 2, 1, 2,
+        1, 2, 1, 2, 1, 2, 1, 2, 1,
+        2, 1, 2, 1, 2, 1, 2, 1, 2,
+        1, 2, 1, 2, 1, 2, 1, 2, 1,
+        2, 1, 2, 1, 2, 1, 2, 1, 2,
+        1, 2, 1, 2, 1, 2, 1, 2, 1,
+        2, 1, 2, 1, 2, 1, 2, 1, 2,
     };
-    vector test_vector = vector{1, 2, 1, 2, 1, 2, 1, 2, 1};
+    vector test_vector = vector{3, 2, 1, 2, 3, 2, 1, 2, 3};
     
     // Example arrays as they should be post smoothing
 	vector actual;
@@ -39,7 +39,7 @@ void test_sor_smoother() {
 	// Test on multiple grid levels
     int num_grids = 3;
     int stride;
-    for (auto grid_depth = 2; grid_depth >= 1; grid_depth--) {
+    for (auto grid_depth = 0; grid_depth < num_grids; grid_depth++) {
         actual = vector(9, 0);
         sor_smooth(test_matrix, actual, test_vector, grid_depth, 100, 1.5F);
         test_vector_equality(expecteds_map[grid_depth], actual);
@@ -66,21 +66,21 @@ void test_jacobi_smoother() {
     (for a 5 x 5 matrix atleast) IF it is a valid solver, to avoid any
     misjusgement based on convergence speed.
 	*/
-    std::cout << "Jacobi smoother correctness test: ";
+    std::cout << "Jacobi smoother correctness tests: \n";
 
 	// Linear system setup
     vector test_matrix = vector{
-        2, 1, 0, 0, 0, 0, 0, 0, 0,
-        1, 2, 1, 0, 0, 0, 0, 0, 0,
-        0, 1, 2, 1, 0, 0, 0, 0, 0,
-        0, 0, 1, 2, 1, 0, 0, 0, 0,
-        0, 0, 0, 1, 2, 1, 0, 0, 0,
-        0, 0, 0, 0, 1, 2, 1, 0, 0,
-        0, 0, 0, 0, 0, 1, 2, 1, 0,
-        0, 0, 0, 0, 0, 0, 1, 2, 1,
-        0, 0, 0, 0, 0, 0, 0, 1, 2,
+        2, 1, 2, 1, 2, 1, 2, 1, 2,
+        1, 2, 1, 2, 1, 2, 1, 2, 1,
+        2, 1, 2, 1, 2, 1, 2, 1, 2,
+        1, 2, 1, 2, 1, 2, 1, 2, 1,
+        2, 1, 2, 1, 2, 1, 2, 1, 2,
+        1, 2, 1, 2, 1, 2, 1, 2, 1,
+        2, 1, 2, 1, 2, 1, 2, 1, 2,
+        1, 2, 1, 2, 1, 2, 1, 2, 1,
+        2, 1, 2, 1, 2, 1, 2, 1, 2,
     };
-    vector test_vector = vector{1, 2, 1, 2, 1, 2, 1, 2, 1};
+    vector test_vector = vector{3, 2, 1, 2, 3, 2, 1, 2, 3};
     
     // Example arrays as they should be post smoothing
 	vector actual;

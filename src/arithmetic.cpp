@@ -6,7 +6,7 @@
 using vector = std::vector<float>;
 
 
-void add(const vector a, const vector b, const int grid_depth, vector result) {
+void add(const vector &a, const vector &b, const int grid_depth, vector &result) {
     /* Add two vectors together, element-wise.*/
 
     // Determine stride length across vector/matrix
@@ -18,7 +18,7 @@ void add(const vector a, const vector b, const int grid_depth, vector result) {
 }
 
 
-void subtract(const vector a, const vector b, const int grid_depth, vector result) {
+void subtract(const vector &a, const vector &b, const int grid_depth, vector &result) {
     /* Subtract two vectors, element-wise.*/
 
     // Determine stride length across vector/matrix
@@ -30,7 +30,7 @@ void subtract(const vector a, const vector b, const int grid_depth, vector resul
 }
 
 
-void multiply(const vector a, const size_t num_rows, const size_t num_cols, const vector b, const int grid_depth, vector result) {
+void multiply(const vector &a, const size_t num_rows, const size_t num_cols, const vector &b, const int grid_depth, vector &result) {
     /* Perform a matrix vector product */
 
     // Determine stride length across vector/matrix

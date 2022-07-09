@@ -12,7 +12,7 @@ using vector = std::vector<float>;
 void test_vector_interpolation() {
 	/* Test vector interpolation at various grid-depths.
 	*/
-    std::cout << "Vector interpolation correctness test: ";
+    std::cout << "Vector interpolation correctness tests: \n";
 
 	// Example coarse and fine arrays as they should be
 	vector actual;
@@ -39,7 +39,7 @@ void test_vector_interpolation() {
 void test_vector_restriction() {
     /* Test vector restriction at various grid-depths.
 	*/
-    std::cout << "Vector restriction correctness test: ";
+    std::cout << "Vector restriction correctness tests: \n";
 
 	// Example coarse and fine arrays as they should be
 	vector actual;
@@ -52,7 +52,7 @@ void test_vector_restriction() {
 	// Test on multiple grid levels
     int num_grids = 3;
     int stride;
-    for (auto grid_depth = 0; grid_depth < num_grids; grid_depth++) {
+    for (auto grid_depth = 0; grid_depth < num_grids - 1; grid_depth++) {
         actual = expecteds_map[grid_depth];
         restrict_vector(actual, grid_depth);
         test_vector_equality(expecteds_map[grid_depth+1], actual);
