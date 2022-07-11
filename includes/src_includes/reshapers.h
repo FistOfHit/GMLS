@@ -2,5 +2,8 @@
 #include <vector>
 
 
-void interpolate_vector(std::vector<float> &vector, int grid_depth);
-void restrict_vector(std::vector<float> &vector, int grid_depth);
+using vector = std::vector<float>;
+
+
+void interpolate_vector(vector &vector, const int grid_depth);
+void restrict_vector(vector &vector, const int grid_depth);

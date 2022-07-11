@@ -3,7 +3,10 @@
 #include <math.h>
 
 
-void interpolate_vector(std::vector<float> &vector, const int grid_depth) {
+using vector = std::vector<float>;
+
+
+void interpolate_vector(vector &vector, const int grid_depth) {
 	/* Interpolate vector linearly from 2^n+1 elements to 2^(n+1)+1 elements.
 
 	Notes
@@ -49,7 +52,7 @@ void interpolate_vector(std::vector<float> &vector, const int grid_depth) {
 }
 
 
-void restrict_vector(std::vector<float> &vector, const int grid_depth) {
+void restrict_vector(vector &vector, const int grid_depth) {
 	/* Restrict vector inv. linearly from 2^n+1 elements to 2^(n-1)+1 elements.
 
 	Notes

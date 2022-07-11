@@ -8,7 +8,10 @@
 #include <vector>
 
 
-void print_matrix(const std::vector<float> &matrix, const size_t num_rows, const size_t num_cols, const int precision) {
+using vector = std::vector<float>;
+
+
+void print_matrix(const vector &matrix, const size_t num_rows, const size_t num_cols, const int precision) {
 	/* Print matrix element by element in easy to read manner.
 
 	Notes
@@ -62,12 +65,8 @@ void print_matrix(const std::vector<float> &matrix, const size_t num_rows, const
 		row_number = i * num_cols;
 
 		// Tidy brackets
-		if (i == 0) {
-			std::cout << "[";
-		}
-		else {
-			std::cout << " [";
-		}
+		if (i == 0) { std::cout << "["; }
+		else { std::cout << " ["; }
 
 		// Print spaces for all but last element in each row
 		for (auto j = 0; j < num_cols - 1; j++) {
@@ -83,17 +82,13 @@ void print_matrix(const std::vector<float> &matrix, const size_t num_rows, const
 		std::cout << matrix[row_number + num_cols - 1];
 
 		// Tidy brackets
-		if (i == num_rows - 1) {
-			std::cout << "]]" << "\n";
-		}
-		else {
-			std::cout << "]" << "\n";
-		}
+		if (i == num_rows - 1) { std::cout << "]]" << "\n"; }
+		else { std::cout << "]" << "\n"; }
 	}
 }
 
 
-void print_vector(const std::vector<float> &vector, const int precision) {
+void print_vector(const vector &vector, const int precision) {
 	/* Print vector element by element in easy to read manner.
 
 	Parameters

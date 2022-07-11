@@ -5,7 +5,9 @@
 
 
 using vector = std::vector<float>;
-void sor_smooth(vector &a, vector &x, vector &b, int grid_depth, int num_iterations, float omega) {
+
+
+void sor_smooth(const vector &a, vector &x, const vector &b, const int grid_depth, const int num_iterations, const float omega) {
     /* Perform a given number of SOR smoothing iterations on Ax=b.
 
     Notes
@@ -40,11 +42,11 @@ void sor_smooth(vector &a, vector &x, vector &b, int grid_depth, int num_iterati
     */
 
     // Get matrix dimensions from equation vectors
-    size_t num_rows = x.size();
-    size_t num_cols = b.size();
+    const auto num_rows = x.size();
+    const auto num_cols = b.size();
 
     // Determine stride length across vector/matrix
-    int stride = std::pow(2, grid_depth);
+    const auto stride = std::pow(2, grid_depth);
 
 	// Perform n iterations
     size_t row_num;
@@ -70,7 +72,7 @@ void sor_smooth(vector &a, vector &x, vector &b, int grid_depth, int num_iterati
 }
 
 
-void jacobi_smooth(vector &a, vector &x, vector &b, int grid_depth, int num_iterations, float omega) {
+void jacobi_smooth(const vector &a, vector &x, const vector &b, const int grid_depth, const int num_iterations, const float omega) {
     /* Perform a given number of Jacobi smoothing iterations on Ax=b.
 
     Notes
@@ -105,11 +107,11 @@ void jacobi_smooth(vector &a, vector &x, vector &b, int grid_depth, int num_iter
     */
 
     // Get matrix dimensions from equation vectors
-    size_t num_rows = x.size();
-    size_t num_cols = b.size();
+    const auto num_rows = x.size();
+    const auto num_cols = b.size();
 
     // Determine stride length across vector/matrix
-    int stride = std::pow(2, grid_depth);
+    const auto stride = std::pow(2, grid_depth);
 
     // Create a duplicate solution vector x
     vector x_old = vector(x);

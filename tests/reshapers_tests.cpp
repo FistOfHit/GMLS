@@ -9,6 +9,7 @@
 
 using vector = std::vector<float>;
 
+
 void test_vector_interpolation() {
 	/* Test vector interpolation at various grid-depths.
 	*/
@@ -23,8 +24,6 @@ void test_vector_interpolation() {
     };
 
 	// Test on multiple grid levels
-    int num_grids = 3;
-    int stride;
     for (auto grid_depth = 2; grid_depth >= 1; grid_depth--) {
         actual = expecteds_map[grid_depth];
         interpolate_vector(actual, grid_depth);
@@ -50,8 +49,7 @@ void test_vector_restriction() {
     };
 
 	// Test on multiple grid levels
-    int num_grids = 3;
-    int stride;
+    const auto num_grids = 3;
     for (auto grid_depth = 0; grid_depth < num_grids - 1; grid_depth++) {
         actual = expecteds_map[grid_depth];
         restrict_vector(actual, grid_depth);

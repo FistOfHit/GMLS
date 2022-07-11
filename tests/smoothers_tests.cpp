@@ -9,6 +9,8 @@
 
 
 using vector = std::vector<float>;
+
+
 void test_sor_smoother() {
     /* Test SOR smoothing at various grid-depths.
 	*/
@@ -37,8 +39,7 @@ void test_sor_smoother() {
     };
 
 	// Test on multiple grid levels
-    int num_grids = 3;
-    int stride;
+    const auto num_grids = 3;
     for (auto grid_depth = 0; grid_depth < num_grids; grid_depth++) {
         actual = vector(9, 0);
         sor_smooth(test_matrix, actual, test_vector, grid_depth, 100, 1.5F);
@@ -47,7 +48,6 @@ void test_sor_smoother() {
 
     actual = vector();
     expecteds_map = std::map<int, vector>();
-
     test_matrix = std::vector<float>();
     test_vector = std::vector<float>();
     actual = std::vector<float>();
@@ -91,8 +91,7 @@ void test_jacobi_smoother() {
     };
 
 	// Test on multiple grid levels
-    int num_grids = 3;
-    int stride;
+    const auto num_grids = 3;
     for (auto grid_depth = 0; grid_depth < num_grids; grid_depth++) {
         actual = vector(9, 0);
         jacobi_smooth(test_matrix, actual, test_vector, grid_depth, 100);
@@ -101,7 +100,6 @@ void test_jacobi_smoother() {
 
     actual = vector();
     expecteds_map = std::map<int, vector>();
-
     test_matrix = std::vector<float>();
     test_vector = std::vector<float>();
     actual = std::vector<float>();
