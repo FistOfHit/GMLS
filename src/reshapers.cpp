@@ -14,9 +14,10 @@ void interpolate_vector(vector &vector, const int grid_depth) {
 	Performs simple linear interpolation, copying elements for odd indexes but
     otherwise taking a simple aritmetic average for new elements generated in
     between, using the following stencil:
-	A simple copy for odd indexed elements and edge elements:
+	A simple copy (or do nothing in this case) for even indexed elements
+    (includes edge elements):
         [1] -> [1]
-	and a simple average for even indexed elements:
+	and a simple average for odd indexed elements:
         0.5 [1, 1] -> [1]
 
     Practically, this means that every "new" element introduced by ~doubling
@@ -31,7 +32,6 @@ void interpolate_vector(vector &vector, const int grid_depth) {
 	----------
 	std::vector<float> &vector:
 		Vector to be interpolated
-    
     const int grid_depth:
         The depth at which this grid is in the fine->coarse stages of grids
 	*/
@@ -62,7 +62,6 @@ void restrict_vector(vector &vector, const int grid_depth) {
 	old elements, using the following stencil:
     A simple copy for odd indexed elements and edge elements:
         [1] -> [1]
-    0.25 * [1, 2, 1] -> [1]
 
 	Parameters
 	----------
@@ -78,8 +77,7 @@ void restrict_vector(vector &vector, const int grid_depth) {
     int stride = half_stride * 2;
 
 	for (auto i = stride; i <= vector.size() - stride; i += stride) {
-        vector[i] = (0.5 * vector[i]) 
-            + 0.25 * (vector[i - half_stride] + vector[i + half_stride]);
+        vector[i] = vector[i];
 	}
 }
 
