@@ -57,58 +57,103 @@ void restrict_vector(vector &vector, const int grid_depth) {
 
 	Notes
 	-----
-	Performs simple inverse linear restriction, taking a centre-heavy
-	weighted aritmetic average for new elements generated in between
-	old elements, using the following stencil:
-    A simple copy for odd indexed elements and edge elements:
-        [1] -> [1]
+	The method implemented here (injection) simply samples alternate elements
+    of the vector to construct a new vector of reduced size by "injecting"
+    them into the new vector. Due to this multi-grid solver simulating multiple
+    grids by operating repeatedly on one grid, this restriction simply becomes
+    strided access.
+
+    The prolongation matrix (P) for this operation
+    looks like this:
+    <-   2^n+1   ->
+    1 0 0 0 0 ... 0    ^
+    0 0 1 0 0 ... 0    |
+    0 0 0 0 1 ... 0    |
+    . .           . 2^(n-1)+1
+    .   .         .    |
+    .     .       .    |
+    0 . . .       0    ^
+
+    As a result, this function is just a placeholder for clarity and to leave
+    the possibility of future methods being implemented.
 
 	Parameters
 	----------
 	std::vector<float> &vector:
 		Vector to be restricted
-
     const int grid_depth:
         The depth at which this grid is in the fine->coarse stages of grids
 	*/
-
-    // Determine stride length across vector
-    int half_stride = std::pow(2, grid_depth);
-    int stride = half_stride * 2;
-
-	for (auto i = stride; i <= vector.size() - stride; i += stride) {
-        vector[i] = vector[i];
-	}
+    return;
 }
 
 
-// void restrict_matrix(std::vector<float> &matrix, const int grid_depth) {
-// 	/* Restrict vector inv. linearly from 2^n+1 elements to 2^(n-1)+1 elements.
+void restrict_matrix(vector &matrix, const int grid_depth) {
+	/* Restrict matrix from (2^n+1)^2 elements to (2^(n-1)+1)^2 elements.
 
-// 	Notes
-// 	-----
-// 	Performs simple inverse linear restriction, taking a centre-heavy
-// 	weighted aritmetic average for new elements generated in between
-// 	old elements, using the following stencil:
-//     A simple copy for odd indexed elements and edge elements:
-//         [1] -> [1]
-//     0.25 * [1, 2, 1] -> [1]
+	Notes
+	-----
+	The method implemented here (injection) simply samples alternate elements
+    of the matrix to construct a new matrix of reduced size by "injecting"
+    them into the new matrix. Due to this multi-grid solver simulating multiple
+    grids by operating repeatedly on one grid, this restriction simply becomes
+    strided access.
 
-// 	Parameters
-// 	----------
-// 	std::vector<float> &vector:
-// 		Vector to be restricted
+    As with vector restriction, the prolongation matrix (P) for this operation
+    looks like this:
+    <-   2^n+1   ->
+    1 0 0 0 0 ... 0    ^
+    0 0 1 0 0 ... 0    |
+    0 0 0 0 1 ... 0    |
+    . .           . 2^(n-1)+1
+    .   .         .    |
+    .     .       .    |
+    0 . . .       0    ^
 
-//     const int grid_depth:
-//         The depth at which this grid is in the fine->coarse stages of grids
-// 	*/
+    And note that as this is matrix restriction/interpolation, the operation
+    reqiured is:
+        PA(P^T)
+    Where P is the above prolongation matrix as described, and A is the LHS
+    matrix given in this functions parameters.
 
-//     // Determine stride length across vector
-//     int half_stride = std::pow(2, grid_depth);
-//     int stride = half_stride * 2;
+    Also note that as a result, interpolation is not required, as it would just
+    also be strided access, with half the stride length. This function, and its 
+    counterpart, the matrix interpolation function, are just placeholders.
 
-// 	for (auto i = stride; i <= vector.size() - stride; i += stride) {
-//         vector[i] = (0.5 * vector[i]) 
-//             + 0.25 * (vector[i - half_stride] + vector[i + half_stride]);
-// 	}
-// }
+	Parameters
+	----------
+	std::vector<float> &vector:
+		Vector to be restricted
+    const int grid_depth:
+        The depth at which this grid is in the fine->coarse stages of grids
+	*/
+    return;
+}
+
+
+void interpolate_matrix(vector &matrix, const int grid_depth) {
+	/* Interpolate matrix from (2^n+1)^2 elements to (2^(n+1)+1)^2 elements.
+
+	Notes
+	-----
+	Due to this multi-grid implementation working only on one grid, an
+    interpolation routine isn't required. In order to interpolate a restricted
+    matrix, the stride used to access matrix elements is simply halved, and the
+    original information is still present. This method of using injection for
+    restriction and hence being able to simply revert to the finer grid matrix
+    saves a lot of memory and compute, and maintains the original information
+    present in the finest (original) grid, at the cost of implying that the
+    errors calculated after smoothing now not only come from smoothing, but
+    also from reshaping the solution/RHS vector.
+
+    As described in restrict_matrix, this fucntion is merely a placeholder.
+
+	Parameters
+	----------
+	std::vector<float> &vector:
+		Vector to be interpolated
+    const int grid_depth:
+        The depth at which this grid is in the fine->coarse stages of grids
+	*/
+    return;
+}

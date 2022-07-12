@@ -11,7 +11,8 @@
 using vector = std::vector<float>;
 
 
-void print_matrix(const vector &matrix, const size_t num_rows, const size_t num_cols, const int precision) {
+void print_matrix(const vector &matrix, const size_t num_rows,
+    const size_t num_cols, const int precision) {
 	/* Print matrix element by element in easy to read manner.
 
 	Notes

@@ -7,7 +7,8 @@
 using vector = std::vector<float>;
 
 
-void sor_smooth(const vector &a, vector &x, const vector &b, const int grid_depth, const int num_iterations, const float omega) {
+void sor_smooth(const vector &a, vector &x, const vector &b,
+    const int grid_depth, const int num_iterations, const float omega) {
     /* Perform a given number of SOR smoothing iterations on Ax=b.
 
     Notes
@@ -24,19 +25,14 @@ void sor_smooth(const vector &a, vector &x, const vector &b, const int grid_dept
     ----------
     const std::vector<float> &a:
         The LHS matrix A in Ax=b
-
     std::vector<float> &x:
         The solution vector x in Ax=b
-
     const std::vector<float> &b:
         The RHS vector b in Ax=b
-
     const int grid_depth:
         The depth at which this grid is in the fine->coarse stages of grids
-
     const int omega (default: 1.5F):
         The weighting factor Omega
-
     const int num_iterations:
         The number of iterations to apply the smoother for
     */
@@ -72,7 +68,8 @@ void sor_smooth(const vector &a, vector &x, const vector &b, const int grid_dept
 }
 
 
-void jacobi_smooth(const vector &a, vector &x, const vector &b, const int grid_depth, const int num_iterations, const float omega) {
+void jacobi_smooth(const vector &a, vector &x, const vector &b,
+    const int grid_depth, const int num_iterations, const float omega) {
     /* Perform a given number of Jacobi smoothing iterations on Ax=b.
 
     Notes
@@ -89,19 +86,14 @@ void jacobi_smooth(const vector &a, vector &x, const vector &b, const int grid_d
     ----------
     const std::vector<float> &a:
         The LHS matrix A in Ax=b
-    
     std::vector<float> &x:
         The solution vector x in Ax=b
-    
     const std::vector<float> &b:
         The RHS vector b in Ax=b
-    
     const int grid_depth:
         The depth at which this grid is in the fine->coarse stages of grids
-    
     const int omega (default: 2.0F/3):
         The weighting factor Omega
-    
     const int num_iterations:
         The number of iterations to apply the smoother for
     */
