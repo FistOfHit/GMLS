@@ -11,6 +11,14 @@
 using vector = std::vector<float>;
 
 
+static std::vector<int> w_cycle_intermediate_depths = std::vector<int>{
+    1, 2, 1,
+    3, 1, 2, 1, 
+    4, 1, 2, 1, 3, 1, 2, 1,
+    5, 1, 2, 1, 3, 1, 2, 1, 4, 1, 2, 1, 3, 1, 2, 1
+};
+
+
 void v_cycle(vector &a, vector &x, vector &b, vector &r, vector&e, 
     const int num_grids, const int num_iterations) {
     /* Perform one V-cycle iteration on a series of grids.
@@ -55,6 +63,7 @@ void v_cycle(vector &a, vector &x, vector &b, vector &r, vector&e,
     }
 }
 
+
 void w_cycle(vector &a, vector &x, vector &b, vector &r, vector&e, 
     const int num_grids, const int num_iterations) {
         /* Perform one W-cycle iteration on a series of grids.
@@ -88,9 +97,13 @@ void w_cycle(vector &a, vector &x, vector &b, vector &r, vector&e,
         sor_smooth(a, e, r, grid_depth + 1, num_iterations);
     }
 
+    int num_intermediate_grids;
     const auto num_intermediate_cycles = std::pow(2, num_grids) - 1;
-    
-
+    // V-cycle repeatedly at varying depths to form the W-cycle
+    for (auto i = 0; i < num_intermediate_cycles; i++) {
+        num_intermediate_grids = w_cycle_intermediate_depths[i];
+        v_cycle(a, x, b, r, e, num_intermediate_grids, num_iterations);
+    }
 
     // Interpolate up to finest mesh
     for (auto grid_depth = num_grids; grid_depth >= 0; grid_depth--) {
