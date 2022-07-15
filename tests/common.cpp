@@ -6,7 +6,8 @@
 using vector = std::vector<float>;
 
 
-void test_vector_equality(const vector &expected, const vector &actual, const float tolerance) {
+void test_vector_equality(const vector &expected, const vector &actual,
+    const float tolerance) {
     /* Test if two vectors are equal to within a given tolerance.
     */
 
