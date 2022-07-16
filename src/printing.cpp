@@ -27,13 +27,10 @@ void print_matrix(const vector &matrix, const size_t num_rows,
 	----------
 	const std::vector<float> &matrix:
         The matrix to print
-
     const size_t num_rows:
         The number of rows in the matrix
-
     const size_t num_cols:
         The number of columns in the matrix
-
     const int precision:
         The numerical precision at which to print
 	*/
@@ -96,7 +93,6 @@ void print_vector(const vector &vector, const int precision) {
 	----------
 	const std::vector<float> &vector:
         The vector to print
-    
     const int precision
         The numerical precision at which to print
 	*/
