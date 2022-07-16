@@ -16,7 +16,7 @@ static std::vector<int> w_cycle_intermediate_depths = std::vector<int>{
     1, 2, 1,
     3, 1, 2, 1,
     4, 1, 2, 1, 3, 1, 2, 1,
-    5, 1, 2, 1, 3, 1, 2, 1, 4, 1, 2, 1, 3, 1, 2, 1
+    5, 1, 2, 1, 3, 1, 2, 1, 4, 1, 2, 1, 3, 1, 2, 1,
 };
 
 

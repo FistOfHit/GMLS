@@ -44,8 +44,8 @@ void test_vector_restriction() {
 	vector actual;
     std::map<int, vector> expecteds_map = std::map<int, vector>{
         {0, vector{1, 1.25, 1.5, 1.75, 2, 1.75, 1.5, 1.25, 1}},
-        {1, vector{1, 0, 1.5, 0, 2, 0, 1.5, 0, 1}},
-        {2, vector{1, 0, 0, 0, 2, 0, 0, 0, 1}},
+        {1, vector{1, 1.25, 1.5, 1.75, 2, 1.75, 1.5, 1.25, 1}},
+        {2, vector{1, 1.25, 1.5, 1.75, 2, 1.75, 1.5, 1.25, 1}},
     };
 
 	// Test on multiple grid levels
