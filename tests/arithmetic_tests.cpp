@@ -12,108 +12,139 @@
 using vector = std::vector<float>;
 
 
-void test_add() {
-    /* Test vector addition at various grid depths.
-    */
-    std::cout << "Vector-Vector addition tests: \n";
-
-    // Create test vectors for adding and storing actual
-    vector test = vector{1, 2, 3, 4, 5, 6, 7, 8, 9};
-    std::map<int, vector> expecteds_map = std::map<int, vector>{
-        {0, vector{2, 4, 6, 8, 10, 12, 14, 16, 18}},
-        {1, vector{2, 0, 6, 0, 10, 0, 14, 0, 18}},
-        {2, vector{2, 0, 0, 0, 10, 0, 0, 0, 18}},
-    };
-    vector actual;
-
-    // Test on multiple grid levels
-    int num_grids = 3;
-    for (auto grid_depth = 0; grid_depth < num_grids; grid_depth++) {
-        actual = vector(9, 0);
-        add(test, test, grid_depth, actual);
-        test_vector_equality(expecteds_map[grid_depth], actual);
-    }
-
-    test = vector();
-    actual = vector();
-    expecteds_map = std::map<int, vector>();
+void test_add(const vector &a, const vector &b,
+    const vector &expected_values) {
+    /* Test vector addition at various grid depths. */
+    vector actual = vector(a.size(), 0);
+    add(a, b, 0, actual);
+    test_vector_equality(expected_values, actual);
 }
 
 
-void test_subtract() {
+void test_subtract(const vector &a, const vector &b,
+    const vector &expected_values) {
     /* Test vector subtraction at various grid depths.
     */
-    std::cout << "Vector-Vector subtract tests: \n";
-
-    // Create test vectors for adding and storing actual
-    vector test_a = vector{1, 2, 3, 4, 5, 6, 7, 8, 9};
-    vector test_b = vector{9, 8, 7, 6, 5, 4, 3, 2, 1};
-    vector expected = vector{-8, -6, -4, -2, 0, 2, 4, 6, 8};
-    std::map<int, vector> expecteds_map = std::map<int, vector>{
-        {0, vector{-8, -6, -4, -2, 0, 2, 4, 6, 8}},
-        {1, vector{-8, 0, -4, 0, 0, 0, 4, 0, 8}},
-        {2, vector{-8, 0, 0, 0, 0, 0, 0, 0, 8}},
-    };
-    
-    vector actual;
-
-    // Test on multiple grid levels
-    int num_grids = 3;
-    for (auto grid_depth = 0; grid_depth < num_grids; grid_depth++) {
-        actual = vector(9, 0);
-        subtract(test_a, test_b, grid_depth, actual);
-        test_vector_equality(expecteds_map[grid_depth], actual);
-    }
-
-    test_a = vector();
-    test_b = vector();
-    actual = vector();
-    expecteds_map = std::map<int, vector>();
+    vector actual = vector(a.size(), 0);
+    subtract(a, b, 0, actual);
+    test_vector_equality(expected_values, actual);
 }
 
 
-void test_multiply() {
+void test_multiply(const vector &test_matrix, const size_t num_rows,
+    const size_t num_cols, const vector &test_vector,
+    const vector &expected_values) {
     /* Test vector subtraction at various grid depths.
     */
-    std::cout << "Matrix-Vector multiplication tests: \n";
-
-    // Create test vectors for adding and storing actual
-    vector test_matrix = vector{
-        1, 2, 3, 4, 5, 6, 7, 8, 9,
-        1, 2, 3, 4, 5, 6, 7, 8, 9,
-        1, 2, 3, 4, 5, 6, 7, 8, 9,
-        1, 2, 3, 4, 5, 6, 7, 8, 9,
-        1, 2, 3, 4, 5, 6, 7, 8, 9,
-        1, 2, 3, 4, 5, 6, 7, 8, 9,
-        1, 2, 3, 4, 5, 6, 7, 8, 9,
-        1, 2, 3, 4, 5, 6, 7, 8, 9,
-        1, 2, 3, 4, 5, 6, 7, 8, 9,
-    };
-    vector test_vector = vector{1, 2, 3, 4, 5, 6, 7, 8, 9};
-    vector actual;
-
-    std::map<int, vector> expecteds_map = std::map<int, vector>{
-        {0, vector{285, 285, 285, 285, 285, 285, 285, 285, 285}},
-        {1, vector{165, 0, 165, 0, 165, 0, 165, 0, 165}},
-        {2, vector{107, 0, 0, 0, 107, 0, 0, 0, 107}},
-    };
-
-    // Test on multiple grid levels
-    int num_grids = 3;
-    for (auto grid_depth = 0; grid_depth < num_grids; grid_depth++) {
-        actual = vector(9, 0);
-        multiply(test_matrix, 9, 9, test_vector, grid_depth, actual);
-        test_vector_equality(expecteds_map[grid_depth], actual);
-    }
-
-    test_matrix = vector();
-    actual = vector();
-    expecteds_map = std::map<int, vector>();
+    vector actual = vector(num_rows, 0);
+    multiply(test_matrix, num_rows, num_cols, test_vector, 0, actual);
+    test_vector_equality(expected_values, actual);
 }
 
 
 void test_arithmetic() {
-    test_add();
-    test_subtract();
-    test_multiply();
+    /* Run all tests for arithmetic operators */
+    vector a;
+    vector b;
+    vector expected_values;
+
+    std::cout << "Vector-Vector addition/subtraction tests: \n";
+    // 0 +- 0 = 0
+    a = vector(5, 0);
+    expected_values = vector(5, 0);
+    test_add(a, a, expected_values);
+    test_subtract(a, a, expected_values);
+
+    // x +- 0 = x
+    a = vector{1, 2, 3, 4, 5};
+    b = vector(5, 0);
+    expected_values = a;
+    test_add(a, b, expected_values);
+    test_subtract(a, b, expected_values);
+
+    // 0 +- x = +-x
+    test_add(b, a, expected_values);
+    expected_values = vector{-1, -2, -3, -4, -5};
+    test_subtract(b, a, expected_values);
+
+    // x - x = 0
+    expected_values = vector(5, 0);
+    test_subtract(a, a, expected_values);
+
+    // x +- y = x +- y
+    a = vector{1, 2, 3, 4, 5};
+    b = vector{3, 3, 3, 3, 3};
+    expected_values = vector{4, 5, 6, 7, 8};
+    test_add(b, a, expected_values);
+    expected_values = vector{2, 1, 0, -1, -2};
+    test_subtract(b, a, expected_values);
+
+    std::cout << "Matrix-Vector multiplication tests: \n";
+    const auto num_rows = 3;
+    const auto num_cols = 3;
+    // Diagonal matricies
+    // 0 * 0 = 0
+    a = vector(num_rows * num_cols, 0);
+    b = vector(num_cols, 0);
+    expected_values = vector(num_cols, 0);
+    test_multiply(a, num_rows, num_cols, b, b);
+
+    // 0 * x = 0
+    b = vector(num_cols, 1);
+    test_multiply(a, num_rows, num_cols, b, expected_values);
+
+    // x * 0 = 0
+    a = vector{
+        1, 0, 0,
+        0, 1, 0,
+        0, 0, 1,
+    };
+    b = vector(num_cols, 0);
+    test_multiply(a, num_rows, num_cols, b, expected_values);
+
+    // Next two tests also test reversibility of this transform
+    // 1 * x = x
+    b = vector(num_cols, 3);
+    test_multiply(a, num_rows, num_cols, b, b);
+
+    // x * 1 = x
+    a = vector{
+        3, 0, 0,
+        0, 3, 0,
+        0, 0, 3,
+    };
+    b = vector(num_cols, 1);
+    expected_values = vector(num_cols, 3);
+    test_multiply(a, num_rows, num_cols, b, expected_values);
+
+    // x * 1/x = 1
+    b = vector(num_cols, 1.0F/3);
+    expected_values = vector(num_cols, 1);
+    test_multiply(a, num_rows, num_cols, b, expected_values);
+    
+    // Non-diagonal matricies
+    // x * y = x.y
+    a = vector{
+        1, 2, 3,
+        4, 5, 6,
+        7, 8, 9,
+    };
+    b = vector{1, 2, 3};
+    expected_values = vector{14, 32, 50};
+    test_multiply(a, num_rows, num_cols, b, expected_values);
+
+    // Testing non-square matricies
+    const int num_cols_new = 5;
+    a = vector{
+        1, 0, 0, 0, 0,
+        0, 0, 1, 0, 0,
+        0, 0, 0, 0, 1,
+    };
+    b = vector{1, 0, 3, 0, 5};
+    expected_values = vector{1, 3, 5};
+    test_multiply(a, num_rows, num_cols_new, b, expected_values);
+
+    a = vector();
+    b = vector();
+    expected_values = vector();
 }

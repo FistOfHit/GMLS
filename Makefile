@@ -1,5 +1,5 @@
 CXX=g++
-CPPFLAGS=-O3 --std=c++17 -fPIC -Wall
+CPPFLAGS=-O3 --std=c++17 -Wall
 SOURCES=./src/* ./tests/*
 
 compile:
