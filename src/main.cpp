@@ -19,9 +19,9 @@ int main() {
 
     // Run all unit tests
     if (TESTING_MODE) {
-        test_arithmetic();
+        run_arithmetic_tests();
         test_reshapers();
-        test_smoothers();
+        run_smoother_tests();
         return 0;
     }
 

@@ -14,35 +14,39 @@ using vector = std::vector<float>;
 
 void test_add(const vector &a, const vector &b,
     const vector &expected_values) {
-    /* Test vector addition at various grid depths. */
+    /* Test vector addition. */
     vector actual = vector(a.size(), 0);
     add(a, b, 0, actual);
     test_vector_equality(expected_values, actual);
+
+    actual = vector();
 }
 
 
 void test_subtract(const vector &a, const vector &b,
     const vector &expected_values) {
-    /* Test vector subtraction at various grid depths.
-    */
+    /* Test vector subtraction. */
     vector actual = vector(a.size(), 0);
     subtract(a, b, 0, actual);
     test_vector_equality(expected_values, actual);
+
+    actual = vector();
 }
 
 
 void test_multiply(const vector &test_matrix, const size_t num_rows,
     const size_t num_cols, const vector &test_vector,
     const vector &expected_values) {
-    /* Test vector subtraction at various grid depths.
-    */
+    /* Test matrix-vector multiplication. */
     vector actual = vector(num_rows, 0);
     multiply(test_matrix, num_rows, num_cols, test_vector, 0, actual);
     test_vector_equality(expected_values, actual);
+
+    actual = vector();
 }
 
 
-void test_arithmetic() {
+void run_arithmetic_tests() {
     /* Run all tests for arithmetic operators */
     vector a;
     vector b;
