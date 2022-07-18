@@ -20,7 +20,7 @@ int main() {
     // Run all unit tests
     if (TESTING_MODE) {
         run_arithmetic_tests();
-        test_reshapers();
+        run_reshapers_tests();
         run_smoother_tests();
         return 0;
     }

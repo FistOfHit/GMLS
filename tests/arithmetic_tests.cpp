@@ -47,7 +47,7 @@ void test_multiply(const vector &test_matrix, const size_t num_rows,
 
 
 void run_arithmetic_tests() {
-    /* Run all tests for arithmetic operators */
+    /* Run all tests for arithmetic operators. */
     vector a;
     vector b;
     vector expected_values;

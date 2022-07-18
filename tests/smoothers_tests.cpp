@@ -30,10 +30,7 @@ void test_smoothers(const vector &test_matrix, const vector &test_vector,
 
 
 void run_smoother_tests() {
-    /*  */
-    const size_t num_rows = 5;
-    const size_t num_cols = 5;
-
+    /* Run all smoother tests. */
     vector test_matrix;
     vector test_vector;
     vector expected_values;
