@@ -110,7 +110,7 @@ void v_cycle(vector &a, vector &x, vector &b, vector &r, vector&e,
     sor_smooth(a, e, r, num_grids - 1, num_iterations);
 
     // Interpolate up to second-finest mesh
-    for (auto grid_depth = num_grids; grid_depth > 2; grid_depth--) {
+    for (auto grid_depth = num_grids - 1; grid_depth > 2; grid_depth--) {
         // Map the correction from the coarse grid to a finer grid
         interpolate_vector(e, grid_depth);
 
@@ -192,40 +192,66 @@ void w_cycle(vector &a, vector &x, vector &b, vector &r, vector&e,
     // Get dimensions of A from x
     const auto num_rows = x.size();
 
-    // Restrict down to coarsest mesh
+    // Presmooth x at finest level
+    sor_smooth(a, x, b, 0, num_iterations);
+
+    // Find the current residual
     vector temp = vector(x);
-    for (auto grid_depth = 0; grid_depth < num_grids - 1; grid_depth++) {
+    multiply(a, x, 0, temp);
+    subtract(b, temp, 0, r);
+
+    // Restrict residual (and LHS matrix)
+    restrict_vector(r, 0);
+    restrict_matrix(a, 0);
+
+    // Restrict down to coarsest grid
+    for (auto grid_depth = 1; grid_depth < num_grids - 1; grid_depth++) {
         // Presmooth x at finer level
-        sor_smooth(a, x, b, grid_depth, num_iterations);
+        sor_smooth(a, e, r, grid_depth, num_iterations);
 
         // Find the current residual
-        multiply(a, x, grid_depth, temp);
-        subtract(b, temp, grid_depth, r);
+        multiply(a, e, grid_depth, temp);
+        subtract(r, temp, grid_depth, r);
 
         // Restrict residual (and LHS matrix)
         restrict_vector(r, grid_depth);
         restrict_matrix(a, grid_depth);
-
-        // Solve on coarser meshes Ae=r
-        sor_smooth(a, e, r, grid_depth + 1, num_iterations);
     }
+
+    // Further smooth on coarsest grid
+    sor_smooth(a, e, r, num_grids - 1, num_iterations);
+
+    // Interpolate everything once to start V-cycles
+    interpolate_vector(e, num_grids - 1);
+    interpolate_vector(r, num_grids - 1);
+    interpolate_matrix(a, num_grids - 1);
 
     // V-cycle repeatedly at varying depths to form the W-cycle
-    // TODO: need to add one interpolation in here or above to start off V cycles
     const auto num_intermediate_cycles = std::pow(2, num_grids) - 1;
     for (auto i = 0; i < num_intermediate_cycles; i++) {
-        v_cycle(a, x, b, r, e, w_cycle_intermediate_depths[i], num_iterations);
+        v_cycle(a, x, b, r, e, w_cycle_intermediate_depths[i] + 1, num_iterations);
     }
-    // TODO: need to add one restriction in here or above to finish off V cycles
+    
+    // Restrict everything once to end V-cycles
+    restrict_vector(e, num_grids - 2);
+    restrict_vector(r, num_grids - 2);
+    restrict_matrix(a, num_grids - 2);
 
-    // Interpolate up to finest mesh
-    for (auto grid_depth = num_grids; grid_depth >= 0; grid_depth--) {
-        // Interpolate the error and use it to correct x
+    // Interpolate up to second-finest mesh
+    for (auto grid_depth = num_grids - 1; grid_depth > 2; grid_depth--) {
+        // Map the correction from the coarse grid to a finer grid
         interpolate_vector(e, grid_depth);
-        add(x, e, grid_depth, x);
 
         // Apply a post-smoother to Ax=b
         interpolate_matrix(a, grid_depth);
-        sor_smooth(a, x, b, grid_depth, num_iterations);
+        sor_smooth(a, e, r, grid_depth, num_iterations);
     }
+
+    // Map the correction from the second finest to finest grid
+    interpolate_vector(e, 1);
+    add(x, e, 0, x);
+
+    // Apply a post-smoother to Ax=b
+    interpolate_matrix(a, 1);
+    sor_smooth(a, x, b, 0, num_iterations);
 }
