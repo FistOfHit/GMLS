@@ -80,34 +80,52 @@ void v_cycle(vector &a, vector &x, vector &b, vector &r, vector&e,
     // Get dimensions of A from x
     const auto num_rows = x.size();
 
-    // Restrict down to coarsest mesh
+    // Presmooth x at finest level
+    sor_smooth(a, x, b, 0, num_iterations);
+
+    // Find the current residual
     vector temp = vector(x);
-    for (auto grid_depth = 0; grid_depth < num_grids - 1; grid_depth++) {
+    multiply(a, x, 0, temp);
+    subtract(b, temp, 0, r);
+
+    // Restrict residual (and LHS matrix)
+    restrict_vector(r, 0);
+    restrict_matrix(a, 0);
+
+    // Restrict down to coarsest grid
+    for (auto grid_depth = 1; grid_depth < num_grids - 1; grid_depth++) {
         // Presmooth x at finer level
-        sor_smooth(a, x, b, grid_depth, num_iterations);
+        sor_smooth(a, e, r, grid_depth, num_iterations);
 
         // Find the current residual
-        multiply(a, x, grid_depth, temp);
-        subtract(b, temp, grid_depth, r);
+        multiply(a, e, grid_depth, temp);
+        subtract(r, temp, grid_depth, r);
 
         // Restrict residual (and LHS matrix)
         restrict_vector(r, grid_depth);
         restrict_matrix(a, grid_depth);
-
-        // Solve on coarser meshes Ae=r
-        sor_smooth(a, e, r, grid_depth + 1, num_iterations);
     }
 
-    // Interpolate up to finest mesh
-    for (auto grid_depth = num_grids; grid_depth > 0; grid_depth--) {
-        // Map the correction from the coarse grid we just found to a finer mesh
+    // Further smooth on coarsest grid
+    sor_smooth(a, e, r, num_grids - 1, num_iterations);
+
+    // Interpolate up to second-finest mesh
+    for (auto grid_depth = num_grids; grid_depth > 2; grid_depth--) {
+        // Map the correction from the coarse grid to a finer grid
         interpolate_vector(e, grid_depth);
-        add(x, e, grid_depth, x);
 
         // Apply a post-smoother to Ax=b
         interpolate_matrix(a, grid_depth);
-        sor_smooth(a, x, b, grid_depth, num_iterations);
+        sor_smooth(a, e, r, grid_depth, num_iterations);
     }
+
+    // Map the correction from the second finest to finest grid
+    interpolate_vector(e, 1);
+    add(x, e, 0, x);
+
+    // Apply a post-smoother to Ax=b
+    interpolate_matrix(a, 1);
+    sor_smooth(a, x, b, 0, num_iterations);
 }
 
 

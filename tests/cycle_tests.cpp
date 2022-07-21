@@ -83,5 +83,5 @@ void run_cycle_tests() {
         -0.08666667,
         0.24222222,
     };
-    test_v_cycle(a, b, r, e, expected_values, 1, 100, 1);
+    test_v_cycle(a, b, r, e, expected_values, 1, 10, 3);
 }
