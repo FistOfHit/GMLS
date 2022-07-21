@@ -84,7 +84,12 @@ void restrict_vector(vector &vector, const int grid_depth) {
     const int grid_depth:
         The depth at which this grid is in the fine->coarse stages of grids
 	*/
-    return;
+
+    if (vector.size() == 3) {
+        std::cout << "Attempting to restrict from coarsest possible grid level"
+            << " (vector of size 3), exiting. \n";
+        return;
+    }
 }
 
 
@@ -127,7 +132,6 @@ void restrict_matrix(vector &matrix, const int grid_depth) {
     const int grid_depth:
         The depth at which this grid is in the fine->coarse stages of grids
 	*/
-    return;
 }
 
 
@@ -155,5 +159,4 @@ void interpolate_matrix(vector &matrix, const int grid_depth) {
     const int grid_depth:
         The depth at which this grid is in the fine->coarse stages of grids
 	*/
-    return;
 }

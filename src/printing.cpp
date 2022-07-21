@@ -12,7 +12,7 @@ using vector = std::vector<float>;
 
 
 void print_matrix(const vector &matrix, const size_t num_rows,
-    const size_t num_cols, const int precision) {
+    const int precision) {
 	/* Print matrix element by element in easy to read manner.
 
 	Notes
@@ -29,22 +29,20 @@ void print_matrix(const vector &matrix, const size_t num_rows,
         The matrix to print
     const size_t num_rows:
         The number of rows in the matrix
-    const size_t num_cols:
-        The number of columns in the matrix
     const int precision (default = 3):
         The numerical precision at which to print
 	*/
 
 	// Storing number of digits in each element
-	std::vector<int> digits_matrix(num_rows * num_cols);
+	std::vector<int> digits_matrix(num_rows * num_rows);
 
 	// Find spaces required to print everything nicely
 	size_t row_number;
 	int num_digits, max_digits = 0;
 	for (auto i = 0; i < num_rows; i++) {
-		row_number = i * num_cols;
+		row_number = i * num_rows;
 
-		for (auto j = 0; j < num_cols; j++) {
+		for (auto j = 0; j < num_rows; j++) {
 			num_digits = (int)std::log10(matrix[row_number + j]);
 			max_digits = std::max(max_digits, num_digits);
 
@@ -54,20 +52,20 @@ void print_matrix(const vector &matrix, const size_t num_rows,
 
 	// Size of whats being printed
 	std::cout << std::setprecision(precision) << std::fixed;
-	std::cout << "Matrix: " << num_rows << " X " << num_cols << "\n";
+	std::cout << "Matrix: " << num_rows << " X " << num_rows << "\n";
 	std::cout << "[" << "\n";
 
 	// Print row by row
 	int num_spaces;
 	for (auto i = 0; i < num_rows; i++) {
-		row_number = i * num_cols;
+		row_number = i * num_rows;
 
 		// Tidy brackets
 		if (i == 0) { std::cout << "["; }
 		else { std::cout << " ["; }
 
 		// Print spaces for all but last element in each row
-		for (auto j = 0; j < num_cols - 1; j++) {
+		for (auto j = 0; j < num_rows - 1; j++) {
 			std::cout << matrix[row_number + j];
 
 			// Print enough spaces to leave big enough gap
@@ -77,7 +75,7 @@ void print_matrix(const vector &matrix, const size_t num_rows,
             }
 		}
 
-		std::cout << matrix[row_number + num_cols - 1];
+		std::cout << matrix[row_number + num_rows - 1];
 
 		// Tidy brackets
 		if (i == num_rows - 1) { std::cout << "]]" << "\n"; }

@@ -35,11 +35,10 @@ void test_subtract(const vector &a, const vector &b,
 
 
 void test_multiply(const vector &test_matrix, const size_t num_rows,
-    const size_t num_cols, const vector &test_vector,
-    const vector &expected_values) {
+    const vector &test_vector, const vector &expected_values) {
     /* Test matrix-vector multiplication. */
     vector actual = vector(num_rows, 0);
-    multiply(test_matrix, num_rows, num_cols, test_vector, 0, actual);
+    multiply(test_matrix, test_vector, 0, actual);
     test_vector_equality(expected_values, actual);
 
     actual = vector();
@@ -85,17 +84,16 @@ void run_arithmetic_tests() {
 
     std::cout << "Matrix-Vector multiplication tests: \n";
     const auto num_rows = 3;
-    const auto num_cols = 3;
     // Diagonal matricies
     // 0 * 0 = 0
-    a = vector(num_rows * num_cols, 0);
-    b = vector(num_cols, 0);
-    expected_values = vector(num_cols, 0);
-    test_multiply(a, num_rows, num_cols, b, b);
+    a = vector(num_rows * num_rows, 0);
+    b = vector(num_rows, 0);
+    expected_values = vector(num_rows, 0);
+    test_multiply(a, num_rows, b, b);
 
     // 0 * x = 0
-    b = vector(num_cols, 1);
-    test_multiply(a, num_rows, num_cols, b, expected_values);
+    b = vector(num_rows, 1);
+    test_multiply(a, num_rows, b, expected_values);
 
     // x * 0 = 0
     a = vector{
@@ -103,13 +101,13 @@ void run_arithmetic_tests() {
         0, 1, 0,
         0, 0, 1,
     };
-    b = vector(num_cols, 0);
-    test_multiply(a, num_rows, num_cols, b, expected_values);
+    b = vector(num_rows, 0);
+    test_multiply(a, num_rows, b, expected_values);
 
     // Next two tests also test reversibility of this transform
     // 1 * x = x
-    b = vector(num_cols, 3);
-    test_multiply(a, num_rows, num_cols, b, b);
+    b = vector(num_rows, 3);
+    test_multiply(a, num_rows, b, b);
 
     // x * 1 = x
     a = vector{
@@ -117,14 +115,14 @@ void run_arithmetic_tests() {
         0, 3, 0,
         0, 0, 3,
     };
-    b = vector(num_cols, 1);
-    expected_values = vector(num_cols, 3);
-    test_multiply(a, num_rows, num_cols, b, expected_values);
+    b = vector(num_rows, 1);
+    expected_values = vector(num_rows, 3);
+    test_multiply(a, num_rows, b, expected_values);
 
     // x * 1/x = 1
-    b = vector(num_cols, 1.0F/3);
-    expected_values = vector(num_cols, 1);
-    test_multiply(a, num_rows, num_cols, b, expected_values);
+    b = vector(num_rows, 1.0F/3);
+    expected_values = vector(num_rows, 1);
+    test_multiply(a, num_rows, b, expected_values);
     
     // Non-diagonal matricies
     // x * y = x.y
@@ -135,18 +133,7 @@ void run_arithmetic_tests() {
     };
     b = vector{1, 2, 3};
     expected_values = vector{14, 32, 50};
-    test_multiply(a, num_rows, num_cols, b, expected_values);
-
-    // Testing non-square matricies
-    const int num_cols_new = 5;
-    a = vector{
-        1, 0, 0, 0, 0,
-        0, 0, 1, 0, 0,
-        0, 0, 0, 0, 1,
-    };
-    b = vector{1, 0, 3, 0, 5};
-    expected_values = vector{1, 3, 5};
-    test_multiply(a, num_rows, num_cols_new, b, expected_values);
+    test_multiply(a, num_rows, b, expected_values);
 
     a = vector();
     b = vector();

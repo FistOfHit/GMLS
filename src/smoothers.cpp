@@ -1,4 +1,5 @@
 #include "../includes/src_includes/smoothers.h"
+#include "../includes/src_includes/printing.h"
 #include <iostream>
 #include <math.h>
 #include <vector>
@@ -39,7 +40,6 @@ void jacobi_smooth(const vector &a, vector &x, const vector &b,
 
     // Get matrix dimensions from equation vectors
     const auto num_rows = x.size();
-    const auto num_cols = b.size();
 
     // Determine stride length across vector/matrix
     const auto stride = std::pow(2, grid_depth);
@@ -52,14 +52,14 @@ void jacobi_smooth(const vector &a, vector &x, const vector &b,
     float row_sum, new_solution;
 	for (auto _ = 0; _ < num_iterations; _++) {
 		for (auto i = 0; i < num_rows; i += stride) {
-			row_num = i * num_cols;
+			row_num = i * num_rows;
             row_sum = .0F;
 
 			// Perform row-solution dot product, avoiding i'th element
 			for (auto j = 0; j < i; j += stride) {
 				row_sum += a[row_num + j] * x_old[j];
 			}
-			for (auto j = i + 1; j < num_cols; j += stride) {
+			for (auto j = i + 1; j < num_rows; j += stride) {
 				row_sum += a[row_num + j] * x_old[j];
 			}
 
@@ -69,7 +69,7 @@ void jacobi_smooth(const vector &a, vector &x, const vector &b,
 		}
 
         // Replace x_old with the updated x
-        x_old.swap(x);
+        x_old = vector(x);
 	}
 }
 
@@ -100,13 +100,12 @@ void sor_smooth(const vector &a, vector &x, const vector &b,
         The depth at which this grid is in the fine->coarse stages of grids
     const int num_iterations:
         The number of iterations to apply the smoother for
-    const int omega (default: 1.5F):
+    const int omega (default: 1.0f):
         The weighting factor Omega
     */
 
     // Get matrix dimensions from equation vectors
     const auto num_rows = x.size();
-    const auto num_cols = b.size();
 
     // Determine stride length across vector/matrix
     const auto stride = std::pow(2, grid_depth);
@@ -116,14 +115,14 @@ void sor_smooth(const vector &a, vector &x, const vector &b,
     float row_sum, new_solution;
 	for (auto _ = 0; _ < num_iterations; _++) {
 		for (auto i = 0; i < num_rows; i += stride) {
-			row_num = i * num_cols;
+			row_num = i * num_rows;
             row_sum = .0F;
 
 			// Perform row-solution dot product, avoiding i'th element
 			for (auto j = 0; j < i; j += stride) {
 				row_sum += a[row_num + j] * x[j];
 			}
-			for (auto j = i + 1; j < num_cols; j += stride) {
+			for (auto j = i + 1; j < num_rows; j += stride) {
 				row_sum += a[row_num + j] * x[j];
 			}
 

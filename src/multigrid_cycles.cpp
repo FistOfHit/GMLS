@@ -6,6 +6,7 @@
 #include <map>
 #include <memory>
 #include <vector>
+#include <iostream>
 
 
 using vector = std::vector<float>;
@@ -76,9 +77,8 @@ void v_cycle(vector &a, vector &x, vector &b, vector &r, vector&e,
         the cycle
     */
 
-    // Get dimensions of A from x and b
+    // Get dimensions of A from x
     const auto num_rows = x.size();
-    const auto num_cols = b.size();
 
     // Restrict down to coarsest mesh
     vector temp = vector(x);
@@ -87,7 +87,7 @@ void v_cycle(vector &a, vector &x, vector &b, vector &r, vector&e,
         sor_smooth(a, x, b, grid_depth, num_iterations);
 
         // Find the current residual
-        multiply(a, num_rows, num_cols, x, grid_depth, temp);
+        multiply(a, x, grid_depth, temp);
         subtract(b, temp, grid_depth, r);
 
         // Restrict residual (and LHS matrix)
@@ -99,7 +99,7 @@ void v_cycle(vector &a, vector &x, vector &b, vector &r, vector&e,
     }
 
     // Interpolate up to finest mesh
-    for (auto grid_depth = num_grids; grid_depth >= 0; grid_depth--) {
+    for (auto grid_depth = num_grids; grid_depth > 0; grid_depth--) {
         // Map the correction from the coarse grid we just found to a finer mesh
         interpolate_vector(e, grid_depth);
         add(x, e, grid_depth, x);
@@ -171,9 +171,8 @@ void w_cycle(vector &a, vector &x, vector &b, vector &r, vector&e,
         the cycle
     */
 
-    // Get dimensions of A from x and b
+    // Get dimensions of A from x
     const auto num_rows = x.size();
-    const auto num_cols = b.size();
 
     // Restrict down to coarsest mesh
     vector temp = vector(x);
@@ -182,7 +181,7 @@ void w_cycle(vector &a, vector &x, vector &b, vector &r, vector&e,
         sor_smooth(a, x, b, grid_depth, num_iterations);
 
         // Find the current residual
-        multiply(a, num_rows, num_cols, x, grid_depth, temp);
+        multiply(a, x, grid_depth, temp);
         subtract(b, temp, grid_depth, r);
 
         // Restrict residual (and LHS matrix)
@@ -194,10 +193,12 @@ void w_cycle(vector &a, vector &x, vector &b, vector &r, vector&e,
     }
 
     // V-cycle repeatedly at varying depths to form the W-cycle
+    // TODO: need to add one interpolation in here or above to start off V cycles
     const auto num_intermediate_cycles = std::pow(2, num_grids) - 1;
     for (auto i = 0; i < num_intermediate_cycles; i++) {
-        v_cycle(a, x, b, r, e,  w_cycle_intermediate_depths[i], num_iterations);
+        v_cycle(a, x, b, r, e, w_cycle_intermediate_depths[i], num_iterations);
     }
+    // TODO: need to add one restriction in here or above to finish off V cycles
 
     // Interpolate up to finest mesh
     for (auto grid_depth = num_grids; grid_depth >= 0; grid_depth--) {

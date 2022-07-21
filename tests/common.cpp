@@ -1,6 +1,7 @@
 #include "../includes/test_includes/common.h"
 #include "../includes/src_includes/printing.h"
 #include <iostream>
+#include <math.h>
 
 
 using vector = std::vector<float>;
@@ -18,7 +19,9 @@ void test_vector_equality(const vector &expected, const vector &actual,
     }
 
     for (auto i = 0; i < expected.size(); i++) {
-        if (abs(expected[i] - actual[i]) > tolerance) {
+        if (std::fabs(expected[i] - actual[i]) > tolerance ||
+            std::isnan(actual[i])) 
+        {
             log_failure(expected, actual);
             return;
         }
