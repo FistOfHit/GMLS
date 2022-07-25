@@ -41,17 +41,8 @@ void run_smoother_tests() {
 
     // Multiple grid levels
 	// Ix = x
-    test_matrix = vector{
-        1, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 1, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 1, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 1, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 1, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 1, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 1, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 1, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 1,
-    };
+    test_matrix = vector(9 * 9, 0);
+    for (auto i = 0; i < 9; i++) { test_matrix[i*9 + i] = 1; }
     test_vectors_map = map{
         {0, vector{3, 2, 1, 2, 3, 2, 1, 2, 3}},
         {1, vector{3, 0, 1, 0, 3, 0, 1, 0, 3}},

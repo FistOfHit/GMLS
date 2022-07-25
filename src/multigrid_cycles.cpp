@@ -77,8 +77,9 @@ void v_cycle(vector &a, vector &x, vector &b, vector &r, vector&e,
         the cycle
     */
 
-    // Get dimensions of A from x
-    const auto num_rows = x.size();
+    // Get dimensions of A from x and b
+    const auto num_rows = b.size();
+    const auto num_cols = x.size();
 
     // Presmooth x at finest level
     sor_smooth(a, x, b, 0, num_iterations);
@@ -189,8 +190,9 @@ void w_cycle(vector &a, vector &x, vector &b, vector &r, vector&e,
         the cycle
     */
 
-    // Get dimensions of A from x
-    const auto num_rows = x.size();
+    // Get dimensions of A from x and b
+    const auto num_rows = b.size();
+    const auto num_cols = x.size();
 
     // Presmooth x at finest level
     sor_smooth(a, x, b, 0, num_iterations);

@@ -84,9 +84,10 @@ void run_arithmetic_tests() {
 
     std::cout << "Matrix-Vector multiplication tests: \n";
     const auto num_rows = 3;
+    const auto num_cols = 3;
     // Diagonal matricies
     // 0 * 0 = 0
-    a = vector(num_rows * num_rows, 0);
+    a = vector(num_rows * num_cols, 0);
     b = vector(num_rows, 0);
     expected_values = vector(num_rows, 0);
     test_multiply(a, num_rows, b, b);

@@ -39,7 +39,8 @@ void jacobi_smooth(const vector &a, vector &x, const vector &b,
     */
 
     // Get matrix dimensions from equation vectors
-    const auto num_rows = x.size();
+    const auto num_rows = b.size();
+    const auto num_cols = x.size();
 
     // Determine stride length across vector/matrix
     const auto stride = std::pow(2, grid_depth);
@@ -52,14 +53,14 @@ void jacobi_smooth(const vector &a, vector &x, const vector &b,
     float row_sum, new_solution;
 	for (auto _ = 0; _ < num_iterations; _++) {
 		for (auto i = 0; i < num_rows; i += stride) {
-			row_num = i * num_rows;
+			row_num = i * num_cols;
             row_sum = .0F;
 
 			// Perform row-solution dot product, avoiding i'th element
 			for (auto j = 0; j < i; j += stride) {
 				row_sum += a[row_num + j] * x_old[j];
 			}
-			for (auto j = i + 1; j < num_rows; j += stride) {
+			for (auto j = i + 1; j < num_cols; j += stride) {
 				row_sum += a[row_num + j] * x_old[j];
 			}
 
@@ -105,7 +106,8 @@ void sor_smooth(const vector &a, vector &x, const vector &b,
     */
 
     // Get matrix dimensions from equation vectors
-    const auto num_rows = x.size();
+    const auto num_rows = b.size();
+    const auto num_cols = x.size();
 
     // Determine stride length across vector/matrix
     const auto stride = std::pow(2, grid_depth);
@@ -115,7 +117,7 @@ void sor_smooth(const vector &a, vector &x, const vector &b,
     float row_sum, new_solution;
 	for (auto _ = 0; _ < num_iterations; _++) {
 		for (auto i = 0; i < num_rows; i += stride) {
-			row_num = i * num_rows;
+			row_num = i * num_cols;
             row_sum = .0F;
 
 			// Perform row-solution dot product, avoiding i'th element

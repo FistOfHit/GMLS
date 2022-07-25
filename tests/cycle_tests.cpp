@@ -48,21 +48,23 @@ void run_cycle_tests() {
 
     // Size of the original (finest) grid
     const auto num_rows = std::pow(2, 8) + 1;
+    const auto num_cols = std::pow(2, 8) + 1;
     
     auto num_grids = 5;
     auto num_cycles = 5;
 
-    std::cout << "V-cycle tests: \n";
+    std::cout << "VW-cycle tests: \n";
     // Solving Ix = b
     // Creating Identity matrix
-    a = vector(num_rows * num_rows, 0);
+    a = vector(num_rows * num_cols, 0);
     for (auto i = 0; i < num_rows; i++) { a[i*num_rows + i] = 1; }
     // Arbitrary LHS vector b
     b = vector(num_rows, 7);
     r = vector(num_rows, 0);
-    e = vector(num_rows, 0);
+    e = vector(num_cols, 0);
     expected_values = vector(b);
     test_v_cycle(a, b, r, e, expected_values, num_grids, 10, num_cycles);
+    test_w_cycle(a, b, r, e, expected_values, num_grids, 10, num_cycles);
 
     // Solving small Ax = b
     a = vector{
@@ -83,5 +85,9 @@ void run_cycle_tests() {
         -0.08666667,
         0.24222222,
     };
-    test_v_cycle(a, b, r, e, expected_values, 2, 20, 5);
+    test_v_cycle(a, b, r, e, expected_values, 2, 20, num_cycles);
+    test_w_cycle(a, b, r, e, expected_values, 2, 20, num_cycles);
+
+    // Solving larger Ax = b
+
 }
