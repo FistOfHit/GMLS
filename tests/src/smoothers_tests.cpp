@@ -2,10 +2,10 @@
 #include <map>
 #include <iostream>
 #include <vector>
-#include "../includes/src_includes/printing.h"
-#include "../includes/src_includes/smoothers.h"
-#include "../includes/test_includes/common.h"
-#include "../includes/test_includes/smoothers_tests.h"
+#include "../../includes/printing.h"
+#include "../../includes/smoothers.h"
+#include "../includes/common.h"
+#include "../includes/smoothers_tests.h"
 
 
 using vector = std::vector<float>;
@@ -44,6 +44,7 @@ void run_smoother_tests() {
     test_matrix = vector(9 * 9, 0);
     for (auto i = 0; i < 9; i++) { test_matrix[i*9 + i] = 1; }
     test_vectors_map = map{
+        // cppcheck-suppress cppcheckError
         {0, vector{3, 2, 1, 2, 3, 2, 1, 2, 3}},
         {1, vector{3, 0, 1, 0, 3, 0, 1, 0, 3}},
         {2, vector{3, 0, 0, 0, 3, 0, 0, 0, 3}},

@@ -1,7 +1,7 @@
-#include "../includes/test_includes/common.h"
-#include "../includes/test_includes/cycle_tests.h"
-#include "../includes/src_includes/multigrid_cycles.h"
-#include "../includes/src_includes/printing.h"
+#include "../includes/common.h"
+#include "../includes/cycle_tests.h"
+#include "../../includes/multigrid_cycles.h"
+#include "../../includes/printing.h"
 #include <iostream>
 #include <math.h>
 #include <vector>

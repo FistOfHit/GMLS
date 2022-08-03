@@ -1,6 +1,6 @@
 CXX=g++
 CPPFLAGS=-O3 --std=c++17 -Wall
-SOURCES=./src/* ./tests/*
+SOURCES=./src/* ./tests/src/*
 
 compile:
 	${CXX} -o gmls.exe ${CPPFLAGS} ${SOURCES}

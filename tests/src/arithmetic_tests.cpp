@@ -3,10 +3,10 @@
 #include <map>
 #include <math.h>
 #include <vector>
-#include "../includes/src_includes/arithmetic.h"
-#include "../includes/src_includes/printing.h"
-#include "../includes/test_includes/arithmetic_tests.h"
-#include "../includes/test_includes/common.h"
+#include "../../includes/arithmetic.h"
+#include "../../includes/printing.h"
+#include "../includes/arithmetic_tests.h"
+#include "../includes/common.h"
 
 
 using vector = std::vector<float>;

@@ -1,0 +1,5 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/hiteshk/GMLS'
+g++ -o gmls.exe -O3 --std=c++17 -Wall ./src/* ./tests/src/*
+make: Leaving directory '/home/hiteshk/GMLS'
+ 

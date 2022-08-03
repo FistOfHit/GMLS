@@ -1,5 +1,5 @@
-#include "../includes/src_includes/smoothers.h"
-#include "../includes/src_includes/printing.h"
+#include "../includes/smoothers.h"
+#include "../includes/printing.h"
 #include <iostream>
 #include <math.h>
 #include <vector>

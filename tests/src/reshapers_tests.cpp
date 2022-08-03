@@ -1,10 +1,10 @@
 #include <map>
 #include <math.h>
 #include <iostream>
-#include "../includes/src_includes/printing.h"
-#include "../includes/src_includes/reshapers.h"
-#include "../includes/test_includes/common.h"
-#include "../includes/test_includes/reshapers_tests.h"
+#include "../../includes/printing.h"
+#include "../../includes/reshapers.h"
+#include "../includes/common.h"
+#include "../includes/reshapers_tests.h"
 
 
 using vector = std::vector<float>;

@@ -1,16 +1,16 @@
 #define TESTING_MODE 1
 
 #ifdef TESTING_MODE
-#include "../includes/test_includes/arithmetic_tests.h"
-#include "../includes/test_includes/cycle_tests.h"
-#include "../includes/test_includes/reshapers_tests.h"
-#include "../includes/test_includes/smoothers_tests.h"
+#include "../tests/includes/arithmetic_tests.h"
+#include "../tests/includes/cycle_tests.h"
+#include "../tests/includes/reshapers_tests.h"
+#include "../tests/includes/smoothers_tests.h"
 #endif
 
 // Source includes
-#include "../includes/src_includes/multigrid_cycles.h"
-#include "../includes/src_includes/printing.h"
-#include "../includes/src_includes/reshapers.h"
+#include "../includes/multigrid_cycles.h"
+#include "../includes/printing.h"
+#include "../includes/reshapers.h"
 
 #include <iostream>
 #include <vector>

@@ -1,7 +1,7 @@
-#include "../includes/src_includes/arithmetic.h"
-#include "../includes/src_includes/multigrid_cycles.h"
-#include "../includes/src_includes/reshapers.h"
-#include "../includes/src_includes/smoothers.h"
+#include "../includes/arithmetic.h"
+#include "../includes/multigrid_cycles.h"
+#include "../includes/reshapers.h"
+#include "../includes/smoothers.h"
 #include <math.h>
 #include <map>
 #include <memory>

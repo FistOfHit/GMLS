@@ -1,5 +1,5 @@
-#include "../includes/test_includes/common.h"
-#include "../includes/src_includes/printing.h"
+#include "../includes/common.h"
+#include "../../includes/printing.h"
 #include <iostream>
 #include <math.h>
 
