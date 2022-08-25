@@ -1,10 +1,10 @@
-#include <map>
-#include <math.h>
+#include "../include/common.h"
+#include "../include/reshapers_tests.h"
+#include "../../include/printing.h"
+#include "../../include/reshapers.h"
+#include <cmath>
 #include <iostream>
-#include "../../includes/printing.h"
-#include "../../includes/reshapers.h"
-#include "../includes/common.h"
-#include "../includes/reshapers_tests.h"
+#include <map>
 
 
 using vector = std::vector<float>;
@@ -12,7 +12,7 @@ using vector = std::vector<float>;
 
 void test_vector_interpolation(const vector &coarse,
     const vector &expected_values, const int grid_depth) {
-	/* Test vector interpolation. */
+
     vector actual = vector(coarse);
     interpolate_vector(actual, grid_depth);
     test_vector_equality(expected_values, actual);
@@ -23,7 +23,7 @@ void test_vector_interpolation(const vector &coarse,
 
 void test_vector_restriction(const vector &fine, const vector &expected_values,
     const int grid_depth) {
-    /* Test vector restriction. */
+
     vector actual = vector(fine);
     restrict_vector(actual, grid_depth);
     test_vector_equality(expected_values, actual);
@@ -33,7 +33,7 @@ void test_vector_restriction(const vector &fine, const vector &expected_values,
 
 
 void run_reshapers_tests() {
-    /* Run all tests for reshape operators. */
+
     vector coarse;
     vector fine;
     vector expected_values;

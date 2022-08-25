@@ -1,12 +1,13 @@
+#include "../include/arithmetic_tests.h"
+#include "../include/common.h"
+#include "../../include/arithmetic.h"
+#include "../../include/printing.h"
 #include <algorithm>
+#include <cmath>
+#include <cstddef>
 #include <iostream>
 #include <map>
-#include <math.h>
 #include <vector>
-#include "../../includes/arithmetic.h"
-#include "../../includes/printing.h"
-#include "../includes/arithmetic_tests.h"
-#include "../includes/common.h"
 
 
 using vector = std::vector<float>;
@@ -14,7 +15,7 @@ using vector = std::vector<float>;
 
 void test_add(const vector &a, const vector &b,
     const vector &expected_values) {
-    /* Test vector addition. */
+
     vector actual = vector(a.size(), 0);
     add(a, b, 0, actual);
     test_vector_equality(expected_values, actual);
@@ -25,7 +26,7 @@ void test_add(const vector &a, const vector &b,
 
 void test_subtract(const vector &a, const vector &b,
     const vector &expected_values) {
-    /* Test vector subtraction. */
+
     vector actual = vector(a.size(), 0);
     subtract(a, b, 0, actual);
     test_vector_equality(expected_values, actual);
@@ -36,7 +37,7 @@ void test_subtract(const vector &a, const vector &b,
 
 void test_multiply(const vector &test_matrix, const size_t num_rows,
     const vector &test_vector, const vector &expected_values) {
-    /* Test matrix-vector multiplication. */
+
     vector actual = vector(num_rows, 0);
     multiply(test_matrix, test_vector, 0, actual);
     test_vector_equality(expected_values, actual);
@@ -46,7 +47,7 @@ void test_multiply(const vector &test_matrix, const size_t num_rows,
 
 
 void run_arithmetic_tests() {
-    /* Run all tests for arithmetic operators. */
+
     vector a;
     vector b;
     vector expected_values;

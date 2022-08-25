@@ -1,5 +1,6 @@
-#include "../includes/arithmetic.h"
-#include <math.h>
+#include "../include/arithmetic.h"
+#include <cmath>
+#include <cstddef>
 #include <vector>
 
 
@@ -8,7 +9,6 @@ using vector = std::vector<float>;
 
 void add(const vector &a, const vector &b, const int grid_depth,
     vector &result) {
-    /* Add two vectors together, element-wise into an output argument vector. */
 
     // Determine stride length across vector/matrix
     const auto stride = std::pow(2, grid_depth);
@@ -19,7 +19,6 @@ void add(const vector &a, const vector &b, const int grid_depth,
 
 void subtract(const vector &a, const vector &b, const int grid_depth,
     vector &result) {
-    /* Subtract two vectors, element-wise into an output argument vector. */
 
     // Determine stride length across vector/matrix
     const auto stride = std::pow(2, grid_depth);
@@ -30,7 +29,6 @@ void subtract(const vector &a, const vector &b, const int grid_depth,
 
 void multiply(const vector &a, const vector &b, const int grid_depth,
     vector &result) {
-    /* Perform a matrix vector product into an output argument vector. */
 
     // Infer the dimensions of A from b and x
     const auto num_rows = result.size();

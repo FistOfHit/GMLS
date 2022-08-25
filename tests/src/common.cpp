@@ -1,7 +1,7 @@
-#include "../includes/common.h"
-#include "../../includes/printing.h"
+#include "../include/common.h"
+#include "../../include/printing.h"
+#include <cmath>
 #include <iostream>
-#include <math.h>
 
 
 using vector = std::vector<float>;
@@ -9,8 +9,6 @@ using vector = std::vector<float>;
 
 void test_vector_equality(const vector &expected, const vector &actual,
     const float tolerance) {
-    /* Test if two vectors are equal to within a given tolerance.
-    */
 
     if (expected.size() != actual.size()) {
         std::cout << "Size mismatch:" << "\n";
@@ -32,8 +30,7 @@ void test_vector_equality(const vector &expected, const vector &actual,
 
 
 void log_failure(const vector &expected, const vector &actual) {
-    /* Log a mismatch failure to stdout.
-    */
+
     std::cout << "FAIL" << "\n";
     std::cout << "\tExpected: " << "\n\t";
     print_vector(expected);

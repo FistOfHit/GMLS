@@ -1,11 +1,11 @@
-#include <math.h>
-#include <map>
+#include "../include/common.h"
+#include "../include/smoothers_tests.h"
+#include "../../include/printing.h"
+#include "../../include/smoothers.h"
+#include <cmath>
 #include <iostream>
+#include <map>
 #include <vector>
-#include "../../includes/printing.h"
-#include "../../includes/smoothers.h"
-#include "../includes/common.h"
-#include "../includes/smoothers_tests.h"
 
 
 using vector = std::vector<float>;
@@ -15,7 +15,6 @@ using map = std::map<int, vector>;
 void test_smoothers(const vector &test_matrix, const vector &test_vector,
     const vector &expected_values, const int grid_depth,
     const int num_iterations) {
-    /* Test smoothers. */
 
     vector actual = vector(expected_values.size(), 0);
     sor_smooth(test_matrix, actual, test_vector, 0, num_iterations);
@@ -30,7 +29,7 @@ void test_smoothers(const vector &test_matrix, const vector &test_vector,
 
 
 void run_smoother_tests() {
-    /* Run all smoother tests. */
+
     vector test_matrix;
     vector test_vector;
     vector expected_values;

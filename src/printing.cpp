@@ -1,9 +1,10 @@
-#include "../includes/printing.h"
+#include "../include/printing.h"
 #include <algorithm>
-#include <iostream>
+#include <cmath>
+#include <cstddef>
+#include <cstdio>
 #include <iomanip>
-#include <math.h>
-#include <stdio.h>
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -13,29 +14,6 @@ using vector = std::vector<float>;
 
 void print_matrix(const vector &matrix, const size_t num_rows,
     const size_t num_cols, const int precision) {
-	/* Print matrix element by element in easy to read manner.
-
-	Notes
-	-----
-	Printing is done as expected, but to make the it a bit nicer, first the
-    number of digits in each element is found and then we print it to 2 decimal
-    places, so that each element is printed with the same amount of space
-    around it. This keeps the printing clean and tidy, and avoids rows being
-    offset when printing, making it much easier to see down columns.
-
-	Parameters
-	----------
-	const std::vector<float> &matrix:
-        The matrix to print
-    const size_t num_rows:
-        The number of rows in the matrix
-    const size_t num_cols:
-        The number of columns in the matrix
-    const size_t num_cols:
-        The number of columns in the matrix
-    const int precision (default = 3):
-        The numerical precision at which to print
-	*/
 
 	// Storing number of digits in each element
 	std::vector<int> digits_matrix(num_rows * num_cols);
@@ -89,15 +67,6 @@ void print_matrix(const vector &matrix, const size_t num_rows,
 
 
 void print_vector(const vector &vector, const int precision) {
-	/* Print vector element by element in easy to read manner.
-
-	Parameters
-	----------
-	const std::vector<float> &vector:
-        The vector to print
-    const int precision (default = 3):
-        The numerical precision at which to print
-	*/
 
 	std::cout << std::setprecision(precision) << std::fixed;
 	std::cout << "Vector: " << vector.size() << " elements" << "\n";

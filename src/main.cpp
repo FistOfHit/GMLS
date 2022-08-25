@@ -1,16 +1,15 @@
 #define TESTING_MODE 1
-
 #ifdef TESTING_MODE
-#include "../tests/includes/arithmetic_tests.h"
-#include "../tests/includes/cycle_tests.h"
-#include "../tests/includes/reshapers_tests.h"
-#include "../tests/includes/smoothers_tests.h"
+#include "../tests/include/arithmetic_tests.h"
+#include "../tests/include/cycle_tests.h"
+#include "../tests/include/reshapers_tests.h"
+#include "../tests/include/smoothers_tests.h"
 #endif
 
 // Source includes
-#include "../includes/multigrid_cycles.h"
-#include "../includes/printing.h"
-#include "../includes/reshapers.h"
+#include "../include/multigrid_cycles.h"
+#include "../include/printing.h"
+#include "../include/reshapers.h"
 
 #include <iostream>
 #include <vector>
@@ -49,8 +48,8 @@ int main() {
     vector b = load("./path_to_b.csv");
 
     // Initialise residual and error vectors
-    vector r = vector(b);
-    vector e = vector(x);
+    vector residual = vector(b);
+    vector error = vector(x);
 
     // Set typical hyperparameters
     const int num_grids = 5;
@@ -59,7 +58,7 @@ int main() {
 
     // Run W-cycles
     for (auto _ = 0; _ < num_cycles; _++) {
-        w_cycle(a, x, b, r, e, num_grids, num_iterations);
+        w_cycle(a, x, b, residual, error, num_grids, num_iterations);
     }
 
     // Write solution to file
