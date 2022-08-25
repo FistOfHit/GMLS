@@ -24,10 +24,6 @@ static std::vector<int> w_cycle_intermediate_depths = std::vector<int>{
 void v_cycle(vector &a, vector &x, vector &b, vector &residual, vector&error,
     const int num_grids, const int num_iterations) {
 
-    // Get dimensions of A from x and b
-    const auto num_rows = b.size();
-    const auto num_cols = x.size();
-
     // Presmooth x at finest level
     sor_smooth(a, x, b, 0, num_iterations);
 
@@ -79,10 +75,6 @@ void v_cycle(vector &a, vector &x, vector &b, vector &residual, vector&error,
 
 void w_cycle(vector &a, vector &x, vector &b, vector &residual, vector&error, 
     const int num_grids, const int num_iterations) {
-
-    // Get dimensions of A from x and b
-    const auto num_rows = b.size();
-    const auto num_cols = x.size();
 
     // Presmooth x at finest level
     sor_smooth(a, x, b, 0, num_iterations);

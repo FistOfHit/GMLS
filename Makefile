@@ -1,5 +1,5 @@
 CXX=g++
-CPPFLAGS=-O3 --std=c++17 -Wall
+CPPFLAGS=-O3 --std=c++17 -Wall -Wno-sign-compare
 SOURCES=./src/* ./tests/src/*
 
 compile:
