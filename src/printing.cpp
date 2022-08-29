@@ -1,4 +1,5 @@
 #include "../include/printing.h"
+
 #include <algorithm>
 #include <cmath>
 #include <cstddef>
@@ -9,14 +10,13 @@
 #include <vector>
 
 
-using vector = std::vector<float>;
-
-
-void print_matrix(const vector &matrix, const size_t num_rows,
-    const size_t num_cols, const int precision) {
+void print_matrix(const Grid &matrix, const int precision) {
 
 	// Storing number of digits in each element
-	std::vector<int> digits_matrix(num_rows * num_cols);
+	std::vector<int> digits_matrix(matrix.size());
+
+    size_t num_rows = matrix.num_rows();
+    size_t num_cols = matrix.num_cols();
 
 	// Find spaces required to print everything nicely
 	size_t row_number;
@@ -66,15 +66,17 @@ void print_matrix(const vector &matrix, const size_t num_rows,
 }
 
 
-void print_vector(const vector &vector, const int precision) {
+void print_vector(const Grid &vector, const int precision) {
+
+    size_t size = vector.size();
 
 	std::cout << std::setprecision(precision) << std::fixed;
-	std::cout << "Vector: " << vector.size() << " elements" << "\n";
+	std::cout << "Vector: " << size << " elements" << "\n";
 
 	std::cout << "[";
-	for (auto i = 0; i < vector.size() - 1; i++) {
+	for (auto i = 0; i < size - 1; i++) {
 		std::cout << vector[i] << " ";
 	}
-	std::cout << vector[vector.size() - 1];
+	std::cout << vector[size - 1];
 	std::cout << "]" << "\n";
 }

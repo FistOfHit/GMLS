@@ -2,10 +2,7 @@
 #define MULTIGRID_CYCLES_H
 #endif
 
-#include <vector>
-
-
-using vector = std::vector<float>;
+#include "../include/grid.h"
 
 
 /* Perform one V-cycle iteration on a series of grids.
@@ -43,25 +40,23 @@ implementations of multi-grid methods
 
 Parameters
 ----------
-std::vector<float> &a:
+std::vector &a:
     LHS n x m matrix A in Ax=b
-std::vector<float> &x:
+std::vector &x:
     m-length solution vector x in Ax=b
-std::vector<float> &b:
+Grid &b:
     n-length RHS vector b in Ax=b
-std::vector<float> &residual:
+Grid &residual:
     m-length residual vector for storing the values of b - Ax', where x' is
     some intermediate/approximation of x
-std::vector<float> &error:
+Grid &error:
     m-length error vector e for solving Ae=residual, and storing the error
     values to correct x with
-const int num_grids:
-    The number of grids to be used in this multigrid cycle
 const int num_iterations (default = 3):
     The number of iterations to apply smoothers whenever required during
     the cycle */
-void v_cycle(vector &a, vector &x, vector &b, vector &residual, vector &error,
-    const int num_grids, const int num_iterations);
+void v_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
+    const int num_iterations);
 
 
 /* Perform one W-cycle iteration on a series of grids.
@@ -103,22 +98,20 @@ implementations of multi-grid methods
 
 Parameters
 ----------
-std::vector<float> &a:
+Grid &a:
     LHS n x m matrix A in Ax=b
-std::vector<float> &x:
+Grid &x:
     m-length Solution vector x in Ax=b
-std::vector<float> &b:
+Grid &b:
     n-length RHS vector b in Ax=b
-std::vector<float> &r:
+Grid &residual:
     m-length residual vector for storing the values of b - Ax', where x' is
     some intermediate/approximation of x
-std::vector<float> &e:
+Grid &error:
     m-length error vector e for solving Ae=residual, and storing the error
     values to correct x with
-const int num_grids:
-    The number of grids to be used in this multigrid cycle
 const int num_iterations (default = 3):
     The number of iterations to apply smoothers whenever required during
     the cycle */
-void w_cycle(vector &a, vector &x, vector &b, vector &residual, vector &error,
-    const int num_grids, const int num_iterations);
+void w_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
+    const int num_iterations);

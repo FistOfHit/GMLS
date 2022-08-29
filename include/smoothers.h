@@ -2,10 +2,7 @@
 #define SMOOTHERS_H
 #endif
 
-#include <vector>
-
-
-using vector = std::vector<float>;
+#include "../include/grid.h"
 
 
 /* Perform a given number of Jacobi smoothing iterations on Ax=b.
@@ -22,11 +19,11 @@ any degree.
 
 Parameters
 ----------
-const std::vector<float> &a:
+const Grid &a:
     The LHS matrix A in Ax=b
-std::vector<float> &x:
+Grid &x:
     The solution vector x in Ax=b
-const std::vector<float> &b:
+const Grid &b:
     The RHS vector b in Ax=b
 const int grid_depth:
     The depth at which this grid is in the fine->coarse stages of grids
@@ -34,8 +31,8 @@ const int num_iterations:
     The number of iterations to apply the smoother for
 const int omega (default: 2.0F/3):
     The weighting factor Omega */
-void jacobi_smooth(const vector &a, vector &x, const vector &b,
-    const int grid_depth, const int num_iterations, const float omega = 0.6f);
+void jacobi_smooth(const Grid &a, Grid &x, const Grid &b,
+    const int num_iterations, const float omega = 0.6F);
 
 
 /* Perform a given number of SOR smoothing iterations on Ax=b.
@@ -52,11 +49,11 @@ paralellisation.
 
 Parameters
 ----------
-const std::vector<float> &a:
+const Grid &a:
     The LHS matrix A in Ax=b
-std::vector<float> &x:
+Grid &x:
     The solution vector x in Ax=b
-const std::vector<float> &b:
+const Grid &b:
     The RHS vector b in Ax=b
 const int grid_depth:
     The depth at which this grid is in the fine->coarse stages of grids
@@ -65,5 +62,5 @@ const int num_iterations:
 const int omega (default: 1.0f):
     The weighting factor Omega
 */
-void sor_smooth(const vector &a, vector &x, const vector &b,
-    const int grid_depth, const int num_iterations, const float omega = 1);
+void sor_smooth(const Grid &a, Grid &x, const Grid &b, const int num_iterations,
+    const float omega = 1);

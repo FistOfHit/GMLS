@@ -1,41 +1,37 @@
 #include "../include/arithmetic.h"
+
+#include "../include/grid.h"
+
 #include <cmath>
 #include <cstddef>
-#include <vector>
 
 
-using vector = std::vector<float>;
+void add(Grid &a, Grid &b, Grid &result) {
 
-
-void add(const vector &a, const vector &b, const int grid_depth,
-    vector &result) {
-
-    // Determine stride length across vector/matrix
-    const auto stride = std::pow(2, grid_depth);
+    // Determine stride length across grid
+    const auto stride = std::pow(2, a.depth);
 
     for (auto i = 0; i < a.size(); i += stride) { result[i] = a[i] + b[i]; }
 }
 
 
-void subtract(const vector &a, const vector &b, const int grid_depth,
-    vector &result) {
+void subtract(Grid &a, Grid &b, Grid &result) {
 
-    // Determine stride length across vector/matrix
-    const auto stride = std::pow(2, grid_depth);
+    // Determine stride length across grid
+    const auto stride = std::pow(2, a.depth);
 
     for (auto i = 0; i < a.size(); i += stride) { result[i] = a[i] - b[i]; }
 }
 
 
-void multiply(const vector &a, const vector &b, const int grid_depth,
-    vector &result) {
+void multiply(Grid &a, Grid &b, Grid &result) {
 
-    // Infer the dimensions of A from b and x
+    // Infer the dimensions of a from b and x
     const auto num_rows = result.size();
     const auto num_cols = b.size();
 
-    // Determine stride length across vector/matrix
-    const auto stride = std::pow(2, grid_depth);
+    // Determine stride length across grid
+    const auto stride = std::pow(2, b.depth);
 
     float row_sum;
     size_t row_num;

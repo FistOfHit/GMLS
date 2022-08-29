@@ -2,22 +2,16 @@
 #define ARITHMETIC_H
 #endif
 
-#include <vector>
-
-
-using vector = std::vector<float>;
+#include "../include/grid.h"
 
 
 /* Add two vectors together, element-wise into an output argument vector. */
-void add(const vector &a, const vector &b, const int grid_depth,
-    vector &result);
+void add(Grid &a, Grid &b, Grid &result);
 
 
 /* Subtract two vectors, element-wise into an output argument vector. */
-void subtract(const vector &a, const vector &b, const int grid_depth,
-    vector &result);
+void subtract(Grid &a, Grid &b, Grid &result);
 
 
 /* Perform a matrix vector product into an output argument vector. */
-void multiply(const vector &a, const vector &b, const int grid_depth,
-    vector &result);
+void multiply(Grid &a, Grid &b, Grid &result);
