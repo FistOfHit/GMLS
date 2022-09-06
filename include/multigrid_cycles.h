@@ -54,9 +54,12 @@ Grid &error:
     values to correct x with
 const int num_iterations (default = 3):
     The number of iterations to apply smoothers whenever required during
-    the cycle */
+    the cycle
+const int initial_depth (default = 0):
+    The grid depth at which this cycle starts from
+*/
 void v_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations);
+    const int num_iterations, const int initial_depth = 0);
 
 
 /* Perform one W-cycle iteration on a series of grids.
@@ -112,6 +115,9 @@ Grid &error:
     values to correct x with
 const int num_iterations (default = 3):
     The number of iterations to apply smoothers whenever required during
-    the cycle */
+    the cycle
+const int initial_depth (default = 0):
+    The grid depth at which this cycle starts from
+*/
 void w_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations);
+    const int num_iterations, const int initial_depth = 0);

@@ -1,36 +1,35 @@
-#ifndef GRID_H
-#define GRID_H
-#endif
+#pragma once
 
+#include <cmath>
 #include <cstddef>
 #include <vector>
 
 
 class Grid {
+    int max_depth_ = 1;
+    size_t num_rows_ = 1;
+    size_t num_cols_ = 1;
+    std::vector<float> grid_;
+
 public:
-    Grid(size_t size, int max_depth);
-    Grid(size_t num_rows, size_t num_cols, int max_depth);
+    static int depth;
+
+    Grid(const size_t size, const int max_depth);
+    Grid(const size_t num_rows, const size_t num_cols, const int max_depth);
     Grid(const Grid &grid);
     Grid(Grid &&grid);
     ~Grid();
 
-    int depth = 0;
-
+    int max_depth() const;
     size_t num_rows() const;
     size_t num_cols() const;
     size_t size() const;
+    int stride() const;
 
-    int max_depth() const;
     std::vector<float> grid();
 
-    inline float &operator[](size_t index);
-    inline const float &operator[](size_t index) const;
+    inline float &operator[](const size_t index);
+    inline const float &operator[](const size_t index) const;
 
     inline Grid &operator=(const Grid &grid);
-
-private:
-    size_t num_rows_ = 1;
-    size_t num_cols_ = 1;
-    int max_depth_;
-    std::vector<float> grid_;
 };

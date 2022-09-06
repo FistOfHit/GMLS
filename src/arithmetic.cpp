@@ -7,39 +7,25 @@
 
 
 void add(Grid &a, Grid &b, Grid &result) {
-
-    // Determine stride length across grid
-    const auto stride = std::pow(2, a.depth);
-
-    for (auto i = 0; i < a.size(); i += stride) { result[i] = a[i] + b[i]; }
+    for (auto i = 0; i < a.size(); i += a.stride()) { result[i] = a[i] + b[i]; }
 }
 
 
 void subtract(Grid &a, Grid &b, Grid &result) {
-
-    // Determine stride length across grid
-    const auto stride = std::pow(2, a.depth);
-
-    for (auto i = 0; i < a.size(); i += stride) { result[i] = a[i] - b[i]; }
+    for (auto i = 0; i < a.size(); i += a.stride()) { result[i] = a[i] - b[i]; }
 }
 
 
 void multiply(Grid &a, Grid &b, Grid &result) {
 
-    // Infer the dimensions of a from b and x
-    const auto num_rows = result.size();
-    const auto num_cols = b.size();
-
-    // Determine stride length across grid
-    const auto stride = std::pow(2, b.depth);
-
     float row_sum;
     size_t row_num;
-    for (auto i = 0; i < num_rows; i += stride) {
+    // Infer size of A from size of result and b
+    for (auto i = 0; i < result.size(); i += a.stride()) {
         row_sum = 0.0f;
-        row_num = i * num_cols;
+        row_num = i * b.size();
 
-        for (auto j = 0; j < num_cols; j += stride) {
+        for (auto j = 0; j < b.size(); j += a.stride()) {
             row_sum += a[row_num + j] * b[j];
         }
 

@@ -25,9 +25,12 @@ static std::vector<int> w_cycle_intermediate_depths = std::vector<int>{
 
 
 void v_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations) {
+    const int num_iterations, const int initial_depth) {
+    
+    // Set initial depth for grids
+    x.depth = initial_depth;
 
-    // Presmooth x at finest level
+    // Presmooth x at initial depth
     sor_smooth(a, x, b, num_iterations);
 
     // Find the current residual
@@ -36,11 +39,12 @@ void v_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
     subtract(b, temp, residual);
 
     // Restrict residual (and LHS matrix)
+    x.depth++;
     restrict_vector(residual);
     restrict_matrix(a);
 
     // Restrict down to coarsest grid
-    for (auto depth = 1; depth < x.max_depth() - 1; depth++) {
+    for (auto depth = a.depth; depth < x.max_depth() - 1; depth++) {
         // Presmooth x at finer level
         sor_smooth(a, error, residual, num_iterations);
 
@@ -49,19 +53,19 @@ void v_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
         subtract(residual, temp, residual);
 
         // Restrict residual (and LHS matrix)
+        x.depth++;
         restrict_vector(residual);
         restrict_matrix(a);
     }
 
     // Further smooth on coarsest grid
-    a.depth -= 1;
-    error.depth -= 1;
-    residual.depth -= 1;
+    x.depth--;
     sor_smooth(a, error, residual, num_iterations);
 
     // Interpolate up to second-finest mesh
-    for (auto depth = x.max_depth() - 1; depth > 2; depth--) {
+    for (auto depth = x.max_depth(); depth > 1; depth--) {
         // Map the correction from the coarse grid to a finer grid
+        x.depth--;
         interpolate_vector(error);
 
         // Apply a post-smoother to Ax=b
@@ -69,7 +73,8 @@ void v_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
         sor_smooth(a, error, residual, num_iterations);
     }
 
-    // Map the correction from the second finest to finest grid
+    // Map the correction from the second finest grid to the finest grid
+    x.depth--;
     interpolate_vector(error);
     add(x, error, x);
 
@@ -90,14 +95,21 @@ void w_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
     multiply(a, x, temp);
     subtract(b, temp, residual);
 
-    // Restrict residual (and LHS matrix)
-    restrict_vector(residual);
+    // Restrict grids
     restrict_matrix(a);
+    restrict_vector(error);
+    restrict_vector(residual);
 
     // Restrict down to coarsest grid
-    for (auto grid_depth = 1; grid_depth < x.max_depth() - 1; grid_depth++) {
+    for (auto depth = 1; depth < x.max_depth() - 1; depth++) {
+        // Set grid depths to work on
+        a.depth = depth;
+        error.depth = depth;
+        residual.depth = depth;
+        temp.depth = depth;
+        
         // Presmooth x at finer level
-        sor_smooth(a, error, residual, grid_depth, num_iterations);
+        sor_smooth(a, error, residual, num_iterations);
 
         // Find the current residual
         multiply(a, error, temp);
