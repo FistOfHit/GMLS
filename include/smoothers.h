@@ -1,8 +1,6 @@
-#ifndef SMOOTHERS_H
-#define SMOOTHERS_H
-#endif
+#pragma once
 
-#include "../include/grid.h"
+#include "grid.h"
 
 
 /* Perform a given number of Jacobi smoothing iterations on Ax=b.

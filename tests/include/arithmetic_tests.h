@@ -1,26 +1,19 @@
-#ifndef ARITHMETIC_TESTS_H
-#define ARITHMETIC_TESTS_H
-#endif
+#pragma once
 
-#include <vector>
+#include "../../include/grid.h"
 
 
-using vector = std::vector<float>;
+/* Test Grid addition. */
+void test_add(const Grid &a, const Grid &b, const Grid &expected_values);
 
 
-/* Test vector addition. */
-void test_add(const vector &a, const vector &b,
-    const vector &expected_values);
+/* Test Grid subtraction. */
+void test_subtract(const Grid &a, const Grid &b, const Grid &expected_values);
 
 
-/* Test vector subtraction. */
-void test_subtract(const vector &a, const vector &b,
-    const vector &expected_values);
-
-
-/* Test matrix-vector multiplication. */
-void test_multiply(const vector &test_matrix, const vector &test_vector,
-    const vector &expected_values);
+/* Test matrix-Grid multiplication. */
+void test_multiply(const Grid &matrix, const Grid &vector,
+    const Grid &expected_values);
 
 
 /* Run all tests for arithmetic operators. */

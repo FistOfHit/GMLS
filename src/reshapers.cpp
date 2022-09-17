@@ -1,7 +1,5 @@
 #include "../include/reshapers.h"
 
-#include "../include/grid.h"
-
 #include <cmath>
 #include <iostream>
 

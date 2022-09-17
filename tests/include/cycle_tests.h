@@ -1,11 +1,4 @@
-#ifndef CYCLE_TESTS_H
-#define CYCLE_TESTS_H
-#endif
-
-#include <vector>
-
-
-using vector = std::vector<float>;
+#pragma once
 
 
 /* Test multigrid V-cycling. */

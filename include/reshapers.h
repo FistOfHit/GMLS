@@ -1,8 +1,6 @@
-#ifndef RESHAPERS_H
-#define RESHAPERS_H
-#endif
+#pragma once
 
-#include "../include/grid.h"
+#include "grid.h"
 
 
 /* Restrict vector inv. linearly from 2^n+1 elements to 2^(n-1)+1 elements.

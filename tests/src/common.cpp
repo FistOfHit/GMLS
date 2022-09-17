@@ -7,7 +7,7 @@
 using vector = std::vector<float>;
 
 
-void test_vector_equality(const vector &expected, const vector &actual,
+void test_grid_equality(const Grid &expected, const Grid &actual,
     const float tolerance) {
 
     if (expected.size() != actual.size()) {
@@ -29,11 +29,11 @@ void test_vector_equality(const vector &expected, const vector &actual,
 }
 
 
-void log_failure(const vector &expected, const vector &actual) {
+void log_failure(const Grid &expected, const Grid &actual) {
 
     std::cout << "FAIL" << "\n";
     std::cout << "\tExpected: " << "\n\t";
-    print_vector(expected);
+    print_grid(expected);
     std::cout << "\tActual:   " << "\n\t";
-    print_vector(actual);
+    print_grid(actual);
 }

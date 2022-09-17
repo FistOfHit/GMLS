@@ -20,18 +20,39 @@ Grid::Grid(const size_t num_rows, const size_t num_cols, const int max_depth) :
 {}
 
 
+Grid::Grid(const std::vector<float> &&vector, const int max_depth) :
+    max_depth_(max_depth),
+    grid_(std::move(vector))
+{}
+    
+    
+Grid::Grid(const std::vector<float> &&vector, const size_t num_rows,
+    const size_t num_cols, const int max_depth) :
+    max_depth_(max_depth),
+    num_rows_(num_rows),
+    num_cols_(num_cols),
+    grid_(std::move(vector))
+{}
+
+
 Grid::Grid(const Grid& source_grid) :
-    num_rows_(source_grid.num_rows_),
-    num_cols_(source_grid.num_cols_),
-    grid_(source_grid.grid_)
+    max_depth_(source_grid.max_depth()),
+    num_rows_(source_grid.num_rows()),
+    num_cols_(source_grid.num_cols()),
+    grid_(source_grid.grid())
 {}
 
 
 Grid::Grid(Grid&& source_grid) :
-    num_rows_(source_grid.num_rows_),
-    num_cols_(source_grid.num_cols_),
-    grid_(std::move(source_grid.grid_))
-{}
+    max_depth_(source_grid.max_depth()),
+    num_rows_(source_grid.num_rows()),
+    num_cols_(source_grid.num_cols()),
+    grid_(std::move(source_grid.grid()))
+{
+    source_grid.num_rows_ = 0;
+    source_grid.num_cols_ = 0;
+    source_grid.grid_ = std::vector<float>();
+}
 
 
 Grid::~Grid() {
@@ -54,7 +75,7 @@ size_t Grid::size() const { return num_rows_ * num_cols_; }
 int Grid::stride() const { return std::pow(2, depth); }
 
 
-std::vector<float> Grid::grid() { return grid_; }
+std::vector<float> Grid::grid() const { return grid_; }
 
 
 float &Grid::operator[](const size_t index) { return grid_[index]; }

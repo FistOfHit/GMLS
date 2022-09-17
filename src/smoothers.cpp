@@ -1,7 +1,5 @@
 #include "../include/smoothers.h"
 
-#include "../include/grid.h"
-
 #include <cmath>
 #include <cstddef>
 #include <iostream>

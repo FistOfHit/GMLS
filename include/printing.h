@@ -1,11 +1,9 @@
-#ifndef PRINTING_H
-#define PRINTING_H
-#endif
+#pragma once
 
-#include "../include/grid.h"
+#include "grid.h"
 
 
-/* Print matrix element by element in easy to read manner.
+/* Print out a grid element by element in easy to read manner.
 
 Notes
 -----
@@ -17,19 +15,8 @@ offset when printing, making it much easier to see down columns.
 
 Parameters
 ----------
-Grid &matrix:
-    The matrix to print
+Grid &grid:
+    The grid to print
 const int precision (default = 3):
     The numerical precision at which to print */
-void print_matrix(const Grid &matrix, const int precision = 3);
-
-
-/* Print vector element by element in easy to read manner.
-
-Parameters
-----------
-Grid &vector:
-    The vector to print
-const int precision (default = 3):
-    The numerical precision at which to print */
-void print_vector(const Grid &vector, const int precision = 3);
+void print_grid(const Grid &grid, const int precision = 3);
