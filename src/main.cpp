@@ -1,4 +1,4 @@
-#define TESTING_MODE 0
+#define TESTING_MODE 1
 #ifdef TESTING_MODE
 #include "../tests/include/arithmetic_tests.h"
 #include "../tests/include/cycle_tests.h"
@@ -46,7 +46,7 @@ int main() {
     Grid g = Grid(31, 3);
     std::cout << g.size() << std::endl;
     std::cout << g.max_depth() << std::endl;
-    print_vector(g);
+    print_grid(g);
 
     // // Load arrays into memory (Ax=b)
     // vector a = load("./path_to_a.csv");

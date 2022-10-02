@@ -28,7 +28,7 @@ void test_w_cycle(Grid &a, Grid &b, Grid &residual, Grid& error,
 
     Grid actual = Grid(expected_values.size(), 3);
     for (auto i = 0; i < num_cycles; i++) {
-        w_cycle(a, actual, b, residual, error, num_grids, num_iterations);
+        w_cycle(a, actual, b, residual, error, num_iterations);
     }
     test_grid_equality(expected_values, actual);
 }

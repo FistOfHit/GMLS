@@ -100,7 +100,7 @@ void v_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
 
 
 void w_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations){
+    const int num_iterations, const int initial_depth){
 
     // Restrict and smooth all the way down to coarsest grid depth
     full_restriction(a, x, b, residual, error, num_iterations, 0);
