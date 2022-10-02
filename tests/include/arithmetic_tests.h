@@ -12,8 +12,7 @@ void test_subtract(const Grid &a, const Grid &b, const Grid &expected_values);
 
 
 /* Test matrix-Grid multiplication. */
-void test_multiply(const Grid &matrix, const Grid &vector,
-    const Grid &expected_values);
+void test_multiply(const Grid &matrix, const Grid &vector, const Grid &expected_values);
 
 
 /* Run all tests for arithmetic operators. */

@@ -37,7 +37,7 @@ void print_grid(const Grid &grid, const int precision) {
 	// Size of whats being printed
 	std::cout << std::setprecision(precision) << std::fixed;
 	std::cout << "Grid: " << num_rows << " X " << num_cols << "\n";
-	std::cout << "[" << "\n";
+	std::cout << "[";
 
 	// Print row by row
 	int num_spaces;

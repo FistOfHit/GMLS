@@ -9,7 +9,9 @@ Grid::Grid(const size_t size, const int max_depth) :
     max_depth_(max_depth),
     num_rows_(size),
     grid_(std::vector<float>(num_rows_ * num_cols_, 0))
-{}
+{
+    depth = 0;
+}
 
 
 Grid::Grid(const size_t num_rows, const size_t num_cols, const int max_depth) :
@@ -17,22 +19,29 @@ Grid::Grid(const size_t num_rows, const size_t num_cols, const int max_depth) :
     num_rows_(num_rows),
     num_cols_(num_cols),
     grid_(std::vector<float>(num_rows_ * num_cols_, 0))
-{}
+{
+    depth = 0;
+}
 
 
 Grid::Grid(const std::vector<float> &&vector, const int max_depth) :
     max_depth_(max_depth),
+    num_rows_(vector.size()),
     grid_(std::move(vector))
-{}
+{
+    depth = 0;
+}
     
     
-Grid::Grid(const std::vector<float> &&vector, const size_t num_rows,
+Grid::Grid(const std::vector<float> &&matrix, const size_t num_rows,
     const size_t num_cols, const int max_depth) :
     max_depth_(max_depth),
     num_rows_(num_rows),
     num_cols_(num_cols),
-    grid_(std::move(vector))
-{}
+    grid_(std::move(matrix))
+{
+    depth = 0;
+}
 
 
 Grid::Grid(const Grid& source_grid) :
@@ -40,7 +49,9 @@ Grid::Grid(const Grid& source_grid) :
     num_rows_(source_grid.num_rows()),
     num_cols_(source_grid.num_cols()),
     grid_(source_grid.grid())
-{}
+{
+    depth = source_grid.depth;
+}
 
 
 Grid::Grid(Grid&& source_grid) :
@@ -49,6 +60,8 @@ Grid::Grid(Grid&& source_grid) :
     num_cols_(source_grid.num_cols()),
     grid_(std::move(source_grid.grid()))
 {
+    depth = source_grid.depth;
+    
     source_grid.num_rows_ = 0;
     source_grid.num_cols_ = 0;
     source_grid.grid_ = std::vector<float>();
@@ -89,6 +102,7 @@ const float &Grid::operator[](const size_t index) const { return grid_[index]; }
 
 Grid &Grid::operator=(const Grid &source_grid) {
 
+    max_depth_ = source_grid.max_depth_;
     num_rows_ = source_grid.num_rows_;
     num_cols_ = source_grid.num_cols_;
     grid_ = std::move(source_grid.grid_);

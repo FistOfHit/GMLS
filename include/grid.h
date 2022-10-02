@@ -32,7 +32,7 @@ public:
     Grid(const size_t size, const int max_depth);
     Grid(const size_t num_rows, const size_t num_cols, const int max_depth);
     Grid(const std::vector<float> &&vector, const int max_depth);
-    Grid(const std::vector<float> &&vector, const size_t num_rows,
+    Grid(const std::vector<float> &&matrix, const size_t num_rows,
         const size_t num_cols, const int max_depth);
     Grid(const Grid &grid);
     Grid(Grid &&grid);
