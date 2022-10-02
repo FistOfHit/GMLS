@@ -62,7 +62,6 @@ Grid::~Grid() {
 
 int Grid::depth;
 
-// int Grid::depth() { return depth; }
 
 int Grid::max_depth() const { return max_depth_; }
 
