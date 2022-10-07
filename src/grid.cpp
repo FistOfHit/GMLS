@@ -102,6 +102,8 @@ const float &Grid::operator[](const size_t index) const { return grid_[index]; }
 
 Grid &Grid::operator=(const Grid &source_grid) {
 
+    depth = source_grid.depth;
+
     max_depth_ = source_grid.max_depth_;
     num_rows_ = source_grid.num_rows_;
     num_cols_ = source_grid.num_cols_;

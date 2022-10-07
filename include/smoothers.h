@@ -27,7 +27,7 @@ const int grid_depth:
     The depth at which this grid is in the fine->coarse stages of grids
 const int num_iterations:
     The number of iterations to apply the smoother for
-const int omega (default: 2.0F/3):
+const int omega (default: 0.6F):
     The weighting factor Omega */
 void jacobi_smooth(const Grid &a, Grid &x, const Grid &b,
     const int num_iterations, const float omega = 0.6F);
@@ -57,8 +57,8 @@ const int grid_depth:
     The depth at which this grid is in the fine->coarse stages of grids
 const int num_iterations:
     The number of iterations to apply the smoother for
-const int omega (default: 1.0f):
+const int omega (default: 1.0F):
     The weighting factor Omega
 */
 void sor_smooth(const Grid &a, Grid &x, const Grid &b, const int num_iterations,
-    const float omega = 1);
+    const float omega = 1.0F);

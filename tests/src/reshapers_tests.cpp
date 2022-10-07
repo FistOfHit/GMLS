@@ -14,8 +14,8 @@ void test_grid_interpolation(const Grid &coarse, const Grid &expected_values) {
 
     Grid actual = Grid(coarse);
 
-    coarse.depth++;
     interpolate_vector(actual);
+    coarse.depth--;
 
     test_grid_equality(expected_values, actual);
 }
@@ -25,8 +25,8 @@ void test_grid_restriction(const Grid &fine, const Grid &expected_values) {
 
     Grid actual = Grid(fine);
 
-    fine.depth++;
     restrict_vector(actual);
+    fine.depth++;
 
     test_grid_equality(expected_values, actual);
 }
@@ -35,24 +35,28 @@ void test_grid_restriction(const Grid &fine, const Grid &expected_values) {
 void run_reshapers_tests() {
 
     std::cout << "Vector interpolation tests: \n";
+    // Interpolating 0s - result should be 0
+    Grid coarse = Grid(vector(9, 0), 3);
+    Grid expected_values = Grid(vector(9, 0), 3);
+    coarse.depth = 1;
+    test_grid_interpolation(coarse, expected_values);
+    
     // Interpolating from one grid level below
-    Grid coarse = Grid(vector{1, 0, 1, 0, 1, 0, 1, 0, 1}, 3);
-    Grid expected_values = Grid(vector(9, 1), 3);
+    coarse = Grid(vector{1, 0, 1, 0, 1, 0, 1, 0, 1}, 3);
+    expected_values = Grid(vector(9, 1), 3);
+    coarse.depth = 1;
     test_grid_interpolation(coarse, expected_values);
 
     // Interpolating from two grid levels below up to one grid level below
     coarse = Grid(vector{1, 0, 0, 0, 1, 0, 0, 0, 1}, 3);
     expected_values = Grid(vector{1, 0, 1, 0, 1, 0, 1, 0, 1}, 3);
-    test_grid_interpolation(coarse, expected_values);
-
-    // Interpolating 0s - result should be 0
-    coarse = Grid(vector(9, 0), 3);
-    expected_values = Grid(vector(9, 0), 3);
+    coarse.depth = 2;
     test_grid_interpolation(coarse, expected_values);
 
     // Interpolating a random vector
     coarse = Grid(vector{4, 2, 6, 8, 3, 5, 8, 1, 4}, 3);
     expected_values = Grid(vector{4, 5, 6, 4.5, 3, 5.5, 8, 6, 4}, 3);
+    coarse.depth = 1;
     test_grid_interpolation(coarse, expected_values);
 
     std::cout << "Vector restriction tests: \n";
