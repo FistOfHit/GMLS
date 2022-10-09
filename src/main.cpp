@@ -1,7 +1,7 @@
 #define TESTING_MODE 1
 #ifdef TESTING_MODE
 #include "../tests/include/arithmetic_tests.h"
-#include "../tests/include/cycle_tests.h"
+#include "../tests/include/multigrid_cycle_tests.h"
 #include "../tests/include/reshapers_tests.h"
 #include "../tests/include/smoothers_tests.h"
 #endif

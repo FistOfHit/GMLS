@@ -2,13 +2,13 @@
 
 #include "grid.h"
 
-/* Perform full restriction (first half of a V-cycle) on a series of grids.
+/* Perform restriction (first half of a V-cycle) on a series of grids.
 
 Notes
 -----
-Performs a full restriction, with smoothing, from the finest grid level down to
-the coarsest grid level. This is the first half of a V-cycle. For more
-information, please refer to the notes in the docstrings for `v_cycle()`. 
+Performs restriction, with smoothing, from the initial given grid level down to
+the final grid level. This is the first half of a V-cycle. For more information,
+please refer to the notes in the docstrings for `v_cycle()`. 
 
 Parameters
 ----------
@@ -27,20 +27,22 @@ Grid &error:
 const int num_iterations (default = 3):
     The number of iterations to apply smoothers whenever required during
     the cycle
-const int initial_depth (default = 0):
-    The grid depth at which this cycle starts from
+const int initial_depth:
+    The grid depth at which this process starts from
+const int final_depth:
+    The grid depth at which this process ends at
 */
-void full_restriction(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations, const int initial_depth = 0);
+void restrict(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
+    const int num_iterations, const int initial_depth, const int final_depth);
 
 
 /* Perform full interpolation (second half of a V-cycle) on a series of grids.
 
 Notes
 -----
-Performs a full interpolation, with smoothing, from the coarsest grid level up
-to the finest grid level. This is the second half of a V-cycle. For more
-information, please refer to the notes in the docstrings for `v_cycle()`. 
+Performs interpolation, with smoothing, from the initial grid level up to the
+final grid level. This is the second half of a V-cycle. For more information,
+please refer to the notes in the docstrings for `v_cycle()`. 
 
 Parameters
 ----------
@@ -59,11 +61,13 @@ Grid &error:
 const int num_iterations (default = 3):
     The number of iterations to apply smoothers whenever required during
     the cycle
-const int initial_depth (default = 0):
-    The grid depth at which this cycle starts from
+const int initial_depth:
+    The grid depth at which this process starts from
+const int final_depth:
+    The grid depth at which this process ends at
 */
-void full_interpolation(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations, const int initial_depth = 0);
+void interpolate(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
+    const int num_iterations, const int initial_depth, const int final_depth);
 
 
 /* Perform one V-cycle iteration on a series of grids.
@@ -116,11 +120,13 @@ Grid &error:
 const int num_iterations (default = 3):
     The number of iterations to apply smoothers whenever required during
     the cycle
-const int initial_depth (default = 0):
+const int minimum_depth:
     The grid depth at which this cycle starts from
+const int maximum_depth:
+    The grid depth at which this cycle ends at
 */
 void v_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations, const int initial_depth = 0);
+    const int num_iterations, const int minimum_depth, const int maximum_depth);
 
 
 /* Perform one W-cycle iteration on a series of grids.
@@ -177,8 +183,6 @@ Grid &error:
 const int num_iterations (default = 3):
     The number of iterations to apply smoothers whenever required during
     the cycle
-const int initial_depth (default = 0):
-    The grid depth at which this cycle starts from
 */
 void w_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations, const int initial_depth = 0);
+    const int num_iterations);

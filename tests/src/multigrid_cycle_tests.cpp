@@ -1,5 +1,5 @@
 #include "../include/common.h"
-#include "../include/cycle_tests.h"
+#include "../include/multigrid_cycle_tests.h"
 #include "../../include/multigrid_cycles.h"
 #include "../../include/printing.h"
 #include <cmath>
@@ -15,7 +15,7 @@ void test_v_cycle(Grid &a, Grid &b, Grid &residual, Grid &error,
 
     Grid actual = Grid(expected_values.size(), 3);
     for (auto i = 0; i < num_cycles; i++) {
-        v_cycle(a, actual, b, residual, error, num_iterations);
+        v_cycle(a, actual, b, residual, error, num_iterations, 0, a.max_depth());
     }
     test_grid_equality(expected_values, actual);
 }
@@ -52,7 +52,7 @@ void run_cycle_tests() {
     Grid error = Grid(num_cols, max_depth);
     Grid expected_values = Grid(vector(num_rows, 7), max_depth);
     test_v_cycle(a, b, residual, error, expected_values, 10, num_cycles);
-    // test_w_cycle(a, b, residual, error, expected_values, 10, num_cycles);
+    test_w_cycle(a, b, residual, error, expected_values, 10, 1);
 
     // // Solving small Ax = b
     // num_rows = 5;
