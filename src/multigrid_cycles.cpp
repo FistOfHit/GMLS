@@ -35,7 +35,7 @@ void restrict(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
     sor_smooth(a, x, b, num_iterations);
 
     // Find the current residual
-    Grid temp = Grid(x);
+    Grid temp = x;
     multiply(a, x, temp);
     subtract(b, temp, residual);
 

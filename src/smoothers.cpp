@@ -9,7 +9,7 @@ void jacobi_smooth(const Grid &a, Grid &x, const Grid &b,
     const int num_iterations, const float omega) {
 
     // Create a duplicate solution vector x
-    Grid x_old = Grid(x);
+    Grid x_old = x;
 
 	// Perform n iterations
     size_t row_num;

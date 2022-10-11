@@ -12,7 +12,7 @@ using vector = std::vector<float>;
 
 void test_grid_interpolation(const Grid &coarse, const Grid &expected_values) {
 
-    Grid actual = Grid(coarse);
+    Grid actual = coarse;
 
     interpolate_vector(actual);
     coarse.depth--;
@@ -23,7 +23,7 @@ void test_grid_interpolation(const Grid &coarse, const Grid &expected_values) {
 
 void test_grid_restriction(const Grid &fine, const Grid &expected_values) {
 
-    Grid actual = Grid(fine);
+    Grid actual = fine;
 
     restrict_vector(actual);
     fine.depth++;
