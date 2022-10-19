@@ -29,7 +29,6 @@ void restrict(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
 
     // Set initial depth for grids
     x.depth = initial_depth;
-    std::cout << x.depth;
 
     // Presmooth x at initial depth
     sor_smooth(a, x, b, num_iterations);
@@ -38,11 +37,6 @@ void restrict(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
     Grid temp = x;
     multiply(a, x, temp);
     subtract(b, temp, residual);
-
-    // Restrict residual (and LHS matrix)
-    restrict_vector(residual);
-    restrict_matrix(a);
-    x.depth++;
 
     // Restrict down to coarsest grid
     for (auto depth = x.depth; depth < final_depth - 1; depth++) {
@@ -57,13 +51,11 @@ void restrict(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
         restrict_vector(residual);
         restrict_matrix(a);
         x.depth++;
-        std::cout << "restricting once";
     }
 
     // Further smooth on coarsest grid
     sor_smooth(a, error, residual, num_iterations);
     x.depth++;
-    std::cout << x.depth;
 }
 
 
@@ -95,14 +87,13 @@ void interpolate(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
 
 
 void v_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations, const int minimum_depth, const int maximum_depth) {
+    const int num_iterations, const int initial_depth, const int final_depth) {
     
     // Restrict and smooth all the way down to coarsest grid depth
-    restrict(a, x, b, residual, error, num_iterations, minimum_depth, maximum_depth);
-    std::cout << x.depth;
+    restrict(a, x, b, residual, error, num_iterations, initial_depth, x.max_depth());
+
     // Interpolate and smooth all the way up to finest grid depth
-    interpolate(a, x, b, residual, error, num_iterations, maximum_depth, minimum_depth);
-    std::cout << x.depth;
+    interpolate(a, x, b, residual, error, num_iterations, x.max_depth(), final_depth);
 }
 
 

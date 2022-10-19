@@ -120,13 +120,13 @@ Grid &error:
 const int num_iterations (default = 3):
     The number of iterations to apply smoothers whenever required during
     the cycle
-const int minimum_depth:
+const int initial_depth:
     The grid depth at which this cycle starts from
-const int maximum_depth:
+const int final_depth:
     The grid depth at which this cycle ends at
 */
 void v_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations, const int minimum_depth, const int maximum_depth);
+    const int num_iterations, const int initial_depth, const int final_depth);
 
 
 /* Perform one W-cycle iteration on a series of grids.
