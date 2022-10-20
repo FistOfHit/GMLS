@@ -33,7 +33,7 @@ void log_failure(const Grid &expected, const Grid &actual) {
 
     std::cout << "FAIL" << "\n";
     std::cout << "\tExpected: " << "\n\t";
-    print_grid(expected);
+    print_grid(expected, 10);
     std::cout << "\tActual:   " << "\n\t";
-    print_grid(actual);
+    print_grid(actual, 10);
 }

@@ -25,10 +25,7 @@ static std::vector<int> w_cycle_intermediate_depths = std::vector<int>{
 
 
 void restrict(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations, const int initial_depth, const int final_depth) {
-
-    // Set initial depth for grids
-    x.depth = initial_depth;
+    const int num_iterations, const int final_depth) {
 
     // Presmooth x at initial depth
     sor_smooth(a, x, b, num_iterations);
@@ -38,8 +35,13 @@ void restrict(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
     multiply(a, x, temp);
     subtract(b, temp, residual);
 
+    // Restrict residual (and LHS matrix)
+    restrict_vector(residual);
+    restrict_matrix(a);
+    x.depth++;
+
     // Restrict down to coarsest grid
-    for (auto depth = x.depth; depth < final_depth - 1; depth++) {
+    for (auto _ = x.depth; _ < final_depth; _++) {
         // Presmooth x at finer level
         sor_smooth(a, error, residual, num_iterations);
 
@@ -55,17 +57,16 @@ void restrict(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
 
     // Further smooth on coarsest grid
     sor_smooth(a, error, residual, num_iterations);
-    x.depth++;
 }
 
 
 void interpolate(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations, const int initial_depth, const int final_depth) {
+    const int num_iterations, const int final_depth) {
 
     // TODO: check or enforce that initial depth is actually what is given?
 
     // Interpolate up to second-finest mesh
-    for (auto depth = initial_depth; depth > final_depth + 1; depth--) {
+    for (auto _ = x.depth; _ > final_depth + 1; _--) {
         // Map the correction from the coarse grid to a finer grid
         interpolate_vector(error);
 
@@ -87,13 +88,13 @@ void interpolate(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
 
 
 void v_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations, const int initial_depth, const int final_depth) {
+    const int num_iterations, const int final_depth) {
     
     // Restrict and smooth all the way down to coarsest grid depth
-    restrict(a, x, b, residual, error, num_iterations, initial_depth, x.max_depth());
+    restrict(a, x, b, residual, error, num_iterations, x.max_depth());
 
-    // Interpolate and smooth all the way up to finest grid depth
-    interpolate(a, x, b, residual, error, num_iterations, x.max_depth(), final_depth);
+    // Interpolate and smooth all the way up to final grid depth
+    interpolate(a, x, b, residual, error, num_iterations, final_depth);
 }
 
 
@@ -101,7 +102,7 @@ void w_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
     const int num_iterations) {
 
     // Restrict and smooth all the way down to coarsest grid depth
-    restrict(a, x, b, residual, error, num_iterations, 0, x.max_depth());
+    restrict(a, x, b, residual, error, num_iterations, x.max_depth());
 
     // Interpolate everything once to start V-cycles
     interpolate_vector(error);
@@ -113,7 +114,6 @@ void w_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
     const auto num_intermediate_cycles = std::pow(2, x.max_depth()-1) - 1;
     for (auto i = 0; i < num_intermediate_cycles - 1; i++) {
         v_cycle(a, x, b, residual, error, num_iterations,
-            x.max_depth() - w_cycle_intermediate_depths[i],
             x.max_depth() - w_cycle_intermediate_depths[i+1]);
     }
     
@@ -124,5 +124,6 @@ void w_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
     x.depth++;
 
     // Interpolate and smooth all the way up to finest grid depth
-    interpolate(a, x, b, residual, error, num_iterations, x.max_depth(), 0);
+    interpolate(a, x, b, residual, error, num_iterations, 0);
+
 }
