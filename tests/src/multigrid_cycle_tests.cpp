@@ -13,7 +13,7 @@ using vector = std::vector<float>;
 void test_v_cycle(Grid &a, Grid &b, Grid &residual, Grid &error,
     const Grid expected_values, const int num_iterations, const int num_cycles) {
 
-    Grid actual = Grid(expected_values.size(), expected_values.depth);
+    Grid actual = Grid(expected_values.size(), expected_values.max_depth());
     for (auto i = 0; i < num_cycles; i++) {
         v_cycle(a, actual, b, residual, error, num_iterations, 0);
     }
@@ -24,7 +24,7 @@ void test_v_cycle(Grid &a, Grid &b, Grid &residual, Grid &error,
 void test_w_cycle(Grid &a, Grid &b, Grid &residual, Grid& error,
     const Grid expected_values, const int num_iterations, const int num_cycles) {
 
-    Grid actual = Grid(expected_values.size(), expected_values.depth);
+    Grid actual = Grid(expected_values.size(), expected_values.max_depth());
     for (auto i = 0; i < num_cycles; i++) {
         w_cycle(a, actual, b, residual, error, num_iterations);
     }
@@ -34,11 +34,11 @@ void test_w_cycle(Grid &a, Grid &b, Grid &residual, Grid& error,
 
 void run_cycle_tests() {
 
-    auto num_cycles = 200;
-    auto num_iterations = 5;
 
     std::cout << "V/W-cycle tests: \n";
     // Solving Ix = b
+    auto num_cycles = 1;
+    auto num_iterations = 3;
     auto num_rows = std::pow(2, 8) + 1;
     auto num_cols = std::pow(2, 8) + 1;
     auto max_depth = 3;
@@ -57,10 +57,13 @@ void run_cycle_tests() {
     test_w_cycle(a, b, residual, error, expected_values, num_iterations, num_cycles);
 
     // Solving small Ax = b
+    num_cycles = 200;
+    num_iterations = 10;
     num_rows = 9;
     num_cols = 9;
     max_depth = 2;
 
+    // SPD matrix formed from generating random A and getting A*(A^T)
     a = Grid(vector{
         385, 317, 310, 338, 237, 295, 265, 358, 200,
         317, 325, 261, 295, 226, 306, 238, 305, 204,

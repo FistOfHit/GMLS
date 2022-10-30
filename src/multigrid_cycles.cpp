@@ -5,23 +5,7 @@
 #include "../include/reshapers.h"
 #include "../include/smoothers.h"
 
-#include <cmath>
-#include <map>
-#include <memory>
-#include <vector>
 #include <iostream>
-
-
-using vector = std::vector<float>;
-
-
-// Pre-determined depths for intermediate V-cycles to form the "W" in W-cycle
-static std::vector<int> w_cycle_intermediate_depths = std::vector<int>{
-    1, 2, 1,
-    3, 1, 2, 1,
-    4, 1, 2, 1, 3, 1, 2, 1,
-    5, 1, 2, 1, 3, 1, 2, 1, 4, 1, 2, 1, 3, 1, 2, 1,
-};
 
 
 void restrict(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
@@ -89,7 +73,7 @@ void interpolate(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
 
 void v_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
     const int num_iterations, const int final_depth) {
-    
+
     // Restrict and smooth all the way down to coarsest grid depth
     restrict(a, x, b, residual, error, num_iterations, x.max_depth());
 
@@ -101,29 +85,18 @@ void v_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
 void w_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
     const int num_iterations) {
 
-    // Restrict and smooth all the way down to coarsest grid depth
-    restrict(a, x, b, residual, error, num_iterations, x.max_depth());
-
-    // Interpolate everything once to start V-cycles
-    interpolate_vector(error);
-    interpolate_vector(residual);
-    interpolate_matrix(a);
-    x.depth--;
-
-    // V-cycle repeatedly at varying depths to form the W-cycle
-    const auto num_intermediate_cycles = std::pow(2, x.max_depth()-1) - 1;
-    for (auto i = 0; i < num_intermediate_cycles - 1; i++) {
+    // V-cycle repeatedly at varying depths to form the W-cycle.
+    // __builtin_ctz used to generate depths for the W-cycle pattern.
+    for (auto i = 2; i < std::pow(2, x.max_depth()+1); i += 2) {
         v_cycle(a, x, b, residual, error, num_iterations,
-            x.max_depth() - w_cycle_intermediate_depths[i+1]);
+            x.max_depth() - __builtin_ctz(i));
     }
     
-    // Restrict everything once to end V-cycles
+    // Restrict everything once and interpolate back to top to end V-cycles
     restrict_vector(error);
     restrict_vector(residual);
     restrict_matrix(a);
     x.depth++;
 
-    // Interpolate and smooth all the way up to finest grid depth
     interpolate(a, x, b, residual, error, num_iterations, 0);
-
 }

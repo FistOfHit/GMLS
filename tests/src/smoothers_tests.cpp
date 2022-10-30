@@ -6,9 +6,7 @@
 #include <iostream>
 #include <vector>
 
-
 using vector = std::vector<float>;
-using map = std::vector<Grid>;
 
 
 void test_smoothers(const Grid &test_matrix, const Grid &test_vector,
@@ -32,20 +30,21 @@ void run_smoother_tests() {
 	// Ix = x
     size_t num_rows = 9;
     size_t num_cols = 9;
-    int max_depth = 3;
+    auto max_depth = 2;
 
     Grid test_matrix = Grid(vector(num_rows * num_cols, 0), num_rows, num_cols, max_depth);
     for (auto i = 0; i < num_rows; i++) { test_matrix[i*num_rows + i] = 1; }
 
-    map test_grids_map = map{
-        Grid(vector{3, 2, 1, 2, 3, 2, 1, 2, 3}, max_depth),
-        Grid(vector{3, 0, 1, 0, 3, 0, 1, 0, 3}, max_depth),
-        Grid(vector{3, 0, 0, 0, 3, 0, 0, 0, 3}, max_depth),
-    };
-    for (auto i = 0; i < 3; i++) {
-        test_matrix.depth = i;
-        test_smoothers(test_matrix, test_grids_map[i], test_grids_map[i]);
-    }
+    auto depth_0_result = Grid(vector{3, 2, 1, 2, 3, 2, 1, 2, 3}, max_depth);
+    depth_0_result.depth = 0;
+    auto depth_1_result = Grid(vector{3, 0, 1, 0, 3, 0, 1, 0, 3}, max_depth);
+    depth_1_result.depth = 1;
+    auto depth_2_result = Grid(vector{3, 0, 0, 0, 3, 0, 0, 0, 3}, max_depth);
+    depth_2_result.depth = 2;
+
+    test_smoothers(test_matrix, depth_0_result, depth_0_result);
+    test_smoothers(test_matrix, depth_1_result, depth_1_result);
+    test_smoothers(test_matrix, depth_2_result, depth_2_result);
 
     // Single grid level tests here on
     // 0 iterations result in a 0 solution vector (default initial value)
@@ -64,6 +63,7 @@ void run_smoother_tests() {
         5, 3, 0, 2, 9,
     }, num_rows, num_cols, 1);
     test_grid = Grid(vector{4, 5, 6, 3, 4}, 1);
+
     // Verified with python numpy.linalg.solve()
     expected_values = Grid(vector{
         0.74,
@@ -72,5 +72,6 @@ void run_smoother_tests() {
         -0.08666667,
         0.24222222,
     }, 1);
+    
     test_smoothers(test_matrix, test_grid, expected_values);
 }
