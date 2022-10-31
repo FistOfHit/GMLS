@@ -8,10 +8,6 @@ Headers
 #include <vector>
 
 
-template <typename Numerical>
-using vector = std::vector<Numerical>;
-
-
 /* 
 \brief Grid class for representing a 1 or 2D array with varying depths.
 
@@ -41,6 +37,7 @@ Methods
     
 
 */
+template <typename T>
 class Grid {
 
     /// The maximum depth this grid can go down to
@@ -50,7 +47,7 @@ class Grid {
     /// The number of columns in this grid (1 implies this is a 1D vector)
     size_t num_cols_ = 1;
     /// The grid elements data structure
-    vector grid_;
+    std::vector<T> grid_;
 
 public:
     /// The current depth of all Grid instances
@@ -79,7 +76,7 @@ public:
     /// \param vector    The vector to std::move from
     /// \param max_depth The maximum depth this grid can go down to
     ///
-    Grid(const vector&& vector, const int max_depth);
+    Grid(const std::vector<T>&& vector, const int max_depth);
 
     ///
     /// \brief Construct a 2D grid from an existing vector, 2 dimensions and a maximum depth
@@ -89,24 +86,24 @@ public:
     /// \param num_cols  The number of columns this grid will have
     /// \param max_depth The maximum depth this grid can go down to
     ///
-    Grid(const vector&& matrix, const size_t num_rows, const size_t num_cols, const int max_depth);
+    Grid(const std::vector<T>&& matrix, const size_t num_rows, const size_t num_cols, const int max_depth);
 
     ///
     /// \brief Copy constructor
     ///
     /// \param grid Instance to copy
     ///
-    Grid(const Grid& grid);
+    Grid(const Grid<T>&);
 
     ///
     /// \brief Move constructor
     ///
-    Grid(Grid&&) noexcept;
+    Grid(Grid<T>&&);
 
     ///
     /// /brief Move assignement
     ///
-    Grid& operator=(Grid&&);
+    Grid<T>& operator=(Grid<T>&&);
     
     ///
     /// \brief Destructor
@@ -126,7 +123,7 @@ public:
     size_t size() const;
     int stride() const;
 
-    vector grid() const;
+    std::vector<T> grid() const;
 
     float &operator[](const size_t index);
     const float &operator[](const size_t index) const;

@@ -1,40 +1,39 @@
 #include "../include/grid.h"
 
-#include <cmath>
 #include <cstddef>
 #include <vector>
 
 
-template <typename Numerical>
-using vector = std::vector<Numerical>;
-
-
-Grid::Grid(const size_t size, const int max_depth) :
+template <typename T>
+Grid<T>::Grid(const size_t size, const int max_depth) :
     max_depth_(max_depth),
     num_rows_(size),
-    grid_(vector(num_rows_ * num_cols_, 0)) {
+    grid_(std::vector<T>(num_rows_ * num_cols_, 0)) {
     depth = 0;
 }
 
 
-Grid::Grid(const size_t num_rows, const size_t num_cols, const int max_depth) :
+template <typename T>
+Grid<T>::Grid(const size_t num_rows, const size_t num_cols, const int max_depth) :
     max_depth_(max_depth),
     num_rows_(num_rows),
     num_cols_(num_cols),
-    grid_(vector(num_rows_ * num_cols_, 0)) {
+    grid_(std::vector<T>(num_rows_ * num_cols_, 0)) {
     depth = 0;
 }
 
 
-Grid::Grid(const vector&& vector, const int max_depth) :
+template <typename T>
+Grid<T>::Grid(const std::vector<T>&& vector, const int max_depth) :
     max_depth_(max_depth),
     num_rows_(vector.size()),
     grid_(std::move(vector)) {
     depth = 0;
 }
     
-    
-Grid::Grid(const vector&& matrix, const size_t num_rows,
+
+template <typename T>
+Grid<T>::Grid(const std::vector<T>&& matrix, const size_t num_rows,
     const size_t num_cols, const int max_depth) :
     max_depth_(max_depth),
     num_rows_(num_rows),
@@ -44,7 +43,8 @@ Grid::Grid(const vector&& matrix, const size_t num_rows,
 }
 
 
-Grid::Grid(const Grid& source_grid) :
+template <typename T>
+Grid<T>::Grid(const Grid<T>& source_grid) :
     max_depth_(source_grid.max_depth()),
     num_rows_(source_grid.num_rows()),
     num_cols_(source_grid.num_cols()),
@@ -53,52 +53,64 @@ Grid::Grid(const Grid& source_grid) :
 }
 
 
-Grid::Grid(Grid&& source_grid) :
+template <typename T>
+Grid<T>::Grid(Grid<T>&& source_grid):
     max_depth_(source_grid.max_depth()),
     num_rows_(source_grid.num_rows()),
     num_cols_(source_grid.num_cols()),
-    grid_(std::move(source_grid.grid())) {
+    grid_(std::move(source_grid.grid())) noexcept {
     depth = source_grid.depth;
 
     source_grid.num_rows_ = 0;
     source_grid.num_cols_ = 0;
-    source_grid.grid_ = vector();
+    source_grid.grid_ = std::vector<T>();
 }
 
 
-Grid::~Grid() {
-    grid_ = vector();
+template <typename T>
+Grid<T>::~Grid() {
+    grid_ = std::vector<T>();
 }
 
 
-int Grid::depth;
+template <typename T>
+int Grid<T>::depth;
 
 
-int Grid::max_depth() const { return max_depth_; }
+template <typename T>
+int Grid<T>::max_depth() const { return max_depth_; }
 
 
-size_t Grid::num_rows() const { return num_rows_; }
+template <typename T>
+size_t Grid<T>::num_rows() const { return num_rows_; }
 
 
-size_t Grid::num_cols() const { return num_cols_; }
+template <typename T>
+size_t Grid<T>::num_cols() const { return num_cols_; }
 
 
-size_t Grid::size() const { return num_rows_ * num_cols_; }
+template <typename T>
+size_t Grid<T>::size() const { return num_rows_ * num_cols_; }
 
 
-int Grid::stride() const { return std::pow(2, depth); }
+template <typename T>
+int Grid<T>::stride() const { return std::pow(2, depth); }
 
 
-vector Grid::grid() const { return grid_; }
+template <typename T>
+std::vector<T> Grid<T>::grid() const { return grid_; }
 
 
-float &Grid::operator[](const size_t index) { return grid_[index]; }
+template <typename T>
+float& Grid<T>::operator[](const size_t index) { return grid_[index]; }
 
 
-const float &Grid::operator[](const size_t index) const { return grid_[index]; }
+template <typename T>
+const float& Grid<T>::operator[](const size_t index) const { return grid_[index]; }
 
 
-Grid &Grid::operator=(const Grid &source_grid) {
+template <typename T>
+Grid<T>& Grid<T>::operator=(Grid<T>&& source_grid) {
 
     depth = source_grid.depth;
 
