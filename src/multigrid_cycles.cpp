@@ -1,5 +1,4 @@
 #include "../include/multigrid_cycles.h"
-
 #include "../include/arithmetic.h"
 #include "../include/grid.h"
 #include "../include/reshapers.h"
@@ -8,9 +7,16 @@
 #include <iostream>
 
 
-void restrict(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations, const int final_depth) {
-
+template <typename T>
+void restrict(
+    Grid<T>& a,
+    Grid<T>& x,
+    Grid<T>& b,
+    Grid<T>& residual,
+    Grid<T>& error,
+    const int num_iterations,
+    const int final_depth
+) {
     // Presmooth x at initial depth
     sor_smooth(a, x, b, num_iterations);
 
@@ -44,11 +50,16 @@ void restrict(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
 }
 
 
-void interpolate(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations, const int final_depth) {
-
-    // TODO: check or enforce that initial depth is actually what is given?
-
+template <typename T>
+void interpolate(
+    Grid<T>& a,
+    Grid<T>& x,
+    Grid<T>& b,
+    Grid<T>& residual,
+    Grid<T>& error,
+    const int num_iterations,
+    const int final_depth
+) {
     // Interpolate up to second-finest mesh
     for (auto _ = x.depth; _ > final_depth + 1; _--) {
         // Map the correction from the coarse grid to a finer grid
@@ -71,9 +82,16 @@ void interpolate(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
 }
 
 
-void v_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations, const int final_depth) {
-
+template <typename T>
+void v_cycle(
+    Grid<T>& a,
+    Grid<T>& x,
+    Grid<T>& b,
+    Grid<T>& residual,
+    Grid<T>& error,
+    const int num_iterations,
+    const int final_depth
+) {
     // Restrict and smooth all the way down to coarsest grid depth
     restrict(a, x, b, residual, error, num_iterations, x.max_depth());
 
@@ -82,9 +100,15 @@ void v_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
 }
 
 
-void w_cycle(Grid &a, Grid &x, Grid &b, Grid &residual, Grid &error,
-    const int num_iterations) {
-
+template <typename T>
+void w_cycle(
+    Grid<T>& a,
+    Grid<T>& x,
+    Grid<T>& b,
+    Grid<T>& residual,
+    Grid<T>& error,
+    const int num_iterations
+) {
     // V-cycle repeatedly at varying depths to form the W-cycle.
     // __builtin_ctz used to generate depths for the W-cycle pattern.
     for (auto i = 2; i < std::pow(2, x.max_depth()+1); i += 2) {

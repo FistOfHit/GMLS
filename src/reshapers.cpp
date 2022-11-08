@@ -1,10 +1,12 @@
+#include "../include/grid.h"
 #include "../include/reshapers.h"
 
 #include <cmath>
 #include <iostream>
 
 
-void interpolate_vector(Grid &vector) {
+template <typename T>
+void interpolate_vector(Grid<T>& vector) {
 
     if (vector.depth == 0) {
         std::cout << "Attempting to interpolate from finest level, exiting. \n"; 
@@ -21,7 +23,8 @@ void interpolate_vector(Grid &vector) {
 }
 
 
-void restrict_vector(Grid &vector) {
+template <typename T>
+void restrict_vector(Grid<T>& vector) {
 
     if (vector.size() == 3) {
         std::cout << "Attempting to restrict from coarsest possible grid level"
@@ -31,7 +34,9 @@ void restrict_vector(Grid &vector) {
 }
 
 
-void interpolate_matrix(Grid &matrix) {}
+template <typename T>
+void interpolate_matrix(Grid<T>& matrix) {}
 
 
-void restrict_matrix(Grid &matrix) {}
+template <typename T>
+void restrict_matrix(Grid<T>& matrix) {}

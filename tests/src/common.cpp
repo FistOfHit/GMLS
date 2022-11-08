@@ -1,15 +1,17 @@
 #include "../include/common.h"
+#include "../../include/grid.h"
 #include "../../include/printing.h"
+
 #include <cmath>
 #include <iostream>
 
 
-using vector = std::vector<float>;
-
-
-void test_grid_equality(const Grid &expected, const Grid &actual,
-    const float tolerance) {
-
+template <typename T>
+void test_grid_equality(
+    const Grid<T>& expected,
+    const Grid<T>& actual,
+    const float tolerance
+) {
     if (expected.size() != actual.size()) {
         std::cout << "Size mismatch:" << "\n";
         log_failure(expected, actual);
@@ -29,7 +31,8 @@ void test_grid_equality(const Grid &expected, const Grid &actual,
 }
 
 
-void log_failure(const Grid &expected, const Grid &actual) {
+template <typename T>
+void log_failure(const Grid<T> &expected, const Grid<T> &actual) {
 
     std::cout << "FAIL" << "\n";
     std::cout << "\tExpected: " << "\n\t";

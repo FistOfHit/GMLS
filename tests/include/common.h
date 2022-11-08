@@ -3,9 +3,22 @@
 #include "../../include/grid.h"
 
 
-/* Test if two grids are equal to within a given tolerance. */
-void test_grid_equality(const Grid &a, const Grid &b, const float tolerance = 0.00001F);
+/// @brief Test if two grids are equal to within a given tolerance.
+///
+/// @param a
+/// @param b
+/// @param tolerance The permitted element-wise distance between a and b
+template <typename T>
+void test_grid_equality(
+    const Grid<T>& a,
+    const Grid<T>& b,
+    const float tolerance = 1e-5F
+);
 
 
-/* Log a mismatch failure to stdout. */
-void log_failure(const Grid &expected, const Grid &actual);
+/// @brief Log a mismatch failure to stdout.
+///
+/// @param expected Expected results
+/// @param actual   Actual results
+template <typename T>
+void log_failure(const Grid<T>& expected, const Grid<T>& actual);

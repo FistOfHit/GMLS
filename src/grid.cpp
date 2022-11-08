@@ -14,7 +14,11 @@ Grid<T>::Grid(const size_t size, const int max_depth) :
 
 
 template <typename T>
-Grid<T>::Grid(const size_t num_rows, const size_t num_cols, const int max_depth) :
+Grid<T>::Grid(
+    const size_t num_rows,
+    const size_t num_cols,
+    const int max_depth
+) :
     max_depth_(max_depth),
     num_rows_(num_rows),
     num_cols_(num_cols),
@@ -33,8 +37,12 @@ Grid<T>::Grid(const std::vector<T>&& vector, const int max_depth) :
     
 
 template <typename T>
-Grid<T>::Grid(const std::vector<T>&& matrix, const size_t num_rows,
-    const size_t num_cols, const int max_depth) :
+Grid<T>::Grid(
+    const std::vector<T>&& matrix,
+    const size_t num_rows,
+    const size_t num_cols,
+    const int max_depth
+) :
     max_depth_(max_depth),
     num_rows_(num_rows),
     num_cols_(num_cols),

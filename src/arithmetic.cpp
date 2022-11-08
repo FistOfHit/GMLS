@@ -1,6 +1,3 @@
-/* 
-Headers
-*/
 #include "../include/arithmetic.h"
 #include "../include/grid.h"
 
@@ -8,17 +5,20 @@ Headers
 #include <cstddef>
 
 
-void add(const Grid &a, const Grid &b, Grid &result) {
+template <typename T>
+void add(const Grid<T>& a, const Grid<T>& b, Grid<T>& result) {
     for (auto i = 0; i < a.size(); i += a.stride()) { result[i] = a[i] + b[i]; }
 }
 
 
-void subtract(const Grid &a, const Grid &b, Grid &result) {
+template <typename T>
+void subtract(const Grid<T>& a, const Grid<T>& b, Grid<T>& result) {
     for (auto i = 0; i < a.size(); i += a.stride()) { result[i] = a[i] - b[i]; }
 }
 
 
-void multiply(const Grid &a, const Grid &b, Grid &result) {
+template <typename T>
+void multiply(const Grid<T>& a, const Grid<T>& b, Grid<T>& result) {
 
     float row_sum;
     size_t row_index;

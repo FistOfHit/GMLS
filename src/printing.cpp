@@ -1,6 +1,5 @@
-#include "../include/printing.h"
-
 #include "../include/grid.h"
+#include "../include/printing.h"
 
 #include <algorithm>
 #include <cmath>
@@ -12,7 +11,8 @@
 #include <vector>
 
 
-void print_grid(const Grid &grid, const int precision) {
+template <typename T>
+void print_grid(const Grid<T>& grid, const int precision) {
 
 	// Storing number of digits in each element
 	std::vector<int> digits_grid(grid.size());

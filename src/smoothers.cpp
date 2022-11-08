@@ -1,3 +1,4 @@
+#include "../include/grid.h"
 #include "../include/smoothers.h"
 
 #include <cmath>
@@ -5,11 +6,16 @@
 #include <iostream>
 
 
-void jacobi_smooth(const Grid &a, Grid &x, const Grid &b,
-    const int num_iterations, const float omega) {
-
+template <typename T>
+void jacobi_smooth(
+    const Grid<T>& a,
+    Grid<T>& x,
+    const Grid<T>& b,
+    const int num_iterations,
+    const float omega
+) {
     // Create a duplicate solution vector x
-    Grid x_old = x;
+    Grid<T> x_old = x;
 
 	// Perform n iterations
     size_t row_num;
@@ -38,9 +44,14 @@ void jacobi_smooth(const Grid &a, Grid &x, const Grid &b,
 }
 
 
-void sor_smooth(const Grid &a, Grid &x, const Grid &b, const int num_iterations,
-    const float omega) {
-
+template <typename T>
+void sor_smooth(
+    const Grid<T>& a,
+    Grid<T>& x,
+    const Grid<T>& b,
+    const int num_iterations,
+    const float omega
+) {
 	// Perform n iterations
     size_t row_num;
     float row_sum, new_solution;
