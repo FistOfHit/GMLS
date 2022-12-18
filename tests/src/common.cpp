@@ -1,15 +1,13 @@
 #include "../include/common.h"
 #include "../../include/grid.h"
-#include "../../include/printing.h"
 
 #include <cmath>
 #include <iostream>
 
 
-template <typename T>
 void test_grid_equality(
-    const Grid<T>& expected,
-    const Grid<T>& actual,
+    const Grid<float>& expected,
+    const Grid<float>& actual,
     const float tolerance
 ) {
     if (expected.size() != actual.size()) {
@@ -31,12 +29,13 @@ void test_grid_equality(
 }
 
 
-template <typename T>
-void log_failure(const Grid<T> &expected, const Grid<T> &actual) {
+void log_failure(const Grid<float> &expected, const Grid<float> &actual) {
+
+    auto precision = 10;
 
     std::cout << "FAIL" << "\n";
     std::cout << "\tExpected: " << "\n\t";
-    print_grid(expected, 10);
+    expected.print(precision);
     std::cout << "\tActual:   " << "\n\t";
-    print_grid(actual, 10);
+    actual.print(precision);
 }

@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <cstddef>
+#include <iomanip>
 #include <iostream>
 #include <vector>
 
@@ -70,6 +71,42 @@ Grid<T>::~Grid() {
 
 
 template <typename T>
+T& Grid<T>::operator[](const size_t index) { return grid_[index]; }
+
+
+template <typename T>
+const T& Grid<T>::operator[](const size_t index) const { return grid_[index]; }
+
+
+template <typename T>
+int Grid<T>::depth;
+
+
+template <typename T>
+int Grid<T>::max_depth() const { return max_depth_; }
+
+
+template <typename T>
+size_t Grid<T>::num_rows() const { return num_rows_; }
+
+
+template <typename T>
+size_t Grid<T>::num_cols() const { return num_cols_; }
+
+
+template <typename T>
+size_t Grid<T>::size() const { return num_rows_ * num_cols_; }
+
+
+template <typename T>
+int Grid<T>::stride() const { return std::pow(2, depth); }
+
+
+template <typename T>
+std::vector<T> Grid<T>::grid() const { return grid_; }
+
+
+template <typename T>
 void Grid<T>::restrict() {
 
     if (this->num_rows() == 3) {
@@ -116,6 +153,63 @@ void Grid<T>::interpolate() {
         }
     }
     
+}
+
+
+template <typename T>
+const void Grid<T>::print(const int precision) const {
+
+    // Storing number of digits in each element
+	std::vector<int> digits_grid(this->size());
+
+    size_t num_rows = this->num_rows();
+    size_t num_cols = this->num_cols();
+
+	// Find spaces required to print everything nicely
+	size_t row_number;
+	int num_digits, max_digits = 0;
+	for (auto i = 0; i < num_rows; i++) {
+		row_number = i * num_cols;
+
+		for (auto j = 0; j < num_cols; j++) {
+			num_digits = (int)std::log10((*this)[row_number + j]);
+			max_digits = std::max(max_digits, num_digits);
+
+			digits_grid[row_number + j] = num_digits;
+		}
+	}
+
+	// Size of whats being printed
+	std::cout << std::setprecision(precision) << std::fixed;
+	std::cout << "Grid: " << num_rows << " X " << num_cols << "\n";
+	std::cout << "[";
+
+	// Print row by row
+	int num_spaces;
+	for (auto i = 0; i < num_rows; i++) {
+		row_number = i * num_cols;
+
+		// Tidy brackets
+		if (i == 0) { std::cout << "["; }
+		else { std::cout << " ["; }
+
+		// Print spaces for all but last element in each row
+		for (auto j = 0; j < num_cols - 1; j++) {
+			std::cout << (*this)[row_number + j];
+
+			// Print enough spaces to leave big enough gap
+			num_spaces = max_digits - digits_grid[row_number + j] + 1;
+			for (auto k = 0; k < num_spaces; k++) {
+                std::cout << " ";
+            }
+		}
+
+		std::cout << (*this)[row_number + num_cols - 1];
+
+		// Tidy brackets
+		if (i == num_rows - 1) { std::cout << "]]" << "\n"; }
+		else { std::cout << "]" << "\n"; }
+	}
 }
 
 
@@ -209,39 +303,3 @@ const Grid<T> Grid<T>::operator *(const Grid<T>& operand) const {
 
     return result;
 }
-
-
-template <typename T>
-float& Grid<T>::operator[](const size_t index) { return grid_[index]; }
-
-
-template <typename T>
-const float& Grid<T>::operator[](const size_t index) const { return grid_[index]; }
-
-
-template <typename T>
-int Grid<T>::depth;
-
-
-template <typename T>
-int Grid<T>::max_depth() const { return max_depth_; }
-
-
-template <typename T>
-size_t Grid<T>::num_rows() const { return num_rows_; }
-
-
-template <typename T>
-size_t Grid<T>::num_cols() const { return num_cols_; }
-
-
-template <typename T>
-size_t Grid<T>::size() const { return num_rows_ * num_cols_; }
-
-
-template <typename T>
-int Grid<T>::stride() const { return std::pow(2, depth); }
-
-
-template <typename T>
-std::vector<T> Grid<T>::grid() const { return grid_; }

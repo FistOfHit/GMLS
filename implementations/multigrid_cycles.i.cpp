@@ -10,6 +10,15 @@ template void restrict(
     const int num_iterations,
     const int final_depth
 );
+template void restrict(
+    Grid<double>& a,
+    Grid<double>& x,
+    Grid<double>& b,
+    Grid<double>& residual,
+    Grid<double>& error,
+    const int num_iterations,
+    const int final_depth
+);
 
 template void interpolate(
     Grid<float>& a,
@@ -17,6 +26,15 @@ template void interpolate(
     Grid<float>& b,
     Grid<float>& residual,
     Grid<float>& error,
+    const int num_iterations,
+    const int final_depth
+);
+template void interpolate(
+    Grid<double>& a,
+    Grid<double>& x,
+    Grid<double>& b,
+    Grid<double>& residual,
+    Grid<double>& error,
     const int num_iterations,
     const int final_depth
 );
@@ -30,6 +48,15 @@ template void v_cycle(
     const int num_iterations,
     const int final_depth
 );
+template void v_cycle(
+    Grid<double>& a,
+    Grid<double>& x,
+    Grid<double>& b,
+    Grid<double>& residual,
+    Grid<double>& error,
+    const int num_iterations,
+    const int final_depth
+);
 
 template void w_cycle(
     Grid<float>& a,
@@ -37,5 +64,13 @@ template void w_cycle(
     Grid<float>& b,
     Grid<float>& residual,
     Grid<float>& error,
+    const int num_iterations
+);
+template void w_cycle(
+    Grid<double>& a,
+    Grid<double>& x,
+    Grid<double>& b,
+    Grid<double>& residual,
+    Grid<double>& error,
     const int num_iterations
 );

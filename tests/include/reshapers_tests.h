@@ -7,13 +7,11 @@
 ///
 /// @param coarse          The coarse grid to interpolate
 /// @param expected_values The expected value of the grid after interpolation
-template <typename T>
-void test_grid_interpolation(const Grid<T>& coarse, const Grid<T>& expected_values);
+void test_grid_interpolation(const Grid<float>& coarse, const Grid<float>& expected_values);
 
 
 /// @brief Test Grid restriction.
 ///
 /// @param fine         The coarse grid to interpolate
 /// @param expected_values The expected value of the grid after interpolation
-template <typename T>
-void test_grid_restriction(const Grid<T>& fine, const Grid<T>& expected_values);
+void test_grid_restriction(const Grid<float>& fine, const Grid<float>& expected_values);

@@ -63,6 +63,30 @@ public:
     /// @brief Destructor
     ~Grid();
 
+    /// @brief Assign grid value at a given index
+    T& operator[](const size_t index);
+
+    /// @brief Get grid value at a given index
+    const T& operator[](const size_t index) const;
+
+    /// @brief Get maximum grid depth
+    int max_depth() const;
+
+    /// @brief Get number of rows (dimension 1)
+    size_t num_rows() const;
+
+    /// @brief Get number of columns (dimension 2)
+    size_t num_cols() const;
+
+    /// @brief Get total number of elements (dimension 1 X dimension 2)
+    size_t size() const;
+
+    /// @brief Get the stride in use to access consecutive grid elements 
+    int stride() const;
+
+    /// @brief Get the grid values
+    std::vector<T> grid() const;
+
     /// @brief Restrict grid from 2^n+1 elements to 2^(n-1)+1 elements
     ///
     /// @details The method implemented here (injection) simply samples 
@@ -123,6 +147,19 @@ public:
     /// solution/RHS vector.
     void interpolate();
     
+
+    /// @brief Print out a grid element by element in easy to read manner.
+    ///
+    /// @details Printing is done as expected, but to make the it a bit nicer,
+    /// first the number of digits in each element is found and then we print it
+    /// to 2 decimal places, so that each element is printed with the same amount
+    /// of space around it. This keeps the printing clean and tidy, and avoids rows
+    /// being offset when printing, making it much easier to see down columns.
+    ///
+    /// @param precision The numerical precision at which to print (default = 3)
+    const void print(const int precision = 3) const;
+
+
     /// @brief Add a grid, element-wise, into this one
     Grid<T>& operator +=(const Grid<T>&);
 
@@ -140,28 +177,4 @@ public:
 
     /// @brief Multiply two grids and return a new one
     const Grid<T> operator *(const Grid<T>&) const;
-
-    /// @brief Assign grid value at a given index
-    float& operator[](const size_t index);
-
-    /// @brief Get grid value at a given index
-    const float& operator[](const size_t index) const;
-
-    /// @brief Get maximum grid depth
-    int max_depth() const;
-
-    /// @brief Get number of rows (dimension 1)
-    size_t num_rows() const;
-
-    /// @brief Get number of columns (dimension 2)
-    size_t num_cols() const;
-
-    /// @brief Get total number of elements (dimension 1 X dimension 2)
-    size_t size() const;
-
-    /// @brief Get the stride in use to access consecutive grid elements 
-    int stride() const;
-
-    /// @brief Get the grid values
-    std::vector<T> grid() const;
 };

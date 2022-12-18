@@ -8,7 +8,6 @@
 // Source includes
 #include "../include/grid.h"
 #include "../include/multigrid_cycles.h"
-#include "../include/printing.h"
 
 #include <iostream>
 #include <vector>
@@ -28,5 +27,5 @@ int main() {
     Grid<float> g = Grid<float>(31, 3);
     std::cout << g.size() << std::endl;
     std::cout << g.max_depth() << std::endl;
-    print_grid(g);
+    g.print();
 }

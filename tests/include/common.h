@@ -8,10 +8,9 @@
 /// @param a
 /// @param b
 /// @param tolerance The permitted element-wise distance between a and b
-template <typename T>
 void test_grid_equality(
-    const Grid<T>& a,
-    const Grid<T>& b,
+    const Grid<float>& a,
+    const Grid<float>& b,
     const float tolerance = 1e-5F
 );
 
@@ -20,5 +19,4 @@ void test_grid_equality(
 ///
 /// @param expected Expected results
 /// @param actual   Actual results
-template <typename T>
-void log_failure(const Grid<T>& expected, const Grid<T>& actual);
+void log_failure(const Grid<float>& expected, const Grid<float>& actual);

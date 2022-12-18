@@ -4,12 +4,11 @@
 #include "../../include/grid.h"
 
 
-template <typename T>
 void test_grid_interpolation(
-    const Grid<T>& coarse,
-    const Grid<T>& expected_values
+    const Grid<float>& coarse,
+    const Grid<float>& expected_values
 ) {
-    Grid<T> actual = coarse;
+    Grid<float> actual = coarse;
 
     actual.interpolate();
     coarse.depth--;
@@ -18,12 +17,11 @@ void test_grid_interpolation(
 }
 
 
-template <typename T>
 void test_grid_restriction(
-    const Grid<T>& fine,
-    const Grid<T>& expected_values
+    const Grid<float>& fine,
+    const Grid<float>& expected_values
 ) {
-    Grid<T> actual = fine;
+    Grid<float> actual = fine;
 
     actual.restrict();
     fine.depth++;

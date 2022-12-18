@@ -16,13 +16,12 @@
 /// @param num_iterations The number of iterations to apply smoothers whenever
 ///                       required during the cycle
 /// @param num_cycles     The number of V-cycles to perform
-template <typename T>
 void test_v_cycle(
-    Grid<T>& a,
-    Grid<T>& b,
-    Grid<T>& residual,
-    Grid<T>& error,
-    const Grid<T> expected_values,
+    Grid<float>& a,
+    Grid<float>& b,
+    Grid<float>& residual,
+    Grid<float>& error,
+    const Grid<float> expected_values,
     const int num_iterations,
     const int num_cycles
 );
@@ -41,13 +40,12 @@ void test_v_cycle(
 /// @param num_iterations The number of iterations to apply smoothers whenever
 ///                       required during the cycle
 /// @param num_cycles     The number of W-cycles to perform
-template <typename T>
 void test_w_cycle(
-    Grid<T>& a,
-    Grid<T>& b,
-    Grid<T>& residual,
-    Grid<T>& error,
-    const Grid<T> expected_values,
+    Grid<float>& a,
+    Grid<float>& b,
+    Grid<float>& residual,
+    Grid<float>& error,
+    const Grid<float> expected_values,
     const int num_iterations,
     const int num_cycles
 );

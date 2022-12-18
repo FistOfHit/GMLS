@@ -8,11 +8,10 @@
 /// @param a
 /// @param b
 /// @param expected_values
-template <typename T>
 void test_add(
-    const Grid<T> &a,
-    const Grid<T> &b,
-    const Grid<T> &expected_values
+    const Grid<float> &a,
+    const Grid<float> &b,
+    const Grid<float> &expected_values
 );
 
 
@@ -21,11 +20,10 @@ void test_add(
 /// @param a
 /// @param b
 /// @param expected_values
-template <typename T>
 void test_subtract(
-    const Grid<T>& a,
-    const Grid<T>& b,
-    const Grid<T>& expected_values
+    const Grid<float>& a,
+    const Grid<float>& b,
+    const Grid<float>& expected_values
 );
 
 
@@ -34,9 +32,8 @@ void test_subtract(
 /// @param matrix
 /// @param b               The second grid argument
 /// @param expected_values The expected output from the test
-template <typename T>
 void test_multiply(
-    const Grid<T>& matrix,
-    const Grid<T>& vector,
-    const Grid<T>& expected_values
+    const Grid<float>& matrix,
+    const Grid<float>& vector,
+    const Grid<float>& expected_values
 );
