@@ -1,6 +1,8 @@
 #include "../include/grid.h"
 
+#include <cmath>
 #include <cstddef>
+#include <iostream>
 #include <vector>
 
 
@@ -64,6 +66,56 @@ Grid<T>::Grid(const Grid<T>& source_grid) :
 template <typename T>
 Grid<T>::~Grid() {
     grid_ = std::vector<T>();
+}
+
+
+template <typename T>
+void Grid<T>::restrict() {
+
+    if (this->num_rows() == 3) {
+        std::cout << "Attempting to restrict from coarsest possible grid level"
+            << " (vector of size 3), exiting. \n";
+        return;
+    }
+
+    // Matrix case
+    if (this->num_cols() > 1) {
+        if (this->num_cols() == 3) {
+            std::cout << "Attempting to restrict from coarsest possible grid level"
+                << " (vector of size 3), exiting. \n";
+            return;
+        }
+
+    // Vector case
+    } else {
+        // Do nothing
+    }
+}
+
+
+template <typename T>
+void Grid<T>::interpolate() {
+
+    if (this->depth == 0) {
+        std::cout << "Attempting to interpolate from finest level, exiting. \n"; 
+        return;
+    }
+
+    // Matrix case
+    if (this->num_cols() > 1) {
+        // Do nothing
+
+    // Vector case
+    } else {
+        // Determine half-stride length across vector for edges
+        int half_stride = this->stride() / 2;
+
+        // Interpolating all "new" points
+        for (auto i = half_stride; i <= this->size() - half_stride; i += this->stride()) {
+            (*this)[i] = 0.5 * ((*this)[i - half_stride] + (*this)[i + half_stride]);
+        }
+    }
+    
 }
 
 

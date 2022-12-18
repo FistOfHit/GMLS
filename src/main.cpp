@@ -9,7 +9,6 @@
 #include "../include/grid.h"
 #include "../include/multigrid_cycles.h"
 #include "../include/printing.h"
-#include "../include/reshapers.h"
 
 #include <iostream>
 #include <vector>

@@ -1,6 +1,5 @@
 #include "../include/multigrid_cycles.h"
 #include "../include/grid.h"
-#include "../include/reshapers.h"
 #include "../include/smoothers.h"
 
 #include <iostream>
@@ -23,8 +22,8 @@ void restrict(
     residual = b - (a * x);
 
     // Restrict residual (and LHS matrix)
-    restrict_vector(residual);
-    restrict_matrix(a);
+    residual.restrict();
+    a.restrict();
     x.depth++;
 
     // Restrict down to coarsest grid
@@ -36,8 +35,8 @@ void restrict(
         residual -= (a * error);
 
         // Restrict residual (and LHS matrix)
-        restrict_vector(residual);
-        restrict_matrix(a);
+        residual.restrict();
+        a.restrict();
         x.depth++;
     }
 
@@ -59,20 +58,20 @@ void interpolate(
     // Interpolate up to second-finest mesh
     for (auto _ = x.depth; _ > final_depth + 1; _--) {
         // Map the correction from the coarse grid to a finer grid
-        interpolate_vector(error);
+        error.interpolate();
 
         // Apply a post-smoother to Ax=b
-        interpolate_matrix(a);
+        a.interpolate();
         sor_smooth(a, error, residual, num_iterations);
         x.depth--;
     }
 
     // Map the correction from the second finest grid to the finest grid
-    interpolate_vector(error);
+    error.interpolate();
     x += error;
 
     // Apply a post-smoother to Ax=b
-    interpolate_matrix(a);
+    a.interpolate();
     sor_smooth(a, x, b, 0, num_iterations);
     x.depth--;
 }
@@ -113,9 +112,9 @@ void w_cycle(
     }
     
     // Restrict everything once and interpolate back to top to end V-cycles
-    restrict_vector(error);
-    restrict_vector(residual);
-    restrict_matrix(a);
+    error.restrict();
+    residual.restrict();
+    a.restrict();
     x.depth++;
 
     interpolate(a, x, b, residual, error, num_iterations, 0);

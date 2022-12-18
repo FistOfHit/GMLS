@@ -2,7 +2,6 @@
 #include "../include/reshapers_tests.h"
 
 #include "../../include/grid.h"
-#include "../../include/reshapers.h"
 
 
 template <typename T>
@@ -12,7 +11,7 @@ void test_grid_interpolation(
 ) {
     Grid<T> actual = coarse;
 
-    interpolate_vector(actual);
+    actual.interpolate();
     coarse.depth--;
 
     test_grid_equality(expected_values, actual);
@@ -26,7 +25,7 @@ void test_grid_restriction(
 ) {
     Grid<T> actual = fine;
 
-    restrict_vector(actual);
+    actual.restrict();
     fine.depth++;
 
     test_grid_equality(expected_values, actual);
