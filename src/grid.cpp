@@ -61,7 +61,6 @@ Grid<T>::Grid(const Grid<T>& source_grid) :
 }
 
 
-
 template <typename T>
 Grid<T>::~Grid() {
     grid_ = std::vector<T>();
