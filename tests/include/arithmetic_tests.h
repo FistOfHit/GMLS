@@ -40,7 +40,3 @@ void test_multiply(
     const Grid<T>& vector,
     const Grid<T>& expected_values
 );
-
-
-/// @brief Run all arithmetic tests
-void run_arithmetic_tests();

@@ -2,10 +2,7 @@
 #ifdef TESTING_MODE
 
 // Test includes
-#include "../tests/include/arithmetic_tests.h"
-#include "../tests/include/multigrid_cycle_tests.h"
-#include "../tests/include/reshapers_tests.h"
-#include "../tests/include/smoothers_tests.h"
+#include "../tests/include/test_wrappers.h"
 #endif
 
 // Source includes

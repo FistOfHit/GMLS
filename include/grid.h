@@ -68,16 +68,6 @@ public:
     /// @param grid Instance to copy
     ///
     Grid(const Grid<T>&);
-
-    ///
-    /// @brief Move constructor
-    ///
-    Grid(Grid<T>&&);
-
-    ///
-    /// @brief Move assignement
-    ///
-    Grid<T>& operator=(Grid<T>&&);
     
     ~Grid();
 

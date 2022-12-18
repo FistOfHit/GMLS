@@ -51,7 +51,3 @@ void test_w_cycle(
     const int num_iterations,
     const int num_cycles
 );
-
-
-/// @brief Run all tests for multigrid cycle.
-void run_cycle_tests();

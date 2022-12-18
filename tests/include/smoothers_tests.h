@@ -16,7 +16,3 @@ void test_smoothers(
     const Grid<T>& expected_values,
     const int num_iterations = 100
 );
-
-
-/// @brief Run all smoother tests.
-void run_smoother_tests();

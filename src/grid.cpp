@@ -61,19 +61,6 @@ Grid<T>::Grid(const Grid<T>& source_grid) :
 }
 
 
-template <typename T>
-Grid<T>::Grid(Grid<T>&& source_grid):
-    max_depth_(source_grid.max_depth()),
-    num_rows_(source_grid.num_rows()),
-    num_cols_(source_grid.num_cols()),
-    grid_(std::move(source_grid.grid())) noexcept {
-    depth = source_grid.depth;
-
-    source_grid.num_rows_ = 0;
-    source_grid.num_cols_ = 0;
-    source_grid.grid_ = std::vector<T>();
-}
-
 
 template <typename T>
 Grid<T>::~Grid() {
@@ -115,17 +102,3 @@ float& Grid<T>::operator[](const size_t index) { return grid_[index]; }
 
 template <typename T>
 const float& Grid<T>::operator[](const size_t index) const { return grid_[index]; }
-
-
-template <typename T>
-Grid<T>& Grid<T>::operator=(Grid<T>&& source_grid) {
-
-    depth = source_grid.depth;
-
-    max_depth_ = source_grid.max_depth_;
-    num_rows_ = source_grid.num_rows_;
-    num_cols_ = source_grid.num_cols_;
-    grid_ = std::move(source_grid.grid_);
-
-    return *this;
-}
