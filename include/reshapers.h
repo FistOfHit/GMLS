@@ -68,7 +68,7 @@ void interpolate_vector(Grid<T>& vector);
 ///
 /// As described in restrict_matrix, this fucntion is merely a placeholder.
 ///
-/// @param vector Vector to be interpolated
+/// @param matrix Matrix to be interpolated
 template <typename T>
 void interpolate_matrix(Grid<T>& matrix);
 
@@ -102,6 +102,6 @@ void interpolate_matrix(Grid<T>& matrix);
 /// also be strided access, with half the stride length. This function, and its 
 /// counterpart, the matrix interpolation function, are just placeholders.
 ///
-/// @param vector Vector to be restricted
+/// @param matrix Matrix to be restricted
 template <typename T>
 void restrict_matrix(Grid<T>& matrix);

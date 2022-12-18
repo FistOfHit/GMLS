@@ -68,6 +68,106 @@ Grid<T>::~Grid() {
 
 
 template <typename T>
+Grid<T>& Grid<T>::operator +=(const Grid<T>& operand) {
+    for (auto i = 0; i < this->size(); i += this->stride()) {
+        (*this)[i] = (*this)[i] + operand[i];
+    }
+
+    return *this;
+}
+
+
+template <typename T>
+Grid<T>& Grid<T>::operator -=(const Grid<T>& operand){
+    for (auto i = 0; i < this->size(); i += this->stride()) {
+        (*this)[i] = (*this)[i] - operand[i];
+    }
+
+    return *this;
+}
+
+
+template <typename T>
+Grid<T>& Grid<T>::operator *=(const Grid<T>& operand){
+
+    float row_sum;
+    size_t row_index;
+    // Matrix-Vector multiplication (row-by-row element wise vector-vector)
+    for (auto i = 0; i < this->num_rows(); i += this->stride()) {
+        row_sum = 0.0F;
+        row_index = i * operand.size();
+
+        for (auto j = 0; j < this->num_cols(); j += this->stride()) {
+            row_sum += (*this)[row_index + j] * operand[j];
+        }
+
+        (*this)[i] = row_sum;
+    }
+
+    return *this;
+}
+
+
+template <typename T>
+const Grid<T> Grid<T>::operator +(const Grid<T>& operand) const {
+    
+    // Create a new grid as a copy of calling grid
+    Grid<T> result = Grid<T>(*this);
+    for (auto i = 0; i < result.size(); i += result.stride()) {
+        result[i] = (*this)[i] + operand[i];
+    }
+
+    return result;
+}
+
+
+template <typename T>
+const Grid<T> Grid<T>::operator -(const Grid<T>& operand) const {
+
+    // Create a new grid as a copy of calling grid
+    Grid<T> result = Grid<T>(*this);
+    for (auto i = 0; i < result.size(); i += result.stride()) {
+        result[i] = (*this)[i] - operand[i];
+    }
+
+    return result;
+}
+
+
+template <typename T>
+const Grid<T> Grid<T>::operator *(const Grid<T>& operand) const {
+
+    // Create a new grid with approrpiate dimensions
+    Grid<T> result = Grid<T>(this->num_rows(), 1);
+    result.depth = this->depth;
+
+    float row_sum;
+    size_t row_index;
+    // Matrix-Vector multiplication (row-by-row element wise vector-vector)
+    for (auto i = 0; i < this->num_rows(); i += this->stride()) {
+        row_sum = 0.0F;
+        row_index = i * this->num_cols();
+
+        for (auto j = 0; j < this->num_cols(); j += this->stride()) {
+            row_sum += (*this)[row_index + j] * operand[j];
+        }
+
+        result[i] = row_sum;
+    }
+
+    return result;
+}
+
+
+template <typename T>
+float& Grid<T>::operator[](const size_t index) { return grid_[index]; }
+
+
+template <typename T>
+const float& Grid<T>::operator[](const size_t index) const { return grid_[index]; }
+
+
+template <typename T>
 int Grid<T>::depth;
 
 
@@ -93,11 +193,3 @@ int Grid<T>::stride() const { return std::pow(2, depth); }
 
 template <typename T>
 std::vector<T> Grid<T>::grid() const { return grid_; }
-
-
-template <typename T>
-float& Grid<T>::operator[](const size_t index) { return grid_[index]; }
-
-
-template <typename T>
-const float& Grid<T>::operator[](const size_t index) const { return grid_[index]; }

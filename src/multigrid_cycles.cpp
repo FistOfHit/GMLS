@@ -1,5 +1,4 @@
 #include "../include/multigrid_cycles.h"
-#include "../include/arithmetic.h"
 #include "../include/grid.h"
 #include "../include/reshapers.h"
 #include "../include/smoothers.h"
@@ -21,9 +20,7 @@ void restrict(
     sor_smooth(a, x, b, num_iterations);
 
     // Find the current residual
-    Grid temp = x;
-    multiply(a, x, temp);
-    subtract(b, temp, residual);
+    residual = b - (a * x);
 
     // Restrict residual (and LHS matrix)
     restrict_vector(residual);
@@ -36,8 +33,7 @@ void restrict(
         sor_smooth(a, error, residual, num_iterations);
 
         // Find the current residual
-        multiply(a, error, temp);
-        subtract(residual, temp, residual);
+        residual -= (a * error);
 
         // Restrict residual (and LHS matrix)
         restrict_vector(residual);
@@ -73,7 +69,7 @@ void interpolate(
 
     // Map the correction from the second finest grid to the finest grid
     interpolate_vector(error);
-    add(x, error, x);
+    x += error;
 
     // Apply a post-smoother to Ax=b
     interpolate_matrix(a);
