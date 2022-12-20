@@ -64,9 +64,13 @@ public:
     ~Grid();
 
     /// @brief Assign grid value at a given index
+    ///
+    /// @param index The index to assign a value to
     T& operator[](const size_t index);
 
     /// @brief Get grid value at a given index
+    ///
+    /// @param index The index to get the value from
     const T& operator[](const size_t index) const;
 
     /// @brief Get maximum grid depth
@@ -85,7 +89,10 @@ public:
     int stride() const;
 
     /// @brief Get the grid values
-    std::vector<T> grid() const;
+    const std::vector<T>& grid() const;
+
+    /// @brief Move the values (elements) from another grid into this one
+    void move_elements_from(const Grid<T>&);
 
     /// @brief Restrict grid from 2^n+1 elements to 2^(n-1)+1 elements
     ///
@@ -146,7 +153,6 @@ public:
     /// smoothing now not only come from smoothing, but also from reshaping the
     /// solution/RHS vector.
     void interpolate();
-    
 
     /// @brief Print out a grid element by element in easy to read manner.
     ///
@@ -158,7 +164,6 @@ public:
     ///
     /// @param precision The numerical precision at which to print (default = 3)
     const void print(const int precision = 3) const;
-
 
     /// @brief Add a grid, element-wise, into this one
     Grid<T>& operator +=(const Grid<T>&);

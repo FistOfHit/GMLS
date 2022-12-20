@@ -103,7 +103,13 @@ int Grid<T>::stride() const { return std::pow(2, depth); }
 
 
 template <typename T>
-std::vector<T> Grid<T>::grid() const { return grid_; }
+const std::vector<T>& Grid<T>::grid() const { return grid_; }
+
+
+template <typename T>
+void Grid<T>::move_elements_from(const Grid<T>& target) {
+    this->grid_ = std::move(target.grid());
+}
 
 
 template <typename T>

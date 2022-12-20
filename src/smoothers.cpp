@@ -15,7 +15,7 @@ void jacobi_smooth(
     const float omega
 ) {
     // Create a duplicate solution vector x
-    Grid<T> x_old = x;
+    Grid<T>& x_old = x;
 
 	// Perform n iterations
     size_t row_num;
@@ -39,7 +39,7 @@ void jacobi_smooth(
 		}
 
         // Replace x_old with the updated x
-        x_old = x;
+        x_old.move_elements_from(x);
 	}
 }
 
