@@ -1,0 +1,14 @@
+build --repo_env=CC=clang-10
+build --copt="-g"
+
+build:base-sanitizer --copt="-fno-omit-frame-pointer"
+build:base-sanitizer --strip never
+
+build:ubsan --config=base-sanitizer
+build:ubsan --copt="-O1"
+build:ubsan --copt="-fsanitize=undefined"
+#build:ubsan --copt="-fno-sanitize=function"
+build:ubsan --linkopt="-fsanitize=undefined"
+build:ubsan --linkopt="-lubsan"
+#build:ubsan --copt="-fsanitize=undefined"
+test:ubsan --test_env="UBSAN_SYMBOLIZER_PATH=/usr/lib/llvm-14/bin/llvm-symbolizer"
