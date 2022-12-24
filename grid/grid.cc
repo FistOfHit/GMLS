@@ -1,4 +1,4 @@
-#include "include/grid.h"
+#include "grid/grid.h"
 
 #include <cmath>
 #include <cstddef>
@@ -9,11 +9,12 @@
 
 template <typename T>
 Grid<T>::Grid(const size_t size, const int max_depth) :
+    depth_(0),
     max_depth_(max_depth),
     num_rows_(size),
-    grid_(std::vector<T>(num_rows_ * num_cols_, 0)) {
-    depth = 0;
-}
+    grid_(std::vector<T>(num_rows_ * num_cols_, 0)) {}
+    
+
 
 
 template <typename T>
@@ -22,21 +23,19 @@ Grid<T>::Grid(
     const size_t num_cols,
     const int max_depth
 ) :
+    depth_(0),
     max_depth_(max_depth),
     num_rows_(num_rows),
     num_cols_(num_cols),
-    grid_(std::vector<T>(num_rows_ * num_cols_, 0)) {
-    depth = 0;
-}
+    grid_(std::vector<T>(num_rows_ * num_cols_, 0)) {}
 
 
 template <typename T>
 Grid<T>::Grid(const std::vector<T>&& vector, const int max_depth) :
+    depth_(0),
     max_depth_(max_depth),
     num_rows_(vector.size()),
-    grid_(std::move(vector)) {
-    depth = 0;
-}
+    grid_(std::move(vector)) {}
     
 
 template <typename T>
@@ -46,22 +45,20 @@ Grid<T>::Grid(
     const size_t num_cols,
     const int max_depth
 ) :
+    depth_(0),
     max_depth_(max_depth),
     num_rows_(num_rows),
     num_cols_(num_cols),
-    grid_(std::move(matrix)) {
-    depth = 0;
-}
+    grid_(std::move(matrix)) {}
 
 
 template <typename T>
 Grid<T>::Grid(const Grid<T>& source_grid) :
+    depth_(source_grid.depth()),
     max_depth_(source_grid.max_depth()),
     num_rows_(source_grid.num_rows()),
     num_cols_(source_grid.num_cols()),
-    grid_(source_grid.grid()) {
-    depth = source_grid.depth;
-}
+    grid_(source_grid.grid()) {}
 
 
 template <typename T>
@@ -79,27 +76,39 @@ const T& Grid<T>::operator[](const size_t index) const { return grid_[index]; }
 
 
 template <typename T>
-int Grid<T>::depth;
+const int Grid<T>::depth() const { return depth_; }
 
 
 template <typename T>
-int Grid<T>::max_depth() const { return max_depth_; }
+void Grid<T>::set_depth(const int new_depth) { depth_ = new_depth; }
 
 
 template <typename T>
-size_t Grid<T>::num_rows() const { return num_rows_; }
+void Grid<T>::increment_depth() { depth_++; };
 
 
 template <typename T>
-size_t Grid<T>::num_cols() const { return num_cols_; }
+void Grid<T>::decrement_depth() { depth_--; };
 
 
 template <typename T>
-size_t Grid<T>::size() const { return num_rows_ * num_cols_; }
+const int Grid<T>::max_depth() const { return max_depth_; }
 
 
 template <typename T>
-int Grid<T>::stride() const { return std::pow(2, depth); }
+const size_t Grid<T>::num_rows() const { return num_rows_; }
+
+
+template <typename T>
+const size_t Grid<T>::num_cols() const { return num_cols_; }
+
+
+template <typename T>
+const size_t Grid<T>::size() const { return num_rows_ * num_cols_; }
+
+
+template <typename T>
+const int Grid<T>::stride() const { return std::pow(2, depth_); }
 
 
 template <typename T>
@@ -108,7 +117,7 @@ const std::vector<T>& Grid<T>::grid() const { return grid_; }
 
 template <typename T>
 void Grid<T>::move_elements_from(const Grid<T>& target) {
-    this->grid_ = std::move(target.grid());
+    grid_ = std::move(target.grid());
 }
 
 
@@ -139,7 +148,7 @@ void Grid<T>::restrict() {
 template <typename T>
 void Grid<T>::interpolate() {
 
-    if (this->depth == 0) {
+    if (this->depth() == 0) {
         std::cout << "Attempting to interpolate from finest level, exiting. \n"; 
         return;
     }
@@ -291,7 +300,7 @@ const Grid<T> Grid<T>::operator *(const Grid<T>& operand) const {
 
     // Create a new grid with approrpiate dimensions
     Grid<T> result = Grid<T>(this->num_rows(), 1);
-    result.depth = this->depth;
+    result.set_depth(this->depth());
 
     float row_sum;
     size_t row_index;

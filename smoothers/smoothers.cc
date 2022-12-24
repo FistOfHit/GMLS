@@ -1,5 +1,5 @@
-#include "include/grid.h"
-#include "include/smoothers.h"
+#include "grid/grid.h"
+#include "smoothers/smoothers.h"
 
 #include <cmath>
 #include <cstddef>
@@ -15,7 +15,7 @@ void jacobi_smooth(
     const float omega
 ) {
     // Create a duplicate solution vector x
-    Grid<T>& x_old = x;
+    auto x_old = x;
 
 	// Perform n iterations
     size_t row_num;
@@ -55,6 +55,7 @@ void sor_smooth(
 	// Perform n iterations
     size_t row_num;
     float row_sum, new_solution;
+
 	for (auto _ = 0; _ < num_iterations; _++) {
 		for (auto i = 0; i < a.num_rows(); i += x.stride()) {
 			row_num = i * a.num_cols();

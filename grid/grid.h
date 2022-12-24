@@ -9,6 +9,8 @@
 template <typename T>
 class Grid {
 
+    /// The current depth of all Grid instances
+    int depth_;
     /// The maximum depth this grid can go down to
     int max_depth_;
     /// The number of rows in this grid (1 implies this is a 1D vector)
@@ -19,9 +21,6 @@ class Grid {
     std::vector<T> grid_;
 
 public:
-
-    /// The current depth of all Grid instances
-    static int depth;
 
     /// @brief Construct a 1D grid from a size and max depth
     ///
@@ -73,20 +72,32 @@ public:
     /// @param index The index to get the value from
     const T& operator[](const size_t index) const;
 
+    /// @brief Get the current grid depth
+    const int depth() const;
+
+    /// @brief Set the current grid depth
+    void set_depth(const int new_depth);
+
+    /// @brief Increment the current grid depth
+    void increment_depth();
+
+    /// @brief Decrement the current grid depth
+    void decrement_depth();
+
     /// @brief Get maximum grid depth
-    int max_depth() const;
+    const int max_depth() const;
 
     /// @brief Get number of rows (dimension 1)
-    size_t num_rows() const;
+    const size_t num_rows() const;
 
     /// @brief Get number of columns (dimension 2)
-    size_t num_cols() const;
+    const size_t num_cols() const;
 
     /// @brief Get total number of elements (dimension 1 X dimension 2)
-    size_t size() const;
+    const size_t size() const;
 
     /// @brief Get the stride in use to access consecutive grid elements 
-    int stride() const;
+    const int stride() const;
 
     /// @brief Get the grid values
     const std::vector<T>& grid() const;

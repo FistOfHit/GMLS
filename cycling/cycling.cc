@@ -1,6 +1,6 @@
-#include "include/multigrid_cycles.h"
-#include "include/grid.h"
-#include "include/smoothers.h"
+#include "cycling/cycling.h"
+#include "grid/grid.h"
+#include "smoothers/smoothers.h"
 
 #include <iostream>
 
@@ -24,10 +24,16 @@ void restrict(
     // Restrict residual (and LHS matrix)
     residual.restrict();
     a.restrict();
-    x.depth++;
+
+    // Increment all depths
+    a.increment_depth();
+    x.increment_depth();
+    b.increment_depth();
+    residual.increment_depth();
+    error.increment_depth();
 
     // Restrict down to coarsest grid
-    for (auto _ = x.depth; _ < final_depth; _++) {
+    for (auto _ = x.depth(); _ < final_depth; _++) {
         // Presmooth x at finer level
         sor_smooth(a, error, residual, num_iterations);
 
@@ -37,7 +43,13 @@ void restrict(
         // Restrict residual (and LHS matrix)
         residual.restrict();
         a.restrict();
-        x.depth++;
+
+        // Increment all depths
+        a.increment_depth();
+        x.increment_depth();
+        b.increment_depth();
+        residual.increment_depth();
+        error.increment_depth();
     }
 
     // Further smooth on coarsest grid
@@ -56,14 +68,20 @@ void interpolate(
     const int final_depth
 ) {
     // Interpolate up to second-finest mesh
-    for (auto _ = x.depth; _ > final_depth + 1; _--) {
+    for (auto _ = x.depth(); _ > final_depth + 1; _--) {
         // Map the correction from the coarse grid to a finer grid
         error.interpolate();
 
         // Apply a post-smoother to Ax=b
         a.interpolate();
         sor_smooth(a, error, residual, num_iterations);
-        x.depth--;
+        
+        // Decrement all depths
+        a.decrement_depth();
+        x.decrement_depth();
+        b.decrement_depth();
+        residual.decrement_depth();
+        error.decrement_depth();
     }
 
     // Map the correction from the second finest grid to the finest grid
@@ -73,7 +91,13 @@ void interpolate(
     // Apply a post-smoother to Ax=b
     a.interpolate();
     sor_smooth(a, x, b, 0, num_iterations);
-    x.depth--;
+    
+    // Decrement all depths
+    a.decrement_depth();
+    x.decrement_depth();
+    b.decrement_depth();
+    residual.decrement_depth();
+    error.decrement_depth();
 }
 
 
@@ -106,7 +130,7 @@ void w_cycle(
 ) {
     // V-cycle repeatedly at varying depths to form the W-cycle.
     // __builtin_ctz used to generate depths for the W-cycle pattern.
-    for (auto i = 2; i < std::pow(2, x.max_depth()+1); i += 2) {
+    for (auto i = 2; i < std::pow(2, x.max_depth() + 1); i += 2) {
         v_cycle(a, x, b, residual, error, num_iterations,
             x.max_depth() - __builtin_ctz(i));
     }
@@ -115,7 +139,13 @@ void w_cycle(
     error.restrict();
     residual.restrict();
     a.restrict();
-    x.depth++;
+    
+    // Increment all depths
+    a.increment_depth();
+    x.increment_depth();
+    b.increment_depth();
+    residual.increment_depth();
+    error.increment_depth();
 
     interpolate(a, x, b, residual, error, num_iterations, 0);
 }
