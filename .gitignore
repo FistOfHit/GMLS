@@ -1,7 +1,3 @@
-bazel-bin
-bazel-GMLS
-bazel-out
-bazel-testlogs
 *.exe
 *.so
 *.csv
