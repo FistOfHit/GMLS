@@ -22,15 +22,11 @@ void restrict(
     residual = b - (a * x);
 
     // Restrict residual (and LHS matrix)
-    residual.restrict();
     a.restrict();
-
-    // Increment all depths
-    a.increment_depth();
-    x.increment_depth();
-    b.increment_depth();
-    residual.increment_depth();
-    error.increment_depth();
+    x.restrict();
+    b.restrict();
+    residual.restrict();
+    error.restrict();
 
     // Restrict down to coarsest grid
     for (auto _ = x.depth(); _ < final_depth; _++) {
@@ -40,16 +36,12 @@ void restrict(
         // Find the current residual
         residual -= (a * error);
 
-        // Restrict residual (and LHS matrix)
-        residual.restrict();
+        // Restrict
         a.restrict();
-
-        // Increment all depths
-        a.increment_depth();
-        x.increment_depth();
-        b.increment_depth();
-        residual.increment_depth();
-        error.increment_depth();
+        x.restrict();
+        b.restrict();
+        residual.restrict();
+        error.restrict();
     }
 
     // Further smooth on coarsest grid
@@ -70,34 +62,26 @@ void interpolate(
     // Interpolate up to second-finest mesh
     for (auto _ = x.depth(); _ > final_depth + 1; _--) {
         // Map the correction from the coarse grid to a finer grid
+        a.interpolate();
+        x.interpolate();
+        b.interpolate();
         error.interpolate();
+        residual.interpolate();
 
         // Apply a post-smoother to Ax=b
-        a.interpolate();
         sor_smooth(a, error, residual, num_iterations);
-        
-        // Decrement all depths
-        a.decrement_depth();
-        x.decrement_depth();
-        b.decrement_depth();
-        residual.decrement_depth();
-        error.decrement_depth();
     }
 
     // Map the correction from the second finest grid to the finest grid
+    a.interpolate();
+    x.interpolate();
+    b.interpolate();
     error.interpolate();
-    x += error;
+    residual.interpolate();
 
     // Apply a post-smoother to Ax=b
-    a.interpolate();
-    sor_smooth(a, x, b, 0, num_iterations);
-    
-    // Decrement all depths
-    a.decrement_depth();
-    x.decrement_depth();
-    b.decrement_depth();
-    residual.decrement_depth();
-    error.decrement_depth();
+    x += error;
+    sor_smooth(a, x, b, num_iterations);
 }
 
 
@@ -136,16 +120,11 @@ void w_cycle(
     }
     
     // Restrict everything once and interpolate back to top to end V-cycles
+    a.restrict();
+    x.restrict();
+    b.restrict();
     error.restrict();
     residual.restrict();
-    a.restrict();
-    
-    // Increment all depths
-    a.increment_depth();
-    x.increment_depth();
-    b.increment_depth();
-    residual.increment_depth();
-    error.increment_depth();
 
     interpolate(a, x, b, residual, error, num_iterations, 0);
 }

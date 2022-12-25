@@ -87,7 +87,7 @@ TEST(VCycleTests, RealTestCaseSmall) {
     const auto num_rows = 9;
     const auto num_cols = 9;
     const auto max_depth = 2;
-    const auto num_cycles = 200;
+    const auto num_cycles = 100;
     const auto num_iterations = 10;
 
     // SPD matrix formed from generating random A and getting A*(A^T)
@@ -159,7 +159,7 @@ TEST(WCycleTests, RealTestCaseSmall) {
     const auto num_rows = 9;
     const auto num_cols = 9;
     const auto max_depth = 2;
-    const auto num_cycles = 200;
+    const auto num_cycles = 100;
     const auto num_iterations = 10;
 
     // SPD matrix formed from generating random A and getting A*(A^T)

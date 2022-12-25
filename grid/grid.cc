@@ -13,8 +13,6 @@ Grid<T>::Grid(const size_t size, const int max_depth) :
     max_depth_(max_depth),
     num_rows_(size),
     grid_(std::vector<T>(num_rows_ * num_cols_, 0)) {}
-    
-
 
 
 template <typename T>
@@ -124,15 +122,15 @@ void Grid<T>::move_elements_from(const Grid<T>& target) {
 template <typename T>
 void Grid<T>::restrict() {
 
-    if (this->num_rows() == 3) {
+    if (num_rows() == 3) {
         std::cout << "Attempting to restrict from coarsest possible grid level"
             << " (vector of size 3), exiting. \n";
         return;
     }
 
     // Matrix case
-    if (this->num_cols() > 1) {
-        if (this->num_cols() == 3) {
+    if (num_cols() > 1) {
+        if (num_cols() == 3) {
             std::cout << "Attempting to restrict from coarsest possible grid level"
                 << " (vector of size 3), exiting. \n";
             return;
@@ -142,32 +140,37 @@ void Grid<T>::restrict() {
     } else {
         // Do nothing
     }
+
+    // Increment depth after interpolation
+    increment_depth();
 }
 
 
 template <typename T>
 void Grid<T>::interpolate() {
 
-    if (this->depth() == 0) {
+    if (depth() == 0) {
         std::cout << "Attempting to interpolate from finest level, exiting. \n"; 
         return;
     }
 
     // Matrix case
-    if (this->num_cols() > 1) {
+    if (num_cols() > 1) {
         // Do nothing
 
     // Vector case
     } else {
         // Determine half-stride length across vector for edges
-        int half_stride = this->stride() / 2;
+        int half_stride = stride() / 2;
 
         // Interpolating all "new" points
-        for (auto i = half_stride; i <= this->size() - half_stride; i += this->stride()) {
+        for (auto i = half_stride; i <= size() - half_stride; i += stride()) {
             (*this)[i] = 0.5 * ((*this)[i - half_stride] + (*this)[i + half_stride]);
         }
     }
     
+    // Decrement depth after interpolation
+    decrement_depth();
 }
 
 
@@ -175,18 +178,15 @@ template <typename T>
 const void Grid<T>::print(const int precision) const {
 
     // Storing number of digits in each element
-	std::vector<int> digits_grid(this->size());
-
-    size_t num_rows = this->num_rows();
-    size_t num_cols = this->num_cols();
+	std::vector<int> digits_grid(size());
 
 	// Find spaces required to print everything nicely
 	size_t row_number;
 	int num_digits, max_digits = 0;
-	for (auto i = 0; i < num_rows; i++) {
-		row_number = i * num_cols;
+	for (auto i = 0; i < num_rows(); i++) {
+		row_number = i * num_cols();
 
-		for (auto j = 0; j < num_cols; j++) {
+		for (auto j = 0; j < num_cols(); j++) {
 			num_digits = (int)std::log10((*this)[row_number + j]);
 			max_digits = std::max(max_digits, num_digits);
 
@@ -196,20 +196,20 @@ const void Grid<T>::print(const int precision) const {
 
 	// Size of whats being printed
 	std::cout << std::setprecision(precision) << std::fixed;
-	std::cout << "Grid: " << num_rows << " X " << num_cols << "\n";
+	std::cout << "Grid: " << num_rows() << " X " << num_cols() << "\n";
 	std::cout << "[";
 
 	// Print row by row
 	int num_spaces;
-	for (auto i = 0; i < num_rows; i++) {
-		row_number = i * num_cols;
+	for (auto i = 0; i < num_rows(); i++) {
+		row_number = i * num_cols();
 
 		// Tidy brackets
 		if (i == 0) { std::cout << "["; }
 		else { std::cout << " ["; }
 
 		// Print spaces for all but last element in each row
-		for (auto j = 0; j < num_cols - 1; j++) {
+		for (auto j = 0; j < num_cols() - 1; j++) {
 			std::cout << (*this)[row_number + j];
 
 			// Print enough spaces to leave big enough gap
@@ -219,10 +219,10 @@ const void Grid<T>::print(const int precision) const {
             }
 		}
 
-		std::cout << (*this)[row_number + num_cols - 1];
+		std::cout << (*this)[row_number + num_cols() - 1];
 
 		// Tidy brackets
-		if (i == num_rows - 1) { std::cout << "]]" << "\n"; }
+		if (i == num_rows() - 1) { std::cout << "]]" << "\n"; }
 		else { std::cout << "]" << "\n"; }
 	}
 }
@@ -230,7 +230,7 @@ const void Grid<T>::print(const int precision) const {
 
 template <typename T>
 Grid<T>& Grid<T>::operator +=(const Grid<T>& operand) {
-    for (auto i = 0; i < this->size(); i += this->stride()) {
+    for (auto i = 0; i < size(); i += stride()) {
         (*this)[i] = (*this)[i] + operand[i];
     }
 
@@ -240,7 +240,7 @@ Grid<T>& Grid<T>::operator +=(const Grid<T>& operand) {
 
 template <typename T>
 Grid<T>& Grid<T>::operator -=(const Grid<T>& operand){
-    for (auto i = 0; i < this->size(); i += this->stride()) {
+    for (auto i = 0; i < size(); i += stride()) {
         (*this)[i] = (*this)[i] - operand[i];
     }
 
@@ -254,11 +254,11 @@ Grid<T>& Grid<T>::operator *=(const Grid<T>& operand){
     float row_sum;
     size_t row_index;
     // Matrix-Vector multiplication (row-by-row element wise vector-vector)
-    for (auto i = 0; i < this->num_rows(); i += this->stride()) {
+    for (auto i = 0; i < num_rows(); i += stride()) {
         row_sum = 0.0F;
         row_index = i * operand.size();
 
-        for (auto j = 0; j < this->num_cols(); j += this->stride()) {
+        for (auto j = 0; j < num_cols(); j += stride()) {
             row_sum += (*this)[row_index + j] * operand[j];
         }
 
@@ -299,17 +299,17 @@ template <typename T>
 const Grid<T> Grid<T>::operator *(const Grid<T>& operand) const {
 
     // Create a new grid with approrpiate dimensions
-    Grid<T> result = Grid<T>(this->num_rows(), 1);
-    result.set_depth(this->depth());
+    Grid<T> result = Grid<T>(num_rows(), 1);
+    result.set_depth(depth());
 
     float row_sum;
     size_t row_index;
     // Matrix-Vector multiplication (row-by-row element wise vector-vector)
-    for (auto i = 0; i < this->num_rows(); i += this->stride()) {
+    for (auto i = 0; i < num_rows(); i += stride()) {
         row_sum = 0.0F;
-        row_index = i * this->num_cols();
+        row_index = i * num_cols();
 
-        for (auto j = 0; j < this->num_cols(); j += this->stride()) {
+        for (auto j = 0; j < num_cols(); j += stride()) {
             row_sum += (*this)[row_index + j] * operand[j];
         }
 

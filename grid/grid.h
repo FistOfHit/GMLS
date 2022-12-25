@@ -10,9 +10,9 @@ template <typename T>
 class Grid {
 
     /// The current depth of all Grid instances
-    int depth_;
+    int depth_ = 0;
     /// The maximum depth this grid can go down to
-    int max_depth_;
+    int max_depth_ = 3;
     /// The number of rows in this grid (1 implies this is a 1D vector)
     size_t num_rows_ = 1;
     /// The number of columns in this grid (1 implies this is a 1D vector)
