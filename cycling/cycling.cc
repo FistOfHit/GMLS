@@ -23,10 +23,10 @@ void restrict(
 
     // Restrict residual (and LHS matrix)
     a.restrict();
-    x.restrict();
-    b.restrict();
     residual.restrict();
     error.restrict();
+    x.set_depth(a.depth());
+    b.set_depth(a.depth());
 
     // Restrict down to coarsest grid
     for (auto _ = x.depth(); _ < final_depth; _++) {
@@ -38,10 +38,10 @@ void restrict(
 
         // Restrict
         a.restrict();
-        x.restrict();
-        b.restrict();
         residual.restrict();
         error.restrict();
+        x.set_depth(a.depth());
+        b.set_depth(a.depth());
     }
 
     // Further smooth on coarsest grid
@@ -63,10 +63,10 @@ void interpolate(
     for (auto _ = x.depth(); _ > final_depth + 1; _--) {
         // Map the correction from the coarse grid to a finer grid
         a.interpolate();
-        x.interpolate();
-        b.interpolate();
         error.interpolate();
         residual.interpolate();
+        x.set_depth(a.depth());
+        b.set_depth(a.depth());
 
         // Apply a post-smoother to Ax=b
         sor_smooth(a, error, residual, num_iterations);
@@ -74,10 +74,10 @@ void interpolate(
 
     // Map the correction from the second finest grid to the finest grid
     a.interpolate();
-    x.interpolate();
-    b.interpolate();
     error.interpolate();
     residual.interpolate();
+    x.set_depth(a.depth());
+    b.set_depth(a.depth());
 
     // Apply a post-smoother to Ax=b
     x += error;
@@ -114,17 +114,17 @@ void w_cycle(
 ) {
     // V-cycle repeatedly at varying depths to form the W-cycle.
     // __builtin_ctz used to generate depths for the W-cycle pattern.
-    for (auto i = 2; i < std::pow(2, x.max_depth() + 1); i += 2) {
+    for (auto i = 2; i < std::pow(2, x.max_depth()); i += 2) {
         v_cycle(a, x, b, residual, error, num_iterations,
             x.max_depth() - __builtin_ctz(i));
     }
     
     // Restrict everything once and interpolate back to top to end V-cycles
     a.restrict();
-    x.restrict();
-    b.restrict();
     error.restrict();
     residual.restrict();
+    x.set_depth(a.depth());
+    b.set_depth(a.depth());
 
     interpolate(a, x, b, residual, error, num_iterations, 0);
 }

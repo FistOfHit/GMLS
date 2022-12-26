@@ -5,12 +5,13 @@
 
 #include <include/gtest/gtest.h>
 #include <iostream>
+#include <string>
 
 
 void test_v_cycle(
     Grid<double>& lhs,
     Grid<double>& rhs,
-    const Grid<double> expected_solution,
+    const Grid<double>& expected_solution,
     const int num_iterations,
     const int num_cycles
 ) {
@@ -37,7 +38,7 @@ void test_v_cycle(
 void test_w_cycle(
     Grid<double>& lhs,
     Grid<double>& rhs,
-    const Grid<double> expected_solution,
+    const Grid<double>& expected_solution,
     const int num_iterations,
     const int num_cycles
 ) {
@@ -86,7 +87,7 @@ TEST(VCycleTests, RealTestCaseSmall) {
     // Solving small Ax = b
     const auto num_rows = 9;
     const auto num_cols = 9;
-    const auto max_depth = 2;
+    const auto max_depth = 1;
     const auto num_cycles = 100;
     const auto num_iterations = 10;
 
@@ -158,7 +159,7 @@ TEST(WCycleTests, RealTestCaseSmall) {
     // Solving small Ax = b
     const auto num_rows = 9;
     const auto num_cols = 9;
-    const auto max_depth = 2;
+    const auto max_depth = 1;
     const auto num_cycles = 100;
     const auto num_iterations = 10;
 
