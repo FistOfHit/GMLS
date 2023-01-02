@@ -1,9 +1,10 @@
+#include "grid/grid.h"
+
+#include <vector>
+
 int main() {
    
+    auto x = Grid<double>(std::vector<double>{1.33, 2.14324, 1231}, 1);
+    x.print();
     return 0;
-
-    // Grid<float> g = Grid<float>(31, 3);
-    // std::cout << g.size() << std::endl;
-    // std::cout << g.max_depth() << std::endl;
-    // g.print();
 }
