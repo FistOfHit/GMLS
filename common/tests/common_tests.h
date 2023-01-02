@@ -1,6 +1,6 @@
 #pragma once
 
-#include "grid/grid.h"
+#include "grid.h"
 
 
 /// @brief Test if two grids are equal to within a given tolerance.

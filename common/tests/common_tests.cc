@@ -1,5 +1,5 @@
-#include "common/tests/common_tests.h"
-#include "grid/grid.h"
+#include "common_tests.h"
+#include "grid.h"
 
 #include <include/gtest/gtest.h>
 #include <include/gmock/gmock.h>

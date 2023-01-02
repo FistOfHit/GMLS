@@ -1,6 +1,6 @@
 #pragma once
 
-#include "grid/grid.h"
+#include "grid.h"
 
 
 /// @brief Perform a given number of Jacobi smoothing iterations on Ax=b.

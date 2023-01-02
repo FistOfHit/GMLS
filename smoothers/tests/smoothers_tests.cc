@@ -1,7 +1,7 @@
-#include "common/tests/common_tests.h"
+#include "common_tests.h"
 
-#include "grid/grid.h"
-#include "smoothers/smoothers.h"
+#include "grid.h"
+#include "smoothers.h"
 
 #include <include/gtest/gtest.h>
 #include <iostream>

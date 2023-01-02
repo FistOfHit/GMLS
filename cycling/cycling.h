@@ -1,6 +1,6 @@
 #pragma once
 
-#include "grid/grid.h"
+#include "grid.h"
 
 
 /// @brief Perform restriction (first half of a V-cycle) on a series of grids.
