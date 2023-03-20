@@ -1,6 +1,6 @@
-#include "cycling.h"
-#include "grid.h"
-#include "smoothers.h"
+#include "cycling/cycling.h"
+#include "grid/grid.h"
+#include "smoothers/smoothers.h"
 
 #include <iostream>
 

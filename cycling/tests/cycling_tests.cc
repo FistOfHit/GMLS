@@ -1,7 +1,7 @@
-#include "common_tests.h"
+#include "common/tests/common_tests.h"
 
-#include "grid.h"
-#include "cycling.h"
+#include "grid/grid.h"
+#include "cycling/cycling.h"
 
 #include <include/gtest/gtest.h>
 #include <iostream>
